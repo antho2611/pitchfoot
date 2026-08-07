@@ -9,6 +9,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { CoachProfileEditor } from "@/components/CoachProfileEditor";
 import { CountrySelect } from "@/components/CountrySelect";
 import { CityAutocomplete } from "@/components/CityAutocomplete";
+import { ClubSelect } from "@/components/ClubSelect";
+import { CURRENT_SEASON, SEASONS_DESC } from "@/lib/seasons";
 
 export const Route = createFileRoute("/_authenticated/profil")({
   head: () => ({
@@ -81,7 +83,7 @@ function PlayerForm({ userId }: { userId: string }) {
 
   const [form, setForm] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState(false);
-  const [season, setSeason] = useState("2024/2025");
+  const [season, setSeason] = useState(CURRENT_SEASON);
   const [statValues, setStatValues] = useState<Record<string, string>>({});
   const [historyEntry, setHistoryEntry] = useState({
     season_start: "",
@@ -306,12 +308,7 @@ function PlayerForm({ userId }: { userId: string }) {
           />
         </Field>
         <Field label="Club actuel">
-          <input
-            className={input}
-            value={form.current_club ?? ""}
-            onChange={(e) => set("current_club", e.target.value)}
-            maxLength={80}
-          />
+          <ClubSelect value={form.current_club ?? ""} onChange={(v) => set("current_club", v)} />
         </Field>
         <Field label="Niveau">
           <select
@@ -421,26 +418,33 @@ function PlayerForm({ userId }: { userId: string }) {
         </div>
 
         <div className="grid gap-3 border border-dashed border-border p-4 sm:grid-cols-[1fr_1fr_2fr_auto]">
-          <input
+          <select
             className={input}
-            placeholder="De (ex : 2018/2019)"
             value={historyEntry.season_start}
             onChange={(e) => setHistoryEntry((h) => ({ ...h, season_start: e.target.value }))}
-            maxLength={20}
-          />
-          <input
+          >
+            <option value="">De —</option>
+            {SEASONS_DESC.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+          <select
             className={input}
-            placeholder="À (ex : 2023/2024)"
             value={historyEntry.season_end}
             onChange={(e) => setHistoryEntry((h) => ({ ...h, season_end: e.target.value }))}
-            maxLength={20}
-          />
-          <input
-            className={input}
-            placeholder="Club"
+          >
+            <option value="">À —</option>
+            {SEASONS_DESC.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+          <ClubSelect
             value={historyEntry.club_name}
-            onChange={(e) => setHistoryEntry((h) => ({ ...h, club_name: e.target.value }))}
-            maxLength={100}
+            onChange={(v) => setHistoryEntry((h) => ({ ...h, club_name: v }))}
           />
           <button
             type="button"
@@ -483,12 +487,13 @@ function PlayerForm({ userId }: { userId: string }) {
 
       <Block title="Statistiques par saison" cols={1}>
         <Field label="Saison">
-          <input
-            className={input}
-            value={season}
-            onChange={(e) => setSeason(e.target.value)}
-            maxLength={20}
-          />
+          <select className={input} value={season} onChange={(e) => setSeason(e.target.value)}>
+            {SEASONS_DESC.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
         </Field>
         <div className="grid gap-3 sm:grid-cols-3">
           {statFieldsFor(form.main_position).map((f) => (

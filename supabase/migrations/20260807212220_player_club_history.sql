@@ -12,5 +12,5 @@ GRANT ALL ON public.player_club_history TO service_role;
 ALTER TABLE public.player_club_history ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "club_history_public_read" ON public.player_club_history FOR SELECT USING (true);
 CREATE POLICY "club_history_write_own" ON public.player_club_history FOR ALL TO authenticated
-  USING (player_id = auth.uid() OR public.has_role(auth.uid(),'admin'))
-  WITH CHECK (player_id = auth.uid() OR public.has_role(auth.uid(),'admin'));
+  USING (player_id = auth.uid() OR private.has_role(auth.uid(), 'admin'::public.app_role))
+  WITH CHECK (player_id = auth.uid() OR private.has_role(auth.uid(), 'admin'::public.app_role));
