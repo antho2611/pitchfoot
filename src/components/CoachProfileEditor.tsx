@@ -1,7 +1,9 @@
+import { useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import {
   COACH_SPECIALTIES,
   RADIUS_OPTIONS,
@@ -13,7 +15,8 @@ import {
 import { CityAutocomplete } from "@/components/CityAutocomplete";
 import { CoachReservations } from "@/components/CoachReservations";
 
-const input = "w-full border border-border bg-card px-3 py-2.5 text-sm outline-none focus:border-pitch";
+const input =
+  "w-full border border-border bg-card px-3 py-2.5 text-sm outline-none focus:border-pitch";
 const labelCls = "label-xs mb-1 block text-foreground/40";
 
 async function uploadPhoto(userId: string, file: File) {
@@ -35,6 +38,8 @@ export function CoachProfileEditor({ userId }: { userId: string }) {
 }
 
 function CoachForm({ userId }: { userId: string }) {
+  const { profileCompleted, refresh } = useAuth();
+  const navigate = useNavigate();
   const { data, refetch } = useQuery({
     queryKey: ["my-coach", userId],
     queryFn: async () => {
@@ -101,8 +106,16 @@ function CoachForm({ userId }: { userId: string }) {
         photo_url: form.photo_url || null,
       });
       if (error) throw error;
+
+      const wasIncomplete = !profileCompleted;
+      if (wasIncomplete) {
+        await supabase.from("profiles").update({ profile_completed: true }).eq("id", userId);
+        await refresh();
+      }
+
       toast.success("Fiche enregistrée.");
       void refetch();
+      if (wasIncomplete) navigate({ to: "/premium" });
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Enregistrement impossible");
     } finally {

@@ -8,6 +8,7 @@ type AuthState = {
   user: User | null;
   accountType: AccountType | null;
   displayName: string;
+  profileCompleted: boolean;
   loading: boolean;
   refresh: () => Promise<void>;
 };
@@ -16,6 +17,7 @@ const AuthContext = createContext<AuthState>({
   user: null,
   accountType: null,
   displayName: "",
+  profileCompleted: false,
   loading: true,
   refresh: async () => {},
 });
@@ -24,21 +26,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [accountType, setAccountType] = useState<AccountType | null>(null);
   const [displayName, setDisplayName] = useState("");
+  const [profileCompleted, setProfileCompleted] = useState(false);
   const [loading, setLoading] = useState(true);
 
   async function loadProfile(uid: string | undefined) {
     if (!uid) {
       setAccountType(null);
       setDisplayName("");
+      setProfileCompleted(false);
       return;
     }
     const { data } = await supabase
       .from("profiles")
-      .select("account_type, display_name")
+      .select("account_type, display_name, profile_completed")
       .eq("id", uid)
       .maybeSingle();
     setAccountType((data?.account_type as AccountType) ?? null);
     setDisplayName(data?.display_name ?? "");
+    setProfileCompleted(data?.profile_completed ?? false);
   }
 
   async function refresh() {
@@ -69,7 +74,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, accountType, displayName, loading, refresh }}>
+    <AuthContext.Provider
+      value={{ user, accountType, displayName, profileCompleted, loading, refresh }}
+    >
       {children}
     </AuthContext.Provider>
   );

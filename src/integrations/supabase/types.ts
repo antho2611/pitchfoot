@@ -812,6 +812,7 @@ export type Database = {
           created_at: string
           display_name: string
           id: string
+          profile_completed: boolean
         }
         Insert: {
           account_type?: Database["public"]["Enums"]["app_role"]
@@ -819,6 +820,7 @@ export type Database = {
           created_at?: string
           display_name?: string
           id: string
+          profile_completed?: boolean
         }
         Update: {
           account_type?: Database["public"]["Enums"]["app_role"]
@@ -826,6 +828,7 @@ export type Database = {
           created_at?: string
           display_name?: string
           id?: string
+          profile_completed?: boolean
         }
         Relationships: []
       }
