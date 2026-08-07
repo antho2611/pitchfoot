@@ -1,0 +1,1 @@
+REVOKE ALL ON FUNCTION public.sync_reserved_count() FROM public, anon, authenticated;
