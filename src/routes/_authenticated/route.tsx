@@ -3,23 +3,11 @@ import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
-  beforeLoad: async ({ location }) => {
+  beforeLoad: async () => {
+    // The mandatory-profile-completion check lives in <OnboardingGate> (src/routes/__root.tsx)
+    // so it applies to every route, not just this authenticated subtree.
     const { data, error } = await supabase.auth.getUser();
     if (error || !data.user) throw redirect({ to: "/auth" });
-
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("account_type, profile_completed")
-      .eq("id", data.user.id)
-      .maybeSingle();
-
-    const mustOnboard =
-      !!profile &&
-      profile.account_type !== "admin" &&
-      !profile.profile_completed &&
-      location.pathname !== "/profil";
-    if (mustOnboard) throw redirect({ to: "/profil" });
-
     return { user: data.user };
   },
   component: () => <Outlet />,
