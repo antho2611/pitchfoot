@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "motion/react";
 import { ArrowRight, ShieldCheck, Sparkles, Users } from "lucide-react";
@@ -9,6 +9,11 @@ import { PlayerCard } from "@/components/PlayerCard";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/")({
+  ssr: false,
+  beforeLoad: async () => {
+    const { data } = await supabase.auth.getUser();
+    if (data.user) throw redirect({ to: "/tableau-de-bord" });
+  },
   head: () => ({
     meta: [
       { title: "PitchPro — Le réseau du recrutement football amateur" },
@@ -20,7 +25,8 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "PitchPro — Le réseau du recrutement football amateur" },
       {
         property: "og:description",
-        content: "Joueurs, créez votre profil sportif. Clubs, publiez vos annonces et recrutez. PitchPro est le réseau du football amateur et semi-professionnel.",
+        content:
+          "Joueurs, créez votre profil sportif. Clubs, publiez vos annonces et recrutez. PitchPro est le réseau du football amateur et semi-professionnel.",
       },
     ],
   }),
