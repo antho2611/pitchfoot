@@ -56,36 +56,27 @@ const COMMON: StatField[] = [
   { key: "minutes", label: "Minutes" },
 ];
 
+const OUTFIELD: StatField[] = [
+  ...COMMON,
+  { key: "goals", label: "Buts" },
+  { key: "assists", label: "Passes décisives" },
+  { key: "shots_on_target", label: "Tirs cadrés" },
+  { key: "interceptions", label: "Interceptions" },
+  { key: "tackles", label: "Tacles" },
+  { key: "duels_won", label: "Duels gagnés" },
+  { key: "pass_accuracy", label: "Précision passes (%)" },
+  { key: "recoveries", label: "Récupérations" },
+];
+
+const GOALKEEPER: StatField[] = [
+  ...COMMON,
+  { key: "clean_sheets", label: "Clean sheets" },
+  { key: "saves", label: "Arrêts" },
+];
+
+/** Same stat set for every outfield position — only the goalkeeper differs. */
 export function statFieldsFor(position?: string | null): StatField[] {
-  if (position === "Gardien") {
-    return [
-      ...COMMON,
-      { key: "clean_sheets", label: "Clean sheets" },
-      { key: "saves", label: "Arrêts" },
-    ];
-  }
-  if (position?.startsWith("Défenseur") || position?.startsWith("Latéral")) {
-    return [
-      ...COMMON,
-      { key: "interceptions", label: "Interceptions" },
-      { key: "duels_won", label: "Duels gagnés" },
-      { key: "tackles", label: "Tacles" },
-    ];
-  }
-  if (position?.startsWith("Milieu")) {
-    return [
-      ...COMMON,
-      { key: "assists", label: "Passes décisives" },
-      { key: "pass_accuracy", label: "Précision passes (%)" },
-      { key: "recoveries", label: "Récupérations" },
-    ];
-  }
-  return [
-    ...COMMON,
-    { key: "goals", label: "Buts" },
-    { key: "assists", label: "Passes décisives" },
-    { key: "shots_on_target", label: "Tirs cadrés" },
-  ];
+  return position === "Gardien" ? GOALKEEPER : OUTFIELD;
 }
 
 export function ageFrom(birthDate?: string | null): number | null {

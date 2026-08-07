@@ -7,6 +7,8 @@ import { AVAILABILITY, FEET, LEVELS, POSITIONS, statFieldsFor } from "@/lib/foot
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { CoachProfileEditor } from "@/components/CoachProfileEditor";
+import { CountrySelect } from "@/components/CountrySelect";
+import { CityAutocomplete } from "@/components/CityAutocomplete";
 
 export const Route = createFileRoute("/_authenticated/profil")({
   head: () => ({
@@ -60,15 +62,20 @@ function PlayerForm({ userId }: { userId: string }) {
   const { data, refetch } = useQuery({
     queryKey: ["my-player", userId],
     queryFn: async () => {
-      const [p, s] = await Promise.all([
+      const [p, s, h] = await Promise.all([
         supabase.from("players").select("*").eq("id", userId).maybeSingle(),
         supabase
           .from("player_stats")
           .select("*")
           .eq("player_id", userId)
           .order("season", { ascending: false }),
+        supabase
+          .from("player_club_history")
+          .select("*")
+          .eq("player_id", userId)
+          .order("season_start", { ascending: false }),
       ]);
-      return { player: p.data, stats: s.data ?? [] };
+      return { player: p.data, stats: s.data ?? [], clubHistory: h.data ?? [] };
     },
   });
 
@@ -76,6 +83,12 @@ function PlayerForm({ userId }: { userId: string }) {
   const [busy, setBusy] = useState(false);
   const [season, setSeason] = useState("2024/2025");
   const [statValues, setStatValues] = useState<Record<string, string>>({});
+  const [historyEntry, setHistoryEntry] = useState({
+    season_start: "",
+    season_end: "",
+    club_name: "",
+  });
+  const [historyBusy, setHistoryBusy] = useState(false);
 
   useEffect(() => {
     if (!data?.player) return;
@@ -97,7 +110,6 @@ function PlayerForm({ userId }: { userId: string }) {
       availability: p.availability ?? "ouvert",
       experience_years: p.experience_years?.toString() ?? "0",
       bio: p.bio ?? "",
-      previous_clubs: p.previous_clubs ?? "",
       trophies: p.trophies ?? "",
       agent: p.agent ?? "",
     });
@@ -126,7 +138,6 @@ function PlayerForm({ userId }: { userId: string }) {
         availability: (form.availability || "ouvert") as "ouvert",
         experience_years: Number(form.experience_years || 0),
         bio: form.bio?.slice(0, 2000) || null,
-        previous_clubs: form.previous_clubs?.slice(0, 1000) || null,
         trophies: form.trophies?.slice(0, 1000) || null,
         agent: form.agent || null,
       })
@@ -180,6 +191,37 @@ function PlayerForm({ userId }: { userId: string }) {
     if (!error) void refetch();
   }
 
+  async function addClubHistory() {
+    if (
+      !historyEntry.club_name.trim() ||
+      !historyEntry.season_start.trim() ||
+      !historyEntry.season_end.trim()
+    ) {
+      toast.error("Club et saisons obligatoires.");
+      return;
+    }
+    setHistoryBusy(true);
+    const { error } = await supabase.from("player_club_history").insert({
+      player_id: userId,
+      club_name: historyEntry.club_name.slice(0, 100),
+      season_start: historyEntry.season_start.slice(0, 20),
+      season_end: historyEntry.season_end.slice(0, 20),
+    });
+    setHistoryBusy(false);
+    if (error) {
+      toast.error("Ajout impossible.");
+      return;
+    }
+    setHistoryEntry({ season_start: "", season_end: "", club_name: "" });
+    void refetch();
+  }
+
+  async function removeClubHistory(id: string) {
+    const { error } = await supabase.from("player_club_history").delete().eq("id", id);
+    if (error) toast.error("Suppression impossible.");
+    else void refetch();
+  }
+
   return (
     <div className="mt-8 space-y-10">
       <Block title="Identité">
@@ -208,28 +250,17 @@ function PlayerForm({ userId }: { userId: string }) {
           />
         </Field>
         <Field label="Nationalité">
-          <input
-            className={input}
-            value={form.nationality ?? ""}
-            onChange={(e) => set("nationality", e.target.value)}
-            maxLength={60}
-          />
+          <CountrySelect value={form.nationality ?? ""} onChange={(v) => set("nationality", v)} />
         </Field>
         <Field label="Ville">
-          <input
-            className={input}
+          <CityAutocomplete
             value={form.city ?? ""}
-            onChange={(e) => set("city", e.target.value)}
-            maxLength={60}
+            onChange={(v) => set("city", v)}
+            onSelect={(pick) => pick && set("city", pick.city)}
           />
         </Field>
         <Field label="Pays">
-          <input
-            className={input}
-            value={form.country ?? ""}
-            onChange={(e) => set("country", e.target.value)}
-            maxLength={60}
-          />
+          <CountrySelect value={form.country ?? ""} onChange={(v) => set("country", v)} />
         </Field>
       </Block>
 
@@ -343,15 +374,6 @@ function PlayerForm({ userId }: { userId: string }) {
             maxLength={2000}
           />
         </Field>
-        <Field label="Clubs précédents">
-          <textarea
-            rows={3}
-            className={input}
-            value={form.previous_clubs ?? ""}
-            onChange={(e) => set("previous_clubs", e.target.value)}
-            maxLength={1000}
-          />
-        </Field>
         <Field label="Palmarès">
           <textarea
             rows={3}
@@ -370,6 +392,67 @@ function PlayerForm({ userId }: { userId: string }) {
       >
         Enregistrer mon profil
       </button>
+
+      <Block title="Parcours" cols={1}>
+        <div className="space-y-2">
+          {(data?.clubHistory ?? []).length === 0 && (
+            <p className="text-sm text-muted-foreground">Aucun club renseigné pour l'instant.</p>
+          )}
+          {(data?.clubHistory ?? []).map((h) => (
+            <div
+              key={h.id}
+              className="flex items-center justify-between gap-3 border border-border bg-card px-4 py-3"
+            >
+              <div className="text-sm">
+                <span className="font-display text-lg uppercase">{h.club_name}</span>
+                <span className="ml-2 text-xs uppercase tracking-widest text-muted-foreground">
+                  {h.season_start} — {h.season_end}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => void removeClubHistory(h.id)}
+                className="text-xs uppercase tracking-widest underline"
+              >
+                Retirer
+              </button>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid gap-3 border border-dashed border-border p-4 sm:grid-cols-[1fr_1fr_2fr_auto]">
+          <input
+            className={input}
+            placeholder="De (ex : 2018/2019)"
+            value={historyEntry.season_start}
+            onChange={(e) => setHistoryEntry((h) => ({ ...h, season_start: e.target.value }))}
+            maxLength={20}
+          />
+          <input
+            className={input}
+            placeholder="À (ex : 2023/2024)"
+            value={historyEntry.season_end}
+            onChange={(e) => setHistoryEntry((h) => ({ ...h, season_end: e.target.value }))}
+            maxLength={20}
+          />
+          <input
+            className={input}
+            placeholder="Club"
+            value={historyEntry.club_name}
+            onChange={(e) => setHistoryEntry((h) => ({ ...h, club_name: e.target.value }))}
+            maxLength={100}
+          />
+          <button
+            type="button"
+            onClick={() => void addClubHistory()}
+            disabled={historyBusy}
+            className="bg-pitch px-4 font-display text-2xl text-volt disabled:opacity-50"
+            aria-label="Ajouter ce club"
+          >
+            +
+          </button>
+        </div>
+      </Block>
 
       <Block title="Médias" cols={1}>
         <Field label="Photo de profil">
