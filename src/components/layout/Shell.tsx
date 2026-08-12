@@ -130,8 +130,13 @@ export function Header() {
         </div>
       </div>
 
-      {open && (
-        <div className="border-t border-border bg-card px-4 py-4 md:hidden">
+      <div
+        aria-hidden={!open}
+        className={`grid overflow-hidden bg-card transition-[grid-template-rows] duration-300 ease-out md:hidden ${
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        }`}
+      >
+        <div className="min-h-0 overflow-hidden border-t border-border px-4 py-4">
           <div className="flex flex-col gap-3 text-sm font-medium uppercase tracking-wider">
             {NAV.map((item) => (
               <Link key={item.to} to={item.to} onClick={() => setOpen(false)}>
@@ -163,7 +168,7 @@ export function Header() {
             )}
           </div>
         </div>
-      )}
+      </div>
     </nav>
   );
 }
