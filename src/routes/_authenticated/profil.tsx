@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useServerFn } from "@tanstack/react-start";
 import { PageShell } from "@/components/layout/Shell";
 import { AVAILABILITY, FEET, LEVELS, POSITIONS, statFieldsFor } from "@/lib/football";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,6 +12,7 @@ import { CountrySelect } from "@/components/CountrySelect";
 import { CityAutocomplete } from "@/components/CityAutocomplete";
 import { ClubSelect } from "@/components/ClubSelect";
 import { CURRENT_SEASON, SEASONS_DESC } from "@/lib/seasons";
+import { deleteMyAccount } from "@/lib/account.functions";
 
 export const Route = createFileRoute("/_authenticated/profil")({
   head: () => ({
@@ -45,8 +47,50 @@ function ProfilePage() {
             Compte administrateur : aucun profil public à éditer.
           </p>
         )}
+        {accountType !== "admin" && <DangerZone />}
       </section>
     </PageShell>
+  );
+}
+
+function DangerZone() {
+  const navigate = useNavigate();
+  const deleteAccount = useServerFn(deleteMyAccount);
+  const [busy, setBusy] = useState(false);
+
+  async function onDelete() {
+    const confirmed = window.confirm(
+      "Supprimer définitivement votre compte ? Votre profil, vos statistiques, vos messages et tous vos fichiers seront effacés. Cette action est irréversible.",
+    );
+    if (!confirmed) return;
+    setBusy(true);
+    try {
+      await deleteAccount();
+      await supabase.auth.signOut();
+      toast.success("Votre compte a été supprimé.");
+      navigate({ to: "/", replace: true });
+    } catch {
+      toast.error("Suppression impossible pour le moment.");
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="mt-16 border-2 border-destructive/30 p-6">
+      <h2 className="font-display text-2xl uppercase text-destructive">Zone dangereuse</h2>
+      <p className="mt-2 text-sm text-muted-foreground">
+        Supprime définitivement votre compte et toutes les données associées (profil, statistiques,
+        parcours, messages, fichiers). Cette action est irréversible.
+      </p>
+      <button
+        type="button"
+        onClick={() => void onDelete()}
+        disabled={busy}
+        className="mt-4 border-2 border-destructive px-5 py-2.5 font-display text-lg uppercase text-destructive disabled:opacity-50"
+      >
+        {busy ? "Suppression…" : "Supprimer mon compte"}
+      </button>
+    </div>
   );
 }
 

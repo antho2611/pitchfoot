@@ -180,9 +180,18 @@ export function Footer() {
         <span className="font-display text-2xl text-white">
           PITCH<span className="bg-volt px-1 text-pitch">PRO</span>
         </span>
-        <p className="text-xs uppercase tracking-widest">
-          © {new Date().getFullYear()} PitchPro — Recrutement football amateur
-        </p>
+        <div className="flex flex-col gap-4 text-xs uppercase tracking-widest sm:flex-row sm:items-center sm:gap-6">
+          <Link to="/mentions-legales" className="hover:text-white">
+            Mentions légales
+          </Link>
+          <Link to="/cgu" className="hover:text-white">
+            CGU
+          </Link>
+          <Link to="/confidentialite" className="hover:text-white">
+            Confidentialité
+          </Link>
+          <p>© {new Date().getFullYear()} PitchPro — Recrutement football amateur</p>
+        </div>
       </div>
     </footer>
   );

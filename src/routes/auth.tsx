@@ -265,6 +265,19 @@ function AuthPage() {
             >
               {busy ? "…" : mode === "signup" ? "Créer mon compte" : "Se connecter"}
             </button>
+            {mode === "signup" && (
+              <p className="text-center text-xs text-muted-foreground">
+                En créant un compte, vous acceptez les{" "}
+                <a href="/cgu" className="underline">
+                  CGU
+                </a>{" "}
+                et la{" "}
+                <a href="/confidentialite" className="underline">
+                  politique de confidentialité
+                </a>
+                .
+              </p>
+            )}
           </form>
 
           <div className="my-5 flex items-center gap-3 text-[10px] uppercase tracking-widest text-foreground/40">
