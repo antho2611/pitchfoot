@@ -3,12 +3,13 @@ import SwiftUI
 /// Écran liste générique (chargement / erreur / vide / contenu) — évite de répéter
 /// la même mécanique dans chaque onglet (Annonces, Clubs, Préparateurs, Séances...).
 /// Rendu en cartes bordées façon site web plutôt qu'en List système.
-struct AsyncListView<Item: Identifiable, RowContent: View>: View {
+struct AsyncListView<Item: Identifiable, RowContent: View, Header: View>: View {
     let title: String
     let emptyMessage: String
     let emptySymbol: String
     let load: () async throws -> [Item]
     @ViewBuilder let row: (Item) -> RowContent
+    @ViewBuilder var header: () -> Header = { EmptyView() }
 
     @State private var items: [Item] = []
     @State private var isLoading = true
@@ -17,19 +18,12 @@ struct AsyncListView<Item: Identifiable, RowContent: View>: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
-                // Repère temporaire de diagnostic — retiré une fois qu'on aura confirmé
-                // que le simulateur exécute bien ce build. Doit être IMPOSSIBLE à manquer.
-                Text("🔴 BUILD-6 🔴")
-                    .font(.system(size: 20, weight: .black))
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.red)
-                    .foregroundStyle(Color.white)
-
                 Text(title.uppercased())
                     .font(.pitchDisplay(40))
                     .padding(.horizontal)
                     .padding(.top, 8)
+
+                header()
 
                 if isLoading {
                     ProgressView()

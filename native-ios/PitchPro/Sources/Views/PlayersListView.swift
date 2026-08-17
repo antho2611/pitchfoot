@@ -1,12 +1,15 @@
 import SwiftUI
 
 struct PlayersListView: View {
+    @State private var draft = PlayerFilters()
+    @State private var applied = PlayerFilters()
+
     var body: some View {
         AsyncListView(
             title: "Joueurs",
-            emptyMessage: "Aucun joueur",
+            emptyMessage: "Aucun joueur ne correspond à ces filtres",
             emptySymbol: "person.2",
-            load: PlayersRepository.fetchAll
+            load: { try await PlayersRepository.fetchAll(filters: applied) }
         ) { player in
             NavigationLink {
                 PlayerDetailView(playerId: player.id)
@@ -14,7 +17,12 @@ struct PlayersListView: View {
                 PlayerRow(player: player)
             }
             .buttonStyle(.plain)
+        } header: {
+            PlayerFilterBar(filters: $draft) {
+                applied = draft
+            }
         }
+        .id(applied)
     }
 }
 

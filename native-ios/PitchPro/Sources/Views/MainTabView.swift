@@ -74,7 +74,7 @@ struct MenuView: View {
                         NavigationLink { PreparateursListView() } label: {
                             PitchCard { MenuRow(text: "Préparateurs") }
                         }
-                        NavigationLink { ComingSoonView(title: "Ebooks") } label: {
+                        NavigationLink { EbooksListView() } label: {
                             PitchCard { MenuRow(text: "Ebooks") }
                         }
                         NavigationLink { ComingSoonView(title: "Premium") } label: {
