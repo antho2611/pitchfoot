@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Bell, Dumbbell, Megaphone, Menu, MessageSquare, Shield, Users, X } from "lucide-react";
@@ -7,8 +7,10 @@ import { supabase } from "@/integrations/supabase/client";
 
 /** Ressort critiquement amorti — le défaut Apple pour toute UI qui ne porte pas d'élan gestuel. */
 const SPRING = { type: "spring", bounce: 0, duration: 0.35 } as const;
-/** Hauteur totale de la barre d'onglets mobile, zone de sécurité iOS comprise. */
-const TAB_BAR_H = "calc(4rem + env(safe-area-inset-bottom))";
+/** Espace entre la barre flottante et le bord de l'écran. */
+const TAB_BAR_GAP = "0.75rem";
+/** Espace total réservé en bas (barre + marges + zone de sécurité iOS) — utilisé pour ne pas passer sous la barre. */
+const TAB_BAR_CLEARANCE = `calc(4rem + 1.5rem + env(safe-area-inset-bottom))`;
 
 const NAV = [
   { to: "/joueurs", label: "Joueurs" },
@@ -131,9 +133,42 @@ export function Header() {
   );
 }
 
-/** Barre d'onglets flottante en verre, ancrée en bas — convention native iOS. */
+const tabItemCls = "relative flex flex-1 items-center justify-center py-2.5";
+
+/** Contenu d'un onglet, avec la pastille active partagée (layoutId) qui se déforme d'un onglet à l'autre. */
+function TabPill({
+  isActive,
+  reduceMotion,
+  children,
+}: {
+  isActive: boolean;
+  reduceMotion: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <>
+      {isActive && (
+        <motion.div
+          layoutId="tab-pill"
+          transition={reduceMotion ? { duration: 0.01 } : SPRING}
+          className="absolute inset-1 rounded-full bg-pitch"
+        />
+      )}
+      <span
+        className={`relative z-10 flex flex-col items-center gap-0.5 transition-colors ${
+          isActive ? "text-volt" : "text-foreground/40"
+        }`}
+      >
+        {children}
+      </span>
+    </>
+  );
+}
+
+/** Barre d'onglets flottante en verre, pilule ancrée en bas — convention native iOS (Liquid Glass). */
 export function MobileTabBar() {
   const { user } = useAuth();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const reduceMotion = useReducedMotion();
@@ -143,9 +178,6 @@ export function MobileTabBar() {
     await supabase.auth.signOut();
     navigate({ to: "/", replace: true });
   }
-
-  const tabCls =
-    "flex flex-1 flex-col items-center gap-1 py-2 text-foreground/40 transition-colors [&.active]:text-pitch";
 
   return (
     <>
@@ -157,8 +189,8 @@ export function MobileTabBar() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: "100%", opacity: 0 }}
             transition={reduceMotion ? { duration: 0.01 } : SPRING}
-            style={{ bottom: TAB_BAR_H }}
-            className="glass fixed inset-x-0 z-40 max-h-[60vh] overflow-auto border-t-0 md:hidden"
+            style={{ bottom: TAB_BAR_CLEARANCE }}
+            className="glass fixed inset-x-4 z-40 max-h-[60vh] overflow-auto rounded-2xl border-t-0 md:hidden"
           >
             <div className="flex flex-col gap-1 px-4 py-4 text-sm font-medium uppercase tracking-wider">
               <Link to="/preparateurs" onClick={() => setOpen(false)} className="py-2">
@@ -200,32 +232,31 @@ export function MobileTabBar() {
       </AnimatePresence>
 
       <nav
-        className="glass fixed inset-x-0 bottom-0 z-50 border-t md:hidden"
-        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+        className="glass fixed inset-x-4 z-50 flex h-16 rounded-full border-t-0 md:hidden"
+        style={{ bottom: `calc(${TAB_BAR_GAP} + env(safe-area-inset-bottom))` }}
       >
-        <div className="flex h-16">
-          {TABS.map((tab) => (
-            <Link
-              key={tab.to}
-              to={tab.to}
-              onClick={() => setOpen(false)}
-              className={tabCls}
-              activeProps={{ className: "active" }}
-            >
-              <tab.icon className="size-5" />
-              <span className="text-[10px] font-bold uppercase tracking-wide">{tab.label}</span>
+        {TABS.map((tab) => {
+          const isActive = pathname === tab.to || pathname.startsWith(`${tab.to}/`);
+          return (
+            <Link key={tab.to} to={tab.to} onClick={() => setOpen(false)} className={tabItemCls}>
+              <TabPill isActive={isActive} reduceMotion={!!reduceMotion}>
+                <tab.icon className="size-5" />
+                <span className="text-[10px] font-bold uppercase tracking-wide">{tab.label}</span>
+              </TabPill>
             </Link>
-          ))}
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            className={`${tabCls} ${open ? "active" : ""}`}
-            aria-expanded={open}
-          >
+          );
+        })}
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          className={tabItemCls}
+        >
+          <TabPill isActive={open} reduceMotion={!!reduceMotion}>
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
             <span className="text-[10px] font-bold uppercase tracking-wide">Menu</span>
-          </button>
-        </div>
+          </TabPill>
+        </button>
       </nav>
     </>
   );
@@ -259,7 +290,9 @@ export function PageShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Header />
-      <main className="flex-1 pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0">{children}</main>
+      <main className="flex-1 pb-[calc(4rem+1.5rem+env(safe-area-inset-bottom))] md:pb-0">
+        {children}
+      </main>
       <Footer />
       <MobileTabBar />
     </div>
