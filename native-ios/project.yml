@@ -28,6 +28,10 @@ targets:
         CFBundleDisplayName: PitchPro
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
+        CFBundleURLTypes:
+          - CFBundleURLName: com.pitchpro.native
+            CFBundleURLSchemes:
+              - pitchpro
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.pitchpro.native

@@ -25,15 +25,35 @@ Au premier lancement, Xcode télécharge automatiquement la dépendance Supabase
 (barre de progression en haut de la fenêtre) — attends que ça termine avant de
 lancer l'app (▶️).
 
-## État actuel (phase 1)
+## Étape Supabase à faire une fois (pour Google/Apple)
 
-- Connexion / inscription par email + mot de passe (même compte que sur le site)
+Dashboard Supabase → **Authentication → URL Configuration → Redirect URLs** →
+ajoute :
+```
+pitchpro://login-callback
+```
+Sans ça, la connexion Google/Apple s'ouvre mais ne revient jamais dans l'app.
+
+## État actuel
+
+- Connexion / inscription par email + mot de passe, **et** Google / Apple
+  (même écran de connexion que le site, revient dans l'app ensuite)
 - Barre d'onglets native (Joueurs / Annonces / Clubs / Séances / Menu)
-- Onglet **Joueurs** : liste réelle, chargée depuis Supabase
-- Les autres onglets affichent "Bientôt disponible" — à construire écran par écran
+- Écrans avec vraies données Supabase : **Joueurs, Annonces, Clubs, Séances,
+  Préparateurs** (dans Menu)
+- Menu : liens vers Ebooks, Premium, Tableau de bord, Messagerie,
+  Notifications — pour l'instant en "Bientôt disponible", Déconnexion
+  fonctionnelle
 
 ## Pas encore fait
 
-- Connexion Google / Apple (nécessite une configuration d'URL de redirection
-  supplémentaire — prochaine étape une fois la base validée)
-- Annonces, Clubs, Séances, Menu complet, profil, messagerie
+- Contenu réel des écrans Ebooks / Premium / Tableau de bord / Messagerie /
+  Notifications
+- Édition de profil (joueur / club / préparateur), statistiques, parcours club
+- Détail d'un joueur/club/annonce en tapant sur une ligne de liste
+
+## Si le build échoue
+
+Je ne peux pas compiler Swift de mon côté (pas d'Xcode ici) — si Xcode signale
+une erreur, copie-colle le message exact (fichier + ligne + texte de
+l'erreur), je corrige à l'aveugle sur cette base.

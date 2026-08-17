@@ -1,4 +1,5 @@
 import SwiftUI
+import Supabase
 
 struct AuthView: View {
     @EnvironmentObject private var session: SessionStore
@@ -75,6 +76,36 @@ struct AuthView: View {
                 .controlSize(.large)
                 .padding(.horizontal)
                 .disabled(email.isEmpty || password.isEmpty || busy)
+
+                HStack {
+                    VStack { Divider() }
+                    Text("ou").font(.caption).foregroundStyle(.secondary)
+                    VStack { Divider() }
+                }
+                .padding(.horizontal)
+
+                VStack(spacing: 10) {
+                    Button {
+                        Task { await session.signInWithOAuth(.google) }
+                    } label: {
+                        Text("Continuer avec Google")
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.large)
+
+                    Button {
+                        Task { await session.signInWithOAuth(.apple) }
+                    } label: {
+                        Text("Continuer avec Apple")
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.large)
+                }
+                .padding(.horizontal)
 
                 Spacer()
             }

@@ -42,4 +42,18 @@ final class SessionStore: ObservableObject {
         try? await supabase.auth.signOut()
         session = nil
     }
+
+    /// Ouvre le navigateur intégré (même écran Google/Apple que sur le site),
+    /// puis revient dans l'app via le schéma d'URL pitchpro://login-callback.
+    func signInWithOAuth(_ provider: Provider) async {
+        errorMessage = nil
+        do {
+            session = try await supabase.auth.signInWithOAuth(
+                provider: provider,
+                redirectTo: URL(string: "pitchpro://login-callback")
+            )
+        } catch {
+            errorMessage = "Connexion impossible."
+        }
+    }
 }
