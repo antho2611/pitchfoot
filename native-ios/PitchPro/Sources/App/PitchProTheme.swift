@@ -31,9 +31,9 @@ struct PitchCard<Content: View>: View {
         content
             .padding(14)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color(.secondarySystemBackground))
+            .background(Color.white)
             .overlay(
-                Rectangle().strokeBorder(Color.pitchGreen.opacity(0.08), lineWidth: 1)
+                Rectangle().strokeBorder(Color.pitchGreen.opacity(0.12), lineWidth: 1)
             )
     }
 }
