@@ -1,12 +1,14 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { Bell, Menu, MessageSquare, X } from "lucide-react";
+import { Bell, Dumbbell, Megaphone, Menu, MessageSquare, Shield, Users, X } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 
 /** Ressort critiquement amorti — le défaut Apple pour toute UI qui ne porte pas d'élan gestuel. */
 const SPRING = { type: "spring", bounce: 0, duration: 0.35 } as const;
+/** Hauteur totale de la barre d'onglets mobile, zone de sécurité iOS comprise. */
+const TAB_BAR_H = "calc(4rem + env(safe-area-inset-bottom))";
 
 const NAV = [
   { to: "/joueurs", label: "Joueurs" },
@@ -18,12 +20,16 @@ const NAV = [
   { to: "/premium", label: "Premium" },
 ];
 
+const TABS = [
+  { to: "/joueurs", label: "Joueurs", icon: Users },
+  { to: "/annonces", label: "Annonces", icon: Megaphone },
+  { to: "/clubs", label: "Clubs", icon: Shield },
+  { to: "/seances", label: "Séances", icon: Dumbbell },
+] as const;
+
 export function Header() {
   const { user, displayName } = useAuth();
-  const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
   const [unread, setUnread] = useState(0);
-  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     if (!user) {
@@ -53,11 +59,6 @@ export function Header() {
       void supabase.removeChannel(channel);
     };
   }, [user]);
-
-  async function signOut() {
-    await supabase.auth.signOut();
-    navigate({ to: "/", replace: true });
-  }
 
   return (
     <nav className="glass sticky top-0 z-50 border-t-0 pt-[env(safe-area-inset-top)]">
@@ -109,7 +110,7 @@ export function Header() {
                 Tableau de bord
               </Link>
               <button
-                onClick={signOut}
+                onClick={() => void supabase.auth.signOut()}
                 className="hidden text-xs font-bold uppercase tracking-wider text-foreground/50 hover:text-foreground sm:block"
               >
                 Sortir
@@ -124,63 +125,109 @@ export function Header() {
               Connexion
             </Link>
           )}
-          <button
-            className="md:hidden"
-            onClick={() => setOpen((v) => !v)}
-            aria-label="Menu"
-            aria-expanded={open}
-          >
-            {open ? <X className="size-6" /> : <Menu className="size-6" />}
-          </button>
         </div>
       </div>
+    </nav>
+  );
+}
 
-      <AnimatePresence initial={false}>
+/** Barre d'onglets flottante en verre, ancrée en bas — convention native iOS. */
+export function MobileTabBar() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
+
+  async function signOut() {
+    setOpen(false);
+    await supabase.auth.signOut();
+    navigate({ to: "/", replace: true });
+  }
+
+  const tabCls =
+    "flex flex-1 flex-col items-center gap-1 py-2 text-foreground/40 transition-colors [&.active]:text-pitch";
+
+  return (
+    <>
+      <AnimatePresence>
         {open && (
           <motion.div
-            key="mobile-menu"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
+            key="tab-sheet"
+            initial={{ y: "100%", opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: "100%", opacity: 0 }}
             transition={reduceMotion ? { duration: 0.01 } : SPRING}
-            className="glass overflow-hidden border-t-0 md:hidden"
+            style={{ bottom: TAB_BAR_H }}
+            className="glass fixed inset-x-0 z-40 max-h-[60vh] overflow-auto border-t-0 md:hidden"
           >
-            <div className="px-4 py-4">
-              <div className="flex flex-col gap-3 text-sm font-medium uppercase tracking-wider">
-                {NAV.map((item) => (
-                  <Link key={item.to} to={item.to} onClick={() => setOpen(false)}>
-                    {item.label}
+            <div className="flex flex-col gap-1 px-4 py-4 text-sm font-medium uppercase tracking-wider">
+              <Link to="/preparateurs" onClick={() => setOpen(false)} className="py-2">
+                Préparateurs
+              </Link>
+              <Link to="/ebooks" onClick={() => setOpen(false)} className="py-2">
+                Ebooks
+              </Link>
+              <Link to="/premium" onClick={() => setOpen(false)} className="py-2">
+                Premium
+              </Link>
+              <div className="my-2 border-t border-border" />
+              {user ? (
+                <>
+                  <Link to="/tableau-de-bord" onClick={() => setOpen(false)} className="py-2">
+                    Tableau de bord
                   </Link>
-                ))}
-                {user ? (
-                  <>
-                    <Link to="/tableau-de-bord" onClick={() => setOpen(false)}>
-                      Tableau de bord
-                    </Link>
-                    <Link to="/bibliotheque" onClick={() => setOpen(false)}>
-                      Ma bibliothèque
-                    </Link>
-                    <Link to="/messages" onClick={() => setOpen(false)}>
-                      Messagerie
-                    </Link>
-                    <Link to="/notifications" onClick={() => setOpen(false)}>
-                      Notifications
-                    </Link>
-                    <button className="text-left uppercase" onClick={signOut}>
-                      Se déconnecter
-                    </button>
-                  </>
-                ) : (
-                  <Link to="/auth" onClick={() => setOpen(false)}>
-                    Connexion
+                  <Link to="/bibliotheque" onClick={() => setOpen(false)} className="py-2">
+                    Ma bibliothèque
                   </Link>
-                )}
-              </div>
+                  <Link to="/messages" onClick={() => setOpen(false)} className="py-2">
+                    Messagerie
+                  </Link>
+                  <Link to="/notifications" onClick={() => setOpen(false)} className="py-2">
+                    Notifications
+                  </Link>
+                  <button className="py-2 text-left uppercase" onClick={() => void signOut()}>
+                    Se déconnecter
+                  </button>
+                </>
+              ) : (
+                <Link to="/auth" onClick={() => setOpen(false)} className="py-2">
+                  Connexion
+                </Link>
+              )}
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+
+      <nav
+        className="glass fixed inset-x-0 bottom-0 z-50 border-t md:hidden"
+        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+      >
+        <div className="flex h-16">
+          {TABS.map((tab) => (
+            <Link
+              key={tab.to}
+              to={tab.to}
+              onClick={() => setOpen(false)}
+              className={tabCls}
+              activeProps={{ className: "active" }}
+            >
+              <tab.icon className="size-5" />
+              <span className="text-[10px] font-bold uppercase tracking-wide">{tab.label}</span>
+            </Link>
+          ))}
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className={`${tabCls} ${open ? "active" : ""}`}
+            aria-expanded={open}
+          >
+            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            <span className="text-[10px] font-bold uppercase tracking-wide">Menu</span>
+          </button>
+        </div>
+      </nav>
+    </>
   );
 }
 
@@ -212,8 +259,9 @@ export function PageShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Header />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0">{children}</main>
       <Footer />
+      <MobileTabBar />
     </div>
   );
 }
