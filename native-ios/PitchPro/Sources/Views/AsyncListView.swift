@@ -17,6 +17,15 @@ struct AsyncListView<Item: Identifiable, RowContent: View>: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
+                // Repère temporaire de diagnostic — retiré une fois qu'on aura confirmé
+                // que le simulateur exécute bien ce build. Doit être IMPOSSIBLE à manquer.
+                Text("🔴 BUILD-6 🔴")
+                    .font(.system(size: 20, weight: .black))
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.red)
+                    .foregroundStyle(Color.white)
+
                 Text(title.uppercased())
                     .font(.pitchDisplay(40))
                     .padding(.horizontal)
