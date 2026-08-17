@@ -8,8 +8,24 @@ struct AsyncListView<Item: Identifiable, RowContent: View, Header: View>: View {
     let emptyMessage: String
     let emptySymbol: String
     let load: () async throws -> [Item]
-    @ViewBuilder let row: (Item) -> RowContent
-    @ViewBuilder var header: () -> Header = { EmptyView() }
+    let row: (Item) -> RowContent
+    let header: () -> Header
+
+    init(
+        title: String,
+        emptyMessage: String,
+        emptySymbol: String,
+        load: @escaping () async throws -> [Item],
+        @ViewBuilder row: @escaping (Item) -> RowContent,
+        @ViewBuilder header: @escaping () -> Header
+    ) {
+        self.title = title
+        self.emptyMessage = emptyMessage
+        self.emptySymbol = emptySymbol
+        self.load = load
+        self.row = row
+        self.header = header
+    }
 
     @State private var items: [Item] = []
     @State private var isLoading = true
@@ -68,5 +84,27 @@ struct AsyncListView<Item: Identifiable, RowContent: View, Header: View>: View {
             errorMessage = "Chargement impossible."
         }
         isLoading = false
+    }
+}
+
+/// Version sans en-tête (Annonces, Clubs, Préparateurs, Séances) — le type
+/// générique Header ne peut pas être déduit d'une valeur par défaut, donc on
+/// le fixe explicitement à EmptyView ici plutôt que de compter sur l'inférence.
+extension AsyncListView where Header == EmptyView {
+    init(
+        title: String,
+        emptyMessage: String,
+        emptySymbol: String,
+        load: @escaping () async throws -> [Item],
+        @ViewBuilder row: @escaping (Item) -> RowContent
+    ) {
+        self.init(
+            title: title,
+            emptyMessage: emptyMessage,
+            emptySymbol: emptySymbol,
+            load: load,
+            row: row,
+            header: { EmptyView() }
+        )
     }
 }
