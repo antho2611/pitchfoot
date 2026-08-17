@@ -151,12 +151,12 @@ function TabPill({
         <motion.div
           layoutId="tab-pill"
           transition={reduceMotion ? { duration: 0.01 } : SPRING}
-          className="absolute inset-1 rounded-full bg-pitch"
+          className="glass-pill absolute inset-1 rounded-full"
         />
       )}
       <span
         className={`relative z-10 flex flex-col items-center gap-0.5 transition-colors ${
-          isActive ? "text-volt" : "text-foreground/40"
+          isActive ? "text-pitch" : "text-foreground/40"
         }`}
       >
         {children}
