@@ -38,9 +38,14 @@ Sans ça, la connexion Google/Apple s'ouvre mais ne revient jamais dans l'app.
 
 - Connexion / inscription par email + mot de passe, **et** Google / Apple
   (même écran de connexion que le site, revient dans l'app ensuite)
+- **Design aligné sur le site** : police Bebas Neue (même fichier que le web,
+  policy OFL, voir `PitchPro/Resources/Fonts`), vert pitch / vert volt,
+  cartes à coins nets bordées — seule la barre d'onglets tout en bas garde le
+  style natif iOS (Liquid Glass), comme demandé
 - Barre d'onglets native (Joueurs / Annonces / Clubs / Séances / Menu)
 - Écrans avec vraies données Supabase : **Joueurs, Annonces, Clubs, Séances,
   Préparateurs** (dans Menu)
+- **Taper sur un joueur ouvre sa fiche** (photo, poste, club, taille/poids/niveau, bio)
 - Menu : liens vers Ebooks, Premium, Tableau de bord, Messagerie,
   Notifications — pour l'instant en "Bientôt disponible", Déconnexion
   fonctionnelle
@@ -50,7 +55,8 @@ Sans ça, la connexion Google/Apple s'ouvre mais ne revient jamais dans l'app.
 - Contenu réel des écrans Ebooks / Premium / Tableau de bord / Messagerie /
   Notifications
 - Édition de profil (joueur / club / préparateur), statistiques, parcours club
-- Détail d'un joueur/club/annonce en tapant sur une ligne de liste
+- Détail d'un club/annonce/préparateur en tapant sur une ligne (seul le
+  joueur a une fiche détaillée pour l'instant)
 
 ## Si le build échoue
 

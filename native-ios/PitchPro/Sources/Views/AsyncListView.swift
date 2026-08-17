@@ -2,6 +2,7 @@ import SwiftUI
 
 /// Écran liste générique (chargement / erreur / vide / contenu) — évite de répéter
 /// la même mécanique dans chaque onglet (Annonces, Clubs, Préparateurs, Séances...).
+/// Rendu en cartes bordées façon site web plutôt qu'en List système.
 struct AsyncListView<Item: Identifiable, RowContent: View>: View {
     let title: String
     let emptyMessage: String
@@ -14,23 +15,45 @@ struct AsyncListView<Item: Identifiable, RowContent: View>: View {
     @State private var errorMessage: String?
 
     var body: some View {
-        Group {
-            if isLoading {
-                ProgressView()
-            } else if let errorMessage {
-                ContentUnavailableView(errorMessage, systemImage: "exclamationmark.triangle")
-            } else if items.isEmpty {
-                ContentUnavailableView(emptyMessage, systemImage: emptySymbol)
-            } else {
-                List(items) { item in
-                    row(item)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 12) {
+                Text(title.uppercased())
+                    .font(.pitchDisplay(40))
+                    .padding(.horizontal)
+                    .padding(.top, 8)
+
+                if isLoading {
+                    ProgressView()
+                        .frame(maxWidth: .infinity)
+                        .padding(.top, 40)
+                } else if let errorMessage {
+                    stateMessage(errorMessage, symbol: "exclamationmark.triangle")
+                } else if items.isEmpty {
+                    stateMessage(emptyMessage, symbol: emptySymbol)
+                } else {
+                    VStack(spacing: 10) {
+                        ForEach(items) { item in
+                            PitchCard { row(item) }
+                        }
+                    }
+                    .padding(.horizontal)
                 }
-                .listStyle(.plain)
             }
+            .padding(.bottom, 24)
         }
-        .navigationTitle(title)
+        .background(Color(.systemBackground))
+        .navigationBarTitleDisplayMode(.inline)
         .task { await fetch() }
         .refreshable { await fetch() }
+    }
+
+    private func stateMessage(_ text: String, symbol: String) -> some View {
+        VStack(spacing: 8) {
+            Image(systemName: symbol).font(.largeTitle).foregroundStyle(.secondary)
+            Text(text).foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 40)
     }
 
     private func fetch() async {

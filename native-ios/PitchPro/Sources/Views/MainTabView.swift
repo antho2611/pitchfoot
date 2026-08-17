@@ -28,15 +28,33 @@ struct ComingSoonView: View {
     let title: String
 
     var body: some View {
-        VStack(spacing: 8) {
-            Image(systemName: "hourglass")
-                .font(.largeTitle)
-                .foregroundStyle(.secondary)
-            Text("Bientôt disponible")
-                .font(.headline)
-                .foregroundStyle(.secondary)
+        VStack(alignment: .leading, spacing: 12) {
+            Text(title.uppercased())
+                .font(.pitchDisplay(40))
+                .padding(.horizontal)
+                .padding(.top, 8)
+            VStack(spacing: 8) {
+                Image(systemName: "hourglass")
+                    .font(.largeTitle)
+                    .foregroundStyle(.secondary)
+                Text("Bientôt disponible")
+                    .foregroundStyle(.secondary)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.top, 40)
+            Spacer()
         }
-        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+private struct MenuRow: View {
+    let text: String
+
+    var body: some View {
+        Text(text.uppercased())
+            .font(.pitchDisplay(20))
+            .foregroundStyle(.primary)
     }
 }
 
@@ -45,26 +63,48 @@ struct MenuView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                Section {
-                    NavigationLink("Préparateurs") { PreparateursListView() }
-                    NavigationLink("Ebooks") { ComingSoonView(title: "Ebooks") }
-                    NavigationLink("Premium") { ComingSoonView(title: "Premium") }
-                }
-                Section {
-                    NavigationLink("Tableau de bord") { ComingSoonView(title: "Tableau de bord") }
-                    NavigationLink("Messagerie") { ComingSoonView(title: "Messagerie") }
-                    NavigationLink("Notifications") { ComingSoonView(title: "Notifications") }
-                }
-                Section {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("MENU")
+                        .font(.pitchDisplay(40))
+                        .padding(.horizontal)
+                        .padding(.top, 8)
+
+                    VStack(spacing: 10) {
+                        NavigationLink { PreparateursListView() } label: {
+                            PitchCard { MenuRow(text: "Préparateurs") }
+                        }
+                        NavigationLink { ComingSoonView(title: "Ebooks") } label: {
+                            PitchCard { MenuRow(text: "Ebooks") }
+                        }
+                        NavigationLink { ComingSoonView(title: "Premium") } label: {
+                            PitchCard { MenuRow(text: "Premium") }
+                        }
+                        NavigationLink { ComingSoonView(title: "Tableau de bord") } label: {
+                            PitchCard { MenuRow(text: "Tableau de bord") }
+                        }
+                        NavigationLink { ComingSoonView(title: "Messagerie") } label: {
+                            PitchCard { MenuRow(text: "Messagerie") }
+                        }
+                        NavigationLink { ComingSoonView(title: "Notifications") } label: {
+                            PitchCard { MenuRow(text: "Notifications") }
+                        }
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.horizontal)
+
                     Button(role: .destructive) {
                         Task { await session.signOut() }
                     } label: {
                         Text("Se déconnecter")
                     }
+                    .buttonStyle(PitchButtonStyle(filled: false))
+                    .padding(.horizontal)
+                    .padding(.top, 12)
                 }
+                .padding(.bottom, 24)
             }
-            .navigationTitle("Menu")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

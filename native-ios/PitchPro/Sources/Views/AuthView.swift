@@ -1,6 +1,8 @@
 import SwiftUI
 import Supabase
 
+private let sharpFieldCls = RoundedRectangle(cornerRadius: 0)
+
 struct AuthView: View {
     @EnvironmentObject private var session: SessionStore
     @State private var mode: Mode = .signIn
@@ -12,103 +14,110 @@ struct AuthView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 20) {
-                Spacer(minLength: 40)
+            ScrollView {
+                VStack(spacing: 20) {
+                    Spacer(minLength: 40)
 
-                HStack(spacing: 0) {
-                    Text("PITCH")
-                        .font(.system(size: 40, weight: .black))
-                    Text("PRO")
-                        .font(.system(size: 40, weight: .black))
-                        .foregroundStyle(Color.pitchVolt)
-                        .padding(.horizontal, 6)
-                        .background(Color.pitchGreen)
-                }
+                    HStack(spacing: 0) {
+                        Text("PITCH")
+                            .font(.pitchDisplay(44))
+                        Text("PRO")
+                            .font(.pitchDisplay(44))
+                            .foregroundStyle(Color.pitchVolt)
+                            .padding(.horizontal, 6)
+                            .background(Color.pitchGreen)
+                    }
 
-                Picker("Mode", selection: $mode) {
-                    Text("Connexion").tag(Mode.signIn)
-                    Text("Inscription").tag(Mode.signUp)
-                }
-                .pickerStyle(.segmented)
-                .padding(.horizontal)
+                    HStack(spacing: 0) {
+                        modeTab("Connexion", .signIn)
+                        modeTab("Inscription", .signUp)
+                    }
+                    .overlay(Rectangle().strokeBorder(Color.pitchGreen, lineWidth: 1))
+                    .padding(.horizontal)
 
-                VStack(spacing: 12) {
-                    TextField("Email", text: $email)
-                        .textInputAutocapitalization(.never)
-                        .autocorrectionDisabled()
-                        .keyboardType(.emailAddress)
-                        .textFieldStyle(.roundedBorder)
+                    VStack(spacing: 12) {
+                        TextField("Email", text: $email)
+                            .textInputAutocapitalization(.never)
+                            .autocorrectionDisabled()
+                            .keyboardType(.emailAddress)
+                            .padding(12)
+                            .overlay(sharpFieldCls.strokeBorder(Color.secondary.opacity(0.3)))
 
-                    SecureField("Mot de passe", text: $password)
-                        .textFieldStyle(.roundedBorder)
-                }
-                .padding(.horizontal)
+                        SecureField("Mot de passe", text: $password)
+                            .padding(12)
+                            .overlay(sharpFieldCls.strokeBorder(Color.secondary.opacity(0.3)))
+                    }
+                    .padding(.horizontal)
 
-                if let error = session.errorMessage {
-                    Text(error)
-                        .font(.footnote)
-                        .foregroundStyle(.red)
-                        .padding(.horizontal)
-                }
+                    if let error = session.errorMessage {
+                        Text(error)
+                            .font(.footnote)
+                            .foregroundStyle(.red)
+                            .padding(.horizontal)
+                    }
 
-                Button {
-                    Task {
-                        busy = true
-                        if mode == .signIn {
-                            await session.signIn(email: email, password: password)
-                        } else {
-                            await session.signUp(email: email, password: password)
+                    Button {
+                        Task {
+                            busy = true
+                            if mode == .signIn {
+                                await session.signIn(email: email, password: password)
+                            } else {
+                                await session.signUp(email: email, password: password)
+                            }
+                            busy = false
                         }
-                        busy = false
-                    }
-                } label: {
-                    if busy {
-                        ProgressView()
-                            .frame(maxWidth: .infinity)
-                    } else {
-                        Text(mode == .signIn ? "Se connecter" : "Créer mon compte")
-                            .fontWeight(.bold)
-                            .frame(maxWidth: .infinity)
-                    }
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(Color.pitchGreen)
-                .controlSize(.large)
-                .padding(.horizontal)
-                .disabled(email.isEmpty || password.isEmpty || busy)
-
-                HStack {
-                    VStack { Divider() }
-                    Text("ou").font(.caption).foregroundStyle(.secondary)
-                    VStack { Divider() }
-                }
-                .padding(.horizontal)
-
-                VStack(spacing: 10) {
-                    Button {
-                        Task { await session.signInWithOAuth(.google) }
                     } label: {
-                        Text("Continuer avec Google")
-                            .fontWeight(.semibold)
-                            .frame(maxWidth: .infinity)
+                        if busy {
+                            ProgressView().tint(Color.pitchVolt)
+                        } else {
+                            Text(mode == .signIn ? "Se connecter" : "Créer mon compte")
+                        }
                     }
-                    .buttonStyle(.bordered)
-                    .controlSize(.large)
+                    .buttonStyle(PitchButtonStyle())
+                    .padding(.horizontal)
+                    .disabled(email.isEmpty || password.isEmpty || busy)
 
-                    Button {
-                        Task { await session.signInWithOAuth(.apple) }
-                    } label: {
-                        Text("Continuer avec Apple")
-                            .fontWeight(.semibold)
-                            .frame(maxWidth: .infinity)
+                    HStack {
+                        VStack { Divider() }
+                        Text("ou").font(.caption).foregroundStyle(.secondary)
+                        VStack { Divider() }
                     }
-                    .buttonStyle(.bordered)
-                    .controlSize(.large)
+                    .padding(.horizontal)
+
+                    VStack(spacing: 10) {
+                        Button {
+                            Task { await session.signInWithOAuth(.google) }
+                        } label: {
+                            Text("Continuer avec Google")
+                        }
+                        .buttonStyle(PitchButtonStyle(filled: false))
+
+                        Button {
+                            Task { await session.signInWithOAuth(.apple) }
+                        } label: {
+                            Text("Continuer avec Apple")
+                        }
+                        .buttonStyle(PitchButtonStyle(filled: false))
+                    }
+                    .padding(.horizontal)
+
+                    Spacer(minLength: 20)
                 }
-                .padding(.horizontal)
-
-                Spacer()
             }
         }
+    }
+
+    private func modeTab(_ text: String, _ value: Mode) -> some View {
+        Button {
+            mode = value
+        } label: {
+            Text(text.uppercased())
+                .font(.system(size: 13, weight: .bold))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 10)
+                .foregroundStyle(mode == value ? Color.pitchVolt : Color.pitchGreen)
+                .background(mode == value ? Color.pitchGreen : Color.clear)
+        }
+        .buttonStyle(.plain)
     }
 }

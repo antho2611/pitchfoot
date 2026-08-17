@@ -11,6 +11,12 @@ struct Player: Identifiable, Codable {
     let currentClub: String?
     let photoURL: String?
     let availability: String
+    let bio: String?
+    let heightCm: Int?
+    let weightKg: Int?
+    let level: String?
+    let championship: String?
+    let birthDate: String?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -22,5 +28,11 @@ struct Player: Identifiable, Codable {
         case currentClub = "current_club"
         case photoURL = "photo_url"
         case availability
+        case bio
+        case heightCm = "height_cm"
+        case weightKg = "weight_kg"
+        case level
+        case championship
+        case birthDate = "birth_date"
     }
 }

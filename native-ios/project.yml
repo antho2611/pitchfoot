@@ -19,6 +19,7 @@ targets:
     deploymentTarget: "17.0"
     sources:
       - path: PitchPro/Sources
+      - path: PitchPro/Resources
     dependencies:
       - package: Supabase
     info:
@@ -32,6 +33,8 @@ targets:
           - CFBundleURLName: com.pitchpro.native
             CFBundleURLSchemes:
               - pitchpro
+        UIAppFonts:
+          - BebasNeue-Regular.ttf
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.pitchpro.native

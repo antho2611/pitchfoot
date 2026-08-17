@@ -8,16 +8,15 @@ struct AnnoncesListView: View {
             emptySymbol: "megaphone",
             load: ListingsRepository.fetchOpen
         ) { listing in
-            VStack(alignment: .leading, spacing: 2) {
-                Text(listing.title).font(.headline)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(listing.title.uppercased()).font(.pitchDisplay(20))
                 let subtitle = [listing.position, listing.city, listing.championship]
                     .compactMap { $0 }
                     .joined(separator: " · ")
                 if !subtitle.isEmpty {
-                    Text(subtitle).font(.subheadline).foregroundStyle(.secondary)
+                    LabelXS(text: subtitle)
                 }
             }
-            .padding(.vertical, 4)
         }
     }
 }

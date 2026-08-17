@@ -12,14 +12,14 @@ struct PreparateursListView: View {
                 AsyncImage(url: coach.photoURL.flatMap(URL.init)) { image in
                     image.resizable().scaledToFill()
                 } placeholder: {
-                    Color.secondary.opacity(0.2)
+                    Color.secondary.opacity(0.15)
                 }
                 .frame(width: 44, height: 44)
                 .clipShape(Circle())
 
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: 3) {
                     HStack(spacing: 4) {
-                        Text(coach.fullName).font(.headline)
+                        Text(coach.fullName.uppercased()).font(.pitchDisplay(20))
                         if coach.isVerified {
                             Image(systemName: "checkmark.seal.fill")
                                 .font(.caption)
@@ -28,11 +28,10 @@ struct PreparateursListView: View {
                     }
                     let subtitle = [coach.headline, coach.city].compactMap { $0 }.joined(separator: " · ")
                     if !subtitle.isEmpty {
-                        Text(subtitle).font(.subheadline).foregroundStyle(.secondary)
+                        LabelXS(text: subtitle)
                     }
                 }
             }
-            .padding(.vertical, 4)
         }
     }
 }
