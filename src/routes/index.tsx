@@ -73,7 +73,7 @@ function Index() {
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            transition={{ type: "spring", bounce: 0, duration: 0.6 }}
           >
             <span className="label-xs inline-block bg-volt px-2 py-1 text-pitch">
               Football amateur & semi-pro
@@ -123,7 +123,7 @@ function Index() {
           <motion.div
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
+            transition={{ type: "spring", bounce: 0, duration: 0.7, delay: 0.1 }}
             className="relative"
           >
             <img

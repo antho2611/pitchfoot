@@ -1,8 +1,12 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Bell, Menu, MessageSquare, X } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+
+/** Ressort critiquement amorti — le défaut Apple pour toute UI qui ne porte pas d'élan gestuel. */
+const SPRING = { type: "spring", bounce: 0, duration: 0.35 } as const;
 
 const NAV = [
   { to: "/joueurs", label: "Joueurs" },
@@ -19,6 +23,7 @@ export function Header() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [unread, setUnread] = useState(0);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     if (!user) {
@@ -55,7 +60,7 @@ export function Header() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-pitch/10 bg-background/85 backdrop-blur-md">
+    <nav className="glass sticky top-0 z-50 border-t-0">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
         <div className="flex min-w-0 items-center gap-8">
           <Link to="/" className="shrink-0 font-display text-3xl tracking-tight">
@@ -130,45 +135,51 @@ export function Header() {
         </div>
       </div>
 
-      <div
-        aria-hidden={!open}
-        className={`grid overflow-hidden bg-card transition-[grid-template-rows] duration-300 ease-out md:hidden ${
-          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-        }`}
-      >
-        <div className="min-h-0 overflow-hidden border-t border-border px-4 py-4">
-          <div className="flex flex-col gap-3 text-sm font-medium uppercase tracking-wider">
-            {NAV.map((item) => (
-              <Link key={item.to} to={item.to} onClick={() => setOpen(false)}>
-                {item.label}
-              </Link>
-            ))}
-            {user ? (
-              <>
-                <Link to="/tableau-de-bord" onClick={() => setOpen(false)}>
-                  Tableau de bord
-                </Link>
-                <Link to="/bibliotheque" onClick={() => setOpen(false)}>
-                  Ma bibliothèque
-                </Link>
-                <Link to="/messages" onClick={() => setOpen(false)}>
-                  Messagerie
-                </Link>
-                <Link to="/notifications" onClick={() => setOpen(false)}>
-                  Notifications
-                </Link>
-                <button className="text-left uppercase" onClick={signOut}>
-                  Se déconnecter
-                </button>
-              </>
-            ) : (
-              <Link to="/auth" onClick={() => setOpen(false)}>
-                Connexion
-              </Link>
-            )}
-          </div>
-        </div>
-      </div>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={reduceMotion ? { duration: 0.01 } : SPRING}
+            className="glass overflow-hidden border-t-0 md:hidden"
+          >
+            <div className="px-4 py-4">
+              <div className="flex flex-col gap-3 text-sm font-medium uppercase tracking-wider">
+                {NAV.map((item) => (
+                  <Link key={item.to} to={item.to} onClick={() => setOpen(false)}>
+                    {item.label}
+                  </Link>
+                ))}
+                {user ? (
+                  <>
+                    <Link to="/tableau-de-bord" onClick={() => setOpen(false)}>
+                      Tableau de bord
+                    </Link>
+                    <Link to="/bibliotheque" onClick={() => setOpen(false)}>
+                      Ma bibliothèque
+                    </Link>
+                    <Link to="/messages" onClick={() => setOpen(false)}>
+                      Messagerie
+                    </Link>
+                    <Link to="/notifications" onClick={() => setOpen(false)}>
+                      Notifications
+                    </Link>
+                    <button className="text-left uppercase" onClick={signOut}>
+                      Se déconnecter
+                    </button>
+                  </>
+                ) : (
+                  <Link to="/auth" onClick={() => setOpen(false)}>
+                    Connexion
+                  </Link>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

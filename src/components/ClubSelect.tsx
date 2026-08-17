@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Shield } from "lucide-react";
 import type { FffClub, FffDistrict } from "@/lib/clubs-fff-data";
 
@@ -6,6 +7,7 @@ const inputCls =
   "w-full border border-border bg-card px-3 py-2.5 text-sm outline-none transition-colors focus:border-pitch";
 
 const MAX_RESULTS = 40;
+const SPRING = { type: "spring", bounce: 0, duration: 0.25 } as const;
 
 type Group = { district: FffDistrict; clubs: FffClub[] };
 
@@ -32,6 +34,7 @@ export function ClubSelect({
   const [open, setOpen] = useState(false);
   const [data, setData] = useState<{ clubs: FffClub[]; districts: FffDistrict[] } | null>(null);
   const box = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => setQuery(value), [value]);
 
@@ -95,38 +98,49 @@ export function ClubSelect({
           setOpen(true);
         }}
       />
-      {open && query.trim().length >= 2 && (
-        <div className="absolute z-30 mt-1 max-h-72 w-full overflow-auto border border-border bg-card shadow-lg">
-          {!data ? (
-            <p className="px-3 py-2 text-sm text-muted-foreground">Chargement des clubs…</p>
-          ) : groups.length === 0 ? (
-            <p className="px-3 py-2 text-sm text-muted-foreground">Aucun club trouvé.</p>
-          ) : (
-            groups.map((g) => (
-              <div key={g.district.id}>
-                <p className="sticky top-0 bg-muted px-3 py-1 text-[11px] uppercase tracking-widest text-muted-foreground">
-                  {g.district.name}
-                </p>
-                {g.clubs.map((club) => (
-                  <button
-                    key={`${club[0]}-${club[1]}`}
-                    type="button"
-                    onMouseDown={(e) => e.preventDefault()}
-                    onClick={() => pick(club)}
-                    className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-muted"
-                  >
-                    <Shield className="size-3.5 shrink-0 text-muted-foreground" />
-                    <span className="truncate">
-                      {club[0]}
-                      {club[1] ? <span className="text-muted-foreground"> — {club[1]}</span> : null}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            ))
-          )}
-        </div>
-      )}
+      <AnimatePresence>
+        {open && query.trim().length >= 2 && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98, y: -4 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.98, y: -4 }}
+            transition={reduceMotion ? { duration: 0.01 } : SPRING}
+            style={{ transformOrigin: "top" }}
+            className="glass absolute z-30 mt-1 max-h-72 w-full overflow-auto rounded-sm"
+          >
+            {!data ? (
+              <p className="px-3 py-2 text-sm text-muted-foreground">Chargement des clubs…</p>
+            ) : groups.length === 0 ? (
+              <p className="px-3 py-2 text-sm text-muted-foreground">Aucun club trouvé.</p>
+            ) : (
+              groups.map((g) => (
+                <div key={g.district.id}>
+                  <p className="sticky top-0 bg-muted/80 px-3 py-1 text-[11px] uppercase tracking-widest text-muted-foreground backdrop-blur-sm">
+                    {g.district.name}
+                  </p>
+                  {g.clubs.map((club) => (
+                    <button
+                      key={`${club[0]}-${club[1]}`}
+                      type="button"
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={() => pick(club)}
+                      className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-muted/70"
+                    >
+                      <Shield className="size-3.5 shrink-0 text-muted-foreground" />
+                      <span className="truncate">
+                        {club[0]}
+                        {club[1] ? (
+                          <span className="text-muted-foreground"> — {club[1]}</span>
+                        ) : null}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              ))
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

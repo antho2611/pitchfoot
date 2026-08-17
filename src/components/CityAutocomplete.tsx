@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { MapPin } from "lucide-react";
+
+const SPRING = { type: "spring", bounce: 0, duration: 0.25 } as const;
 
 export type CityPick = {
   city: string;
@@ -36,6 +39,7 @@ export function CityAutocomplete({
   const [loading, setLoading] = useState(false);
   const box = useRef<HTMLDivElement>(null);
   const skip = useRef(false);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     if (skip.current) {
@@ -106,23 +110,32 @@ export function CityAutocomplete({
           onSelect(null);
         }}
       />
-      {open && items.length > 0 && (
-        <ul className="absolute z-30 mt-1 max-h-64 w-full overflow-auto border border-border bg-card shadow-lg">
-          {items.map((it) => (
-            <li key={it.label}>
-              <button
-                type="button"
-                onMouseDown={(e) => e.preventDefault()}
-                onClick={() => pick(it)}
-                className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-muted"
-              >
-                <MapPin className="size-3.5 shrink-0 text-muted-foreground" />
-                <span className="truncate">{it.label}</span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
+      <AnimatePresence>
+        {open && items.length > 0 && (
+          <motion.ul
+            initial={{ opacity: 0, scale: 0.98, y: -4 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.98, y: -4 }}
+            transition={reduceMotion ? { duration: 0.01 } : SPRING}
+            style={{ transformOrigin: "top" }}
+            className="glass absolute z-30 mt-1 max-h-64 w-full overflow-auto rounded-sm"
+          >
+            {items.map((it) => (
+              <li key={it.label}>
+                <button
+                  type="button"
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={() => pick(it)}
+                  className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-muted/70"
+                >
+                  <MapPin className="size-3.5 shrink-0 text-muted-foreground" />
+                  <span className="truncate">{it.label}</span>
+                </button>
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
       {loading && (
         <span className="pointer-events-none absolute right-3 top-3 text-[11px] uppercase tracking-widest text-muted-foreground">
           …
