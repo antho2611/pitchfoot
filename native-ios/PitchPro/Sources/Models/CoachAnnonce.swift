@@ -13,6 +13,7 @@ struct CoachAnnonce: Identifiable, Codable {
     let priceInfo: String?
     let capacity: Int?
     let reservedCount: Int
+    let coachId: String
 
     enum CodingKeys: String, CodingKey {
         case id, title, city, location, status, description, capacity
@@ -21,5 +22,11 @@ struct CoachAnnonce: Identifiable, Codable {
         case endTime = "end_time"
         case priceInfo = "price_info"
         case reservedCount = "reserved_count"
+        case coachId = "coach_id"
+    }
+
+    var isFull: Bool {
+        guard let capacity else { return false }
+        return reservedCount >= capacity
     }
 }

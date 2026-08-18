@@ -8,12 +8,16 @@ struct Ebook: Identifiable, Codable {
     let priceCents: Int
     let isFree: Bool
     let coverURL: String?
+    let previewText: String?
+    let contentURL: String?
 
     enum CodingKeys: String, CodingKey {
         case id, title, summary, category
         case priceCents = "price_cents"
         case isFree = "is_free"
         case coverURL = "cover_url"
+        case previewText = "preview_text"
+        case contentURL = "content_url"
     }
 
     var priceLabel: String {
