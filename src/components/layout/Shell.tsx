@@ -1,9 +1,10 @@
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { Bell, Dumbbell, Megaphone, Menu, MessageSquare, Shield, Users, X } from "lucide-react";
+import { Dumbbell, Megaphone, Menu, MessageSquare, Shield, Users, X } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import { NotificationsBell } from "@/components/NotificationsBell";
 
 /** Ressort critiquement amorti — le défaut Apple pour toute UI qui ne porte pas d'élan gestuel. */
 const SPRING = { type: "spring", bounce: 0, duration: 0.35 } as const;
@@ -31,36 +32,6 @@ const TABS = [
 
 export function Header() {
   const { user, displayName } = useAuth();
-  const [unread, setUnread] = useState(0);
-
-  useEffect(() => {
-    if (!user) {
-      setUnread(0);
-      return;
-    }
-    let cancelled = false;
-    const load = async () => {
-      const { count } = await supabase
-        .from("notifications")
-        .select("id", { count: "exact", head: true })
-        .eq("user_id", user.id)
-        .eq("is_read", false);
-      if (!cancelled) setUnread(count ?? 0);
-    };
-    void load();
-    const channel = supabase
-      .channel("header-notifs")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "notifications", filter: `user_id=eq.${user.id}` },
-        () => void load(),
-      )
-      .subscribe();
-    return () => {
-      cancelled = true;
-      void supabase.removeChannel(channel);
-    };
-  }, [user]);
 
   return (
     <nav className="glass sticky top-0 z-50 border-t-0 pt-[env(safe-area-inset-top)]">
@@ -93,18 +64,7 @@ export function Header() {
               >
                 <MessageSquare className="size-5" />
               </Link>
-              <Link
-                to="/notifications"
-                className="relative hidden text-foreground/60 transition-colors hover:text-foreground sm:block"
-                aria-label="Notifications"
-              >
-                <Bell className="size-5" />
-                {unread > 0 && (
-                  <span className="absolute -right-1.5 -top-1.5 grid size-4 place-items-center bg-volt text-[9px] font-black text-pitch">
-                    {unread > 9 ? "9+" : unread}
-                  </span>
-                )}
-              </Link>
+              <NotificationsBell />
               <Link
                 to="/tableau-de-bord"
                 className="hidden bg-pitch px-4 py-2 font-display text-lg uppercase text-volt transition-colors hover:bg-field sm:block"

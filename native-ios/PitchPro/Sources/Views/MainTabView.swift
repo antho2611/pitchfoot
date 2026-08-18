@@ -79,16 +79,16 @@ struct MenuView: View {
                         NavigationLink { EbooksListView() } label: {
                             PitchCard { MenuRow(text: "Ebooks") }
                         }
-                        NavigationLink { ComingSoonView(title: "Premium") } label: {
+                        NavigationLink { PremiumView() } label: {
                             PitchCard { MenuRow(text: "Premium") }
                         }
-                        NavigationLink { ComingSoonView(title: "Tableau de bord") } label: {
+                        NavigationLink { TableauDeBordView() } label: {
                             PitchCard { MenuRow(text: "Tableau de bord") }
                         }
                         NavigationLink { ConversationsListView() } label: {
                             PitchCard { MenuRow(text: "Messagerie") }
                         }
-                        NavigationLink { ComingSoonView(title: "Notifications") } label: {
+                        NavigationLink { NotificationsListView() } label: {
                             PitchCard { MenuRow(text: "Notifications") }
                         }
                     }

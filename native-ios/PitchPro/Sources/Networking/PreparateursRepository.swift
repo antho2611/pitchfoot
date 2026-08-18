@@ -3,7 +3,7 @@ import Supabase
 
 enum PreparateursRepository {
     private static let columns =
-        "id, full_name, headline, city, country, photo_url, is_verified, bio, qualifications, specialties, price_info"
+        "id, full_name, headline, city, country, photo_url, is_verified, bio, qualifications, specialties, price_info, views_count"
 
     static func fetchAll() async throws -> [Preparateur] {
         try await supabase

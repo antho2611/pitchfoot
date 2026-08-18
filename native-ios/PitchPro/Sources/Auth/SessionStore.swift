@@ -6,6 +6,7 @@ final class SessionStore: ObservableObject {
     @Published var session: Session?
     @Published var isLoading = true
     @Published var errorMessage: String?
+    @Published var resetEmailSent = false
 
     var isSignedIn: Bool { session != nil }
 
@@ -35,6 +36,23 @@ final class SessionStore: ObservableObject {
             errorMessage = "Compte créé — vérifiez votre email pour le confirmer."
         } catch {
             errorMessage = "Inscription impossible."
+        }
+    }
+
+    /// Envoie le lien de réinitialisation vers la même page web que le site
+    /// (pitchfoot.onrender.com/reset-password) — pas d'écran natif dédié,
+    /// on réutilise le flow web sur le même projet Supabase.
+    func resetPassword(email: String) async {
+        errorMessage = nil
+        resetEmailSent = false
+        do {
+            try await supabase.auth.resetPasswordForEmail(
+                email,
+                redirectTo: URL(string: "https://pitchfoot.onrender.com/reset-password")
+            )
+            resetEmailSent = true
+        } catch {
+            errorMessage = "Envoi impossible. Vérifiez l'adresse email."
         }
     }
 

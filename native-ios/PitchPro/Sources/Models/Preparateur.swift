@@ -12,6 +12,7 @@ struct Preparateur: Identifiable, Codable {
     let qualifications: String?
     let specialties: [String]
     let priceInfo: String?
+    let viewsCount: Int
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -21,5 +22,6 @@ struct Preparateur: Identifiable, Codable {
         case isVerified = "is_verified"
         case bio, qualifications, specialties
         case priceInfo = "price_info"
+        case viewsCount = "views_count"
     }
 }

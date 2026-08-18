@@ -26,6 +26,16 @@ enum ListingsRepository {
             .value
     }
 
+    static func fetchMany(ids: [String]) async throws -> [Listing] {
+        guard !ids.isEmpty else { return [] }
+        return try await supabase
+            .from("listings")
+            .select(columns)
+            .in("id", values: ids)
+            .execute()
+            .value
+    }
+
     static func fetchOpenForClub(clubId: String) async throws -> [Listing] {
         try await supabase
             .from("listings")

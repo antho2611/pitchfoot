@@ -44,6 +44,16 @@ enum PlayersRepository {
             .value
     }
 
+    static func fetchMany(ids: [String]) async throws -> [Player] {
+        guard !ids.isEmpty else { return [] }
+        return try await supabase
+            .from("players")
+            .select(listColumns)
+            .in("id", values: ids)
+            .execute()
+            .value
+    }
+
     static func fetchOne(id: String) async throws -> Player {
         try await supabase
             .from("players")

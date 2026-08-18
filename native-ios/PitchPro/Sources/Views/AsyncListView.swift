@@ -79,6 +79,15 @@ struct AsyncListView<Item: Identifiable, RowContent: View, Header: View>: View {
         }
         .background(Color(.systemBackground))
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    NotificationsListView()
+                } label: {
+                    NotificationBellIcon()
+                }
+            }
+        }
         .task { await fetch() }
         .refreshable { await fetch() }
     }

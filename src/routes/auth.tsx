@@ -38,7 +38,8 @@ function AuthPage() {
   const { role } = Route.useSearch();
   const navigate = useNavigate();
   const { user, loading } = useAuth();
-  const [mode, setMode] = useState<"signin" | "signup">(role ? "signup" : "signin");
+  const [mode, setMode] = useState<"signin" | "signup" | "forgot">(role ? "signup" : "signin");
+  const [resetSent, setResetSent] = useState(false);
   const [accountType, setAccountType] = useState<"player" | "club" | "coach">(role ?? "player");
   const [form, setForm] = useState({
     email: "",
@@ -112,6 +113,26 @@ function AuthPage() {
     }
   }
 
+  async function forgotPassword() {
+    const email = form.email.trim();
+    if (!email) {
+      toast.error("Renseignez votre email.");
+      return;
+    }
+    setBusy(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+      if (error) throw error;
+      setResetSent(true);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Une erreur est survenue");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   async function oauth(provider: "google" | "apple") {
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
@@ -164,20 +185,75 @@ function AuthPage() {
               </button>
             </div>
           )}
-          <div className="mb-6 grid grid-cols-2 gap-px bg-border">
-            {(["signin", "signup"] as const).map((m) => (
-              <button
-                key={m}
-                onClick={() => setMode(m)}
-                className={`py-2.5 font-display text-lg uppercase transition-colors ${
-                  mode === m ? "bg-pitch text-volt" : "bg-card text-foreground/50"
-                }`}
-              >
-                {m === "signin" ? "Connexion" : "Inscription"}
-              </button>
-            ))}
-          </div>
+          {mode !== "forgot" && (
+            <div className="mb-6 grid grid-cols-2 gap-px bg-border">
+              {(["signin", "signup"] as const).map((m) => (
+                <button
+                  key={m}
+                  onClick={() => setMode(m)}
+                  className={`py-2.5 font-display text-lg uppercase transition-colors ${
+                    mode === m ? "bg-pitch text-volt" : "bg-card text-foreground/50"
+                  }`}
+                >
+                  {m === "signin" ? "Connexion" : "Inscription"}
+                </button>
+              ))}
+            </div>
+          )}
 
+          {mode === "forgot" ? (
+            resetSent ? (
+              <div className="space-y-4 text-sm">
+                <p>
+                  Si un compte existe pour <strong>{form.email.trim()}</strong>, un lien de
+                  réinitialisation vient d'être envoyé. Cliquez dessus pour choisir un nouveau mot
+                  de passe.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setResetSent(false);
+                    setMode("signin");
+                  }}
+                  className="text-xs font-bold uppercase tracking-widest underline"
+                >
+                  Retour à la connexion
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                <p className="text-sm text-muted-foreground">
+                  Indiquez votre email, on vous envoie un lien pour choisir un nouveau mot de
+                  passe.
+                </p>
+                <input
+                  className={input}
+                  type="email"
+                  placeholder="Email"
+                  autoComplete="email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  maxLength={255}
+                />
+                <button
+                  type="button"
+                  onClick={() => void forgotPassword()}
+                  disabled={busy}
+                  className="w-full bg-pitch py-3 font-display text-xl uppercase text-volt disabled:opacity-50"
+                >
+                  {busy ? "…" : "Envoyer le lien"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setMode("signin")}
+                  className="w-full text-center text-xs font-bold uppercase tracking-widest underline"
+                >
+                  Retour à la connexion
+                </button>
+              </div>
+            )
+          ) : (
+            <>
           {mode === "signup" && (
             <div className="mb-5">
               <p className="label-xs mb-2 text-foreground/40">Je suis</p>
@@ -258,6 +334,15 @@ function AuthPage() {
               onChange={(e) => setForm({ ...form, password: e.target.value })}
               maxLength={72}
             />
+            {mode === "signin" && (
+              <button
+                type="button"
+                onClick={() => setMode("forgot")}
+                className="block text-xs font-bold uppercase tracking-widest text-foreground/50 underline hover:text-foreground"
+              >
+                Mot de passe oublié ?
+              </button>
+            )}
             <button
               type="submit"
               disabled={busy}
@@ -298,6 +383,8 @@ function AuthPage() {
               Continuer avec Apple
             </button>
           </div>
+            </>
+          )}
         </div>
       </section>
     </PageShell>
