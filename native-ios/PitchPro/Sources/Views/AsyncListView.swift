@@ -3,10 +3,13 @@ import SwiftUI
 /// Écran liste générique (chargement / erreur / vide / contenu) — évite de répéter
 /// la même mécanique dans chaque onglet (Annonces, Clubs, Préparateurs, Séances...).
 /// Rendu en cartes bordées façon site web plutôt qu'en List système.
+/// `columns > 1` bascule en grille (façon grille de cartes joueurs du site) —
+/// dans ce cas `row` doit fournir sa propre carte (pas de PitchCard automatique).
 struct AsyncListView<Item: Identifiable, RowContent: View, Header: View>: View {
     let title: String
     let emptyMessage: String
     let emptySymbol: String
+    let columns: Int
     let load: () async throws -> [Item]
     let row: (Item) -> RowContent
     let header: () -> Header
@@ -15,6 +18,7 @@ struct AsyncListView<Item: Identifiable, RowContent: View, Header: View>: View {
         title: String,
         emptyMessage: String,
         emptySymbol: String,
+        columns: Int = 1,
         load: @escaping () async throws -> [Item],
         @ViewBuilder row: @escaping (Item) -> RowContent,
         @ViewBuilder header: @escaping () -> Header
@@ -22,6 +26,7 @@ struct AsyncListView<Item: Identifiable, RowContent: View, Header: View>: View {
         self.title = title
         self.emptyMessage = emptyMessage
         self.emptySymbol = emptySymbol
+        self.columns = columns
         self.load = load
         self.row = row
         self.header = header
@@ -49,6 +54,14 @@ struct AsyncListView<Item: Identifiable, RowContent: View, Header: View>: View {
                     stateMessage(errorMessage, symbol: "exclamationmark.triangle")
                 } else if items.isEmpty {
                     stateMessage(emptyMessage, symbol: emptySymbol)
+                } else if columns > 1 {
+                    LazyVGrid(
+                        columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: columns),
+                        spacing: 10
+                    ) {
+                        ForEach(items) { item in row(item) }
+                    }
+                    .padding(.horizontal)
                 } else {
                     VStack(spacing: 10) {
                         ForEach(items) { item in
@@ -99,6 +112,7 @@ extension AsyncListView where Header == EmptyView {
         title: String,
         emptyMessage: String,
         emptySymbol: String,
+        columns: Int = 1,
         load: @escaping () async throws -> [Item],
         @ViewBuilder row: @escaping (Item) -> RowContent
     ) {
@@ -106,6 +120,7 @@ extension AsyncListView where Header == EmptyView {
             title: title,
             emptyMessage: emptyMessage,
             emptySymbol: emptySymbol,
+            columns: columns,
             load: load,
             row: row,
             header: { EmptyView() }

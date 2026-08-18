@@ -3,8 +3,8 @@ import Supabase
 
 enum PlayersRepository {
     private static let listColumns =
-        "id, first_name, last_name, main_position, city, country, current_club, photo_url, availability"
-    private static let detailColumns = listColumns + ", bio, height_cm, weight_kg, level, championship, birth_date"
+        "id, first_name, last_name, main_position, city, country, current_club, photo_url, availability, birth_date, is_premium"
+    private static let detailColumns = listColumns + ", bio, height_cm, weight_kg, level, championship"
 
     static func fetchAll(filters: PlayerFilters = PlayerFilters()) async throws -> [Player] {
         var query = supabase

@@ -17,6 +17,7 @@ struct Player: Identifiable, Codable {
     let level: String?
     let championship: String?
     let birthDate: String?
+    let isPremium: Bool
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -34,5 +35,36 @@ struct Player: Identifiable, Codable {
         case level
         case championship
         case birthDate = "birth_date"
+        case isPremium = "is_premium"
     }
+
+    var age: Int? {
+        guard let birthDate else { return nil }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        guard let date = formatter.date(from: birthDate) else { return nil }
+        return Calendar.current.dateComponents([.year], from: date, to: Date()).year
+    }
+
+    var positionShort: String? {
+        Self.positionShortMap[mainPosition ?? ""]
+    }
+
+    var availabilityLabel: String {
+        PitchProConstants.availabilities.first { $0.value == availability }?.label
+            ?? "Ouvert aux propositions"
+    }
+
+    private static let positionShortMap: [String: String] = [
+        "Gardien": "GB",
+        "Latéral droit": "DD",
+        "Latéral gauche": "DG",
+        "Défenseur central": "DC",
+        "Milieu défensif": "MDC",
+        "Milieu central": "MC",
+        "Milieu offensif": "MOC",
+        "Ailier droit": "AD",
+        "Ailier gauche": "AG",
+        "Attaquant": "BU",
+    ]
 }
