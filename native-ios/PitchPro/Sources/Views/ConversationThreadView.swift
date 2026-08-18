@@ -75,7 +75,7 @@ struct ConversationThreadView: View {
 
     @ViewBuilder
     private func bubble(for message: ChatMessage) -> some View {
-        let mine = message.senderId == myId
+        let mine = message.senderId.lowercased() == myId.lowercased()
         HStack {
             if mine { Spacer(minLength: 40) }
             VStack(alignment: .leading, spacing: 4) {

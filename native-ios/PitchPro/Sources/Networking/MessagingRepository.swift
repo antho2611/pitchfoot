@@ -56,7 +56,10 @@ private struct NewNotification: Encodable {
 /// comptes suit l'autre (voir can_message() dans la migration follows).
 enum MessagingRepository {
     static func openConversation(me: String, other: String) async throws -> String {
-        let sorted = [me, other].sorted()
+        // Supabase renvoie les uuid en minuscules alors que UUID.uuidString est en
+        // majuscules côté Swift — sans normaliser, le tri diffère de celui du site
+        // (participant_a/b inversés) et on crée une conversation en doublon.
+        let sorted = [me.lowercased(), other.lowercased()].sorted()
         let existing: [ConversationIdRow] = try await supabase
             .from("conversations")
             .select("id")
@@ -82,6 +85,7 @@ enum MessagingRepository {
     }
 
     static func fetchConversations(myId: String) async throws -> [Conversation] {
+        let myId = myId.lowercased()
         let rows: [ConversationRow] = try await supabase
             .from("conversations")
             .select("*")
@@ -133,6 +137,7 @@ enum MessagingRepository {
     /// Résout une seule conversation par id — utilisé quand on tape une
     /// notification de message pour retrouver le fil correspondant.
     static func fetchConversation(id: String, myId: String) async throws -> Conversation? {
+        let myId = myId.lowercased()
         let rows: [ConversationRow] = try await supabase
             .from("conversations")
             .select("*")

@@ -29,7 +29,7 @@ struct PlayerDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task { await load() }
         .navigationDestination(item: $pushedConversation) { conversation in
-            if let myId = session.session?.user.id.uuidString {
+            if let myId = session.session?.user.id.uuidString.lowercased() {
                 ConversationThreadView(myId: myId, conversation: conversation)
             }
         }
@@ -124,7 +124,7 @@ struct PlayerDetailView: View {
     }
 
     private func contact(player: Player) async {
-        guard let myId = session.session?.user.id.uuidString else { return }
+        guard let myId = session.session?.user.id.uuidString.lowercased() else { return }
         contacting = true
         contactError = nil
         do {

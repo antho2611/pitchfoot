@@ -5,7 +5,7 @@ struct ConversationsListView: View {
     @State private var conversations: [Conversation] = []
     @State private var isLoading = true
 
-    private var myId: String? { session.session?.user.id.uuidString }
+    private var myId: String? { session.session?.user.id.uuidString.lowercased() }
 
     var body: some View {
         ScrollView {

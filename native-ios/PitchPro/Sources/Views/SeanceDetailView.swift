@@ -116,7 +116,7 @@ struct SeanceDetailView: View {
         if let playerId = authSession.session?.user.id {
             alreadyReserved = (try? await CoachReservationsRepository.hasReservation(
                 annonceId: session.id,
-                playerId: playerId.uuidString
+                playerId: playerId.uuidString.lowercased()
             )) ?? false
         }
         checkingStatus = false
@@ -130,7 +130,7 @@ struct SeanceDetailView: View {
             try await CoachReservationsRepository.reserve(
                 annonceId: session.id,
                 coachId: session.coachId,
-                playerId: playerId.uuidString,
+                playerId: playerId.uuidString.lowercased(),
                 message: message
             )
             sent = true

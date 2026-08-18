@@ -28,7 +28,7 @@ struct PreparateurDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task { await load() }
         .navigationDestination(item: $pushedConversation) { conversation in
-            if let myId = session.session?.user.id.uuidString {
+            if let myId = session.session?.user.id.uuidString.lowercased() {
                 ConversationThreadView(myId: myId, conversation: conversation)
             }
         }
@@ -164,7 +164,7 @@ struct PreparateurDetailView: View {
     }
 
     private func contact(coach: Preparateur) async {
-        guard let myId = session.session?.user.id.uuidString else { return }
+        guard let myId = session.session?.user.id.uuidString.lowercased() else { return }
         contacting = true
         contactError = nil
         do {

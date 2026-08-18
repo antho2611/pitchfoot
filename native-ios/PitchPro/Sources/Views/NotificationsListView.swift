@@ -6,7 +6,7 @@ struct NotificationsListView: View {
     @State private var isLoading = true
     @State private var pushedConversation: Conversation?
 
-    private var myId: String? { session.session?.user.id.uuidString }
+    private var myId: String? { session.session?.user.id.uuidString.lowercased() }
 
     var body: some View {
         ScrollView {

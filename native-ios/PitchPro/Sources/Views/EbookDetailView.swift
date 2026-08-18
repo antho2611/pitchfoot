@@ -90,7 +90,7 @@ struct EbookDetailView: View {
         if let userId = session.session?.user.id {
             owned = (try? await EbookPurchasesRepository.isOwned(
                 ebookId: ebook.id,
-                userId: userId.uuidString
+                userId: userId.uuidString.lowercased()
             )) ?? false
         }
         checkingOwnership = false
@@ -103,7 +103,7 @@ struct EbookDetailView: View {
         do {
             try await EbookPurchasesRepository.unlock(
                 ebookId: ebook.id,
-                userId: userId.uuidString,
+                userId: userId.uuidString.lowercased(),
                 amountCents: ebook.priceCents
             )
             owned = true

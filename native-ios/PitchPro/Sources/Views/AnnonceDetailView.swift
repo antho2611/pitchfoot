@@ -127,7 +127,7 @@ struct AnnonceDetailView: View {
             try await ApplicationsRepository.apply(
                 listingId: listing.id,
                 clubId: listing.clubId,
-                playerId: playerId.uuidString,
+                playerId: playerId.uuidString.lowercased(),
                 message: message
             )
             sent = true

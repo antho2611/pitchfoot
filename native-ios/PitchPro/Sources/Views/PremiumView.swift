@@ -8,7 +8,7 @@ struct PremiumView: View {
     @State private var isLoading = true
     @State private var busyPlanId: String?
 
-    private var myId: String? { session.session?.user.id.uuidString }
+    private var myId: String? { session.session?.user.id.uuidString.lowercased() }
     private var myPlanId: String { PremiumPlans.forAccountType(accountType) }
     private var isPremium: Bool { subscription?.isActive ?? false }
 

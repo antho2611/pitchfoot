@@ -7,7 +7,7 @@ struct TableauDeBordView: View {
     @State private var profile: AccountProfile?
     @State private var isLoading = true
 
-    private var myId: String? { session.session?.user.id.uuidString }
+    private var myId: String? { session.session?.user.id.uuidString.lowercased() }
 
     var body: some View {
         ScrollView {

@@ -11,7 +11,7 @@ struct FollowButton: View {
     @State private var isLoading = true
     @State private var pending = false
 
-    private var myId: String? { session.session?.user.id.uuidString }
+    private var myId: String? { session.session?.user.id.uuidString.lowercased() }
 
     var body: some View {
         if let myId, myId != targetId {
