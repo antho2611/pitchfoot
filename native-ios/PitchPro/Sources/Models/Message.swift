@@ -31,7 +31,8 @@ struct ConversationRow: Decodable {
 }
 
 /// Vue composée côté client — équivalent du type Conv dans messages.tsx.
-struct Conversation: Identifiable {
+/// Hashable (en plus d'Identifiable) car navigationDestination(item:) l'exige.
+struct Conversation: Identifiable, Hashable {
     let id: String
     let otherId: String
     let name: String

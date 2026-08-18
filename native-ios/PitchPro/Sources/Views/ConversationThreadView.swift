@@ -40,9 +40,10 @@ struct ConversationThreadView: View {
                 TextField("Votre message…", text: $text, axis: .vertical)
                     .lineLimit(1...4)
                     .textFieldStyle(.plain)
-                    .padding(.horizontal, 12)
+                    .padding(.horizontal, 14)
                     .padding(.vertical, 9)
-                    .overlay(Rectangle().strokeBorder(Color.secondary.opacity(0.25)))
+                    .background(Color.secondary.opacity(0.1))
+                    .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
 
                 Button {
                     Task { await send() }
@@ -50,8 +51,9 @@ struct ConversationThreadView: View {
                     Image(systemName: "arrow.up")
                         .font(.system(size: 15, weight: .bold))
                         .foregroundStyle(Color.pitchVolt)
-                        .frame(width: 40, height: 40)
+                        .frame(width: 38, height: 38)
                         .background(Color.pitchGreen)
+                        .clipShape(Circle())
                 }
                 .disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || sending)
             }
@@ -82,10 +84,21 @@ struct ConversationThreadView: View {
                     .font(.system(size: 10))
                     .opacity(0.6)
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
+            .padding(.horizontal, 14)
+            .padding(.vertical, 9)
             .foregroundStyle(mine ? Color.white : Color.primary)
             .background(mine ? Color.pitchGreen : Color.secondary.opacity(0.12))
+            .clipShape(
+                UnevenRoundedRectangle(
+                    cornerRadii: RectangleCornerRadii(
+                        topLeading: 18,
+                        bottomLeading: mine ? 18 : 4,
+                        bottomTrailing: mine ? 4 : 18,
+                        topTrailing: 18
+                    ),
+                    style: .continuous
+                )
+            )
             .frame(maxWidth: 280, alignment: .leading)
             if !mine { Spacer(minLength: 40) }
         }

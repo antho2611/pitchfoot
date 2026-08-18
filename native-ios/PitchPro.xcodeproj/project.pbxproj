@@ -17,8 +17,10 @@
 		2293D40E70ED07ECB318E598 /* EbookPurchasesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67080D19DE0A55597CE21628 /* EbookPurchasesRepository.swift */; };
 		3440D9F7E0CA01013EC1B576 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = BD5AED8EED7500A3974D5B37 /* OFL.txt */; };
 		35412CB36349C1D703E940FD /* PitchProTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E902448E771B52EBDFC7ADDA /* PitchProTheme.swift */; };
+		4087C68A5B42CB105B0459F3 /* ConversationsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDF2E789AF0719CE5173FCE /* ConversationsListView.swift */; };
 		4B4CF7A181B35E8CFB14D159 /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD54AE0A2E133CDD4874F5D6 /* Listing.swift */; };
 		4D635635F9B3368647091508 /* AsyncListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62358E2A9A52E7B6FFAAF918 /* AsyncListView.swift */; };
+		4DC2E8C8CE40F4EA96C2E9B9 /* MessagingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B81C55459F86B4FCF810BAD /* MessagingRepository.swift */; };
 		4FD95293EAA46AD802642E14 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A080D0FFB637C8129D2507 /* Player.swift */; };
 		503BB956DAAD3A1AFFBDB63C /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 3645F4FA8DC3AC7C7D338A9A /* Supabase */; };
 		5B1D0AF9713DB0920C13046C /* EbooksRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5F00C7FC2BDFF48D978D4E /* EbooksRepository.swift */; };
@@ -27,17 +29,20 @@
 		642E3A0AC4B7F0C88C48F507 /* CoachAnnonce.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3955A285A9EA4BA3E800FEF /* CoachAnnonce.swift */; };
 		6534989C3C674B7E1115525A /* CoachAnnoncesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCD3FF720EE134955F1CB6F /* CoachAnnoncesRepository.swift */; };
 		65921D2AA8549C161F30A27B /* PlayerFilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5C96A7561C4687A0B5C1C0 /* PlayerFilterBar.swift */; };
+		7A50649EDE3A8DD0E5B34D0F /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D300A3CCFDB36F691646EFC /* Message.swift */; };
 		7F22917EE11B35039862303A /* Color+Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B79A76ACB16722DC74064E /* Color+Brand.swift */; };
 		83E2DC997172D81C17819D2F /* ClubDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DEBDBD954D67C1DA537FF5 /* ClubDetailView.swift */; };
 		86747A553C997EF2689F13F5 /* PreparateurDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2F7644E20F42B2143DDE0 /* PreparateurDetailView.swift */; };
 		8B8C543483C560F10DBC3846 /* Preparateur.swift in Sources */ = {isa = PBXBuildFile; fileRef = B861A9771E6D3350EE243A5D /* Preparateur.swift */; };
 		9E659C84E09B59ABBD232C78 /* ClubsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B16F03E94A3266DB9889ED5 /* ClubsListView.swift */; };
 		9F82882D37C1AE0DA67BC65F /* PlayersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE898F0ADD84AD783F16DC2 /* PlayersRepository.swift */; };
+		A1780F2A0E785202FF80E780 /* ConversationThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51A4153BCF5E2AF393070D2 /* ConversationThreadView.swift */; };
 		A46DCCEF1D2FC54775CBDC0A /* BebasNeue-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C604388A89973C30A2071ACF /* BebasNeue-Regular.ttf */; };
 		A6C822DFF2B5A7DC5519CEF2 /* ListingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B819807FC5F776113747052D /* ListingsRepository.swift */; };
 		AEEA5C131ADEEA3312DF0BA2 /* EbooksListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4145E2BDC8DF837F4E5167 /* EbooksListView.swift */; };
 		B59F44D851F364391DEFF2E2 /* PlayerFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6280E5844340CEFE1ED4E77 /* PlayerFilters.swift */; };
 		B9CA1A3997411D65950E9141 /* PreparateursRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC8A1079CD139CD8875F8B0 /* PreparateursRepository.swift */; };
+		BA6FB5411E9E1D30D4CC6F9F /* FollowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4255927394121AE4EDD7C256 /* FollowButton.swift */; };
 		BBEA6804142887E900346058 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CA62FCB7544868841BF59C /* AuthView.swift */; };
 		C0D9D116EFB120988E6715D7 /* PitchProApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3BC83D13733CA2DE43BA2 /* PitchProApp.swift */; };
 		C80C11B8BE095313BB8197D7 /* CoachReservationsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EC8517B2D9768901745C8E /* CoachReservationsRepository.swift */; };
@@ -45,6 +50,7 @@
 		CA868E50C41BF2E92978A30F /* SeanceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8E454937D40C0DBFEC83B1 /* SeanceDetailView.swift */; };
 		D1E2F95AC2D58B3AF0551D38 /* AnnonceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD78CA70960A62C28953FD0 /* AnnonceDetailView.swift */; };
 		D6C09902CA82ED0D7F8FAFEA /* EbookDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EBB611F2CEAC91B1D2FF4C /* EbookDetailView.swift */; };
+		DABC2126D5F03C9B89469391 /* FollowsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE47557334DA38E684E670A /* FollowsRepository.swift */; };
 		E1ED53660E09D4F9AFBB4964 /* PlayerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9C2EF09EB10CB3CD73E3E6 /* PlayerDetailView.swift */; };
 		E5758F9F86A8DAE49BB339E3 /* SeancesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB83F039DAA02E3F01CC6A8 /* SeancesListView.swift */; };
 		E975C29A9AD0EDA762C173C6 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1CAAA00A76F4DC6C8F0D30 /* RootView.swift */; };
@@ -58,15 +64,20 @@
 		0E4145E2BDC8DF837F4E5167 /* EbooksListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EbooksListView.swift; sourceTree = "<group>"; };
 		0E5E45F0F704C0ECEE52A024 /* Club.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Club.swift; sourceTree = "<group>"; };
 		0E9C2EF09EB10CB3CD73E3E6 /* PlayerDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailView.swift; sourceTree = "<group>"; };
+		1B81C55459F86B4FCF810BAD /* MessagingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingRepository.swift; sourceTree = "<group>"; };
 		25DEBDBD954D67C1DA537FF5 /* ClubDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubDetailView.swift; sourceTree = "<group>"; };
+		2FDF2E789AF0719CE5173FCE /* ConversationsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListView.swift; sourceTree = "<group>"; };
 		3C16ED04BBC4FBCF58297139 /* PlayersListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersListView.swift; sourceTree = "<group>"; };
+		4255927394121AE4EDD7C256 /* FollowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowButton.swift; sourceTree = "<group>"; };
 		4665858442CBB9FF781179D3 /* AnnoncesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnoncesListView.swift; sourceTree = "<group>"; };
 		55E5184FD69C2889F58CC289 /* ApplicationsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationsRepository.swift; sourceTree = "<group>"; };
 		5D1CAAA00A76F4DC6C8F0D30 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		5DD78CA70960A62C28953FD0 /* AnnonceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnonceDetailView.swift; sourceTree = "<group>"; };
 		62358E2A9A52E7B6FFAAF918 /* AsyncListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncListView.swift; sourceTree = "<group>"; };
 		67080D19DE0A55597CE21628 /* EbookPurchasesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EbookPurchasesRepository.swift; sourceTree = "<group>"; };
+		6D300A3CCFDB36F691646EFC /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		76E2C0CA9A94044B6DCD34DE /* PreparateursListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparateursListView.swift; sourceTree = "<group>"; };
+		7EE47557334DA38E684E670A /* FollowsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowsRepository.swift; sourceTree = "<group>"; };
 		7FCD3FF720EE134955F1CB6F /* CoachAnnoncesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachAnnoncesRepository.swift; sourceTree = "<group>"; };
 		81316930A01B7F89A1C96F2E /* PitchProConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitchProConstants.swift; sourceTree = "<group>"; };
 		85B79A76ACB16722DC74064E /* Color+Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Brand.swift"; sourceTree = "<group>"; };
@@ -75,6 +86,7 @@
 		9BA3BC83D13733CA2DE43BA2 /* PitchProApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitchProApp.swift; sourceTree = "<group>"; };
 		A3955A285A9EA4BA3E800FEF /* CoachAnnonce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachAnnonce.swift; sourceTree = "<group>"; };
 		A4EC8517B2D9768901745C8E /* CoachReservationsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachReservationsRepository.swift; sourceTree = "<group>"; };
+		A51A4153BCF5E2AF393070D2 /* ConversationThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationThreadView.swift; sourceTree = "<group>"; };
 		ABE898F0ADD84AD783F16DC2 /* PlayersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersRepository.swift; sourceTree = "<group>"; };
 		AF8E454937D40C0DBFEC83B1 /* SeanceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeanceDetailView.swift; sourceTree = "<group>"; };
 		B268178F6DEEDA54CA56476A /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
@@ -145,7 +157,9 @@
 				A4EC8517B2D9768901745C8E /* CoachReservationsRepository.swift */,
 				67080D19DE0A55597CE21628 /* EbookPurchasesRepository.swift */,
 				0A5F00C7FC2BDFF48D978D4E /* EbooksRepository.swift */,
+				7EE47557334DA38E684E670A /* FollowsRepository.swift */,
 				B819807FC5F776113747052D /* ListingsRepository.swift */,
+				1B81C55459F86B4FCF810BAD /* MessagingRepository.swift */,
 				ABE898F0ADD84AD783F16DC2 /* PlayersRepository.swift */,
 				CFC8A1079CD139CD8875F8B0 /* PreparateursRepository.swift */,
 				C5F189F0B9414748A1AEAA7E /* SupabaseService.swift */,
@@ -169,6 +183,7 @@
 				A3955A285A9EA4BA3E800FEF /* CoachAnnonce.swift */,
 				D06BB22C10079EEB22443423 /* Ebook.swift */,
 				BD54AE0A2E133CDD4874F5D6 /* Listing.swift */,
+				6D300A3CCFDB36F691646EFC /* Message.swift */,
 				94A080D0FFB637C8129D2507 /* Player.swift */,
 				B861A9771E6D3350EE243A5D /* Preparateur.swift */,
 			);
@@ -184,8 +199,11 @@
 				C5CA62FCB7544868841BF59C /* AuthView.swift */,
 				25DEBDBD954D67C1DA537FF5 /* ClubDetailView.swift */,
 				8B16F03E94A3266DB9889ED5 /* ClubsListView.swift */,
+				2FDF2E789AF0719CE5173FCE /* ConversationsListView.swift */,
+				A51A4153BCF5E2AF393070D2 /* ConversationThreadView.swift */,
 				02EBB611F2CEAC91B1D2FF4C /* EbookDetailView.swift */,
 				0E4145E2BDC8DF837F4E5167 /* EbooksListView.swift */,
+				4255927394121AE4EDD7C256 /* FollowButton.swift */,
 				F9E0CFEFD741D4156AA8326F /* MainTabView.swift */,
 				0E9C2EF09EB10CB3CD73E3E6 /* PlayerDetailView.swift */,
 				CC5C96A7561C4687A0B5C1C0 /* PlayerFilterBar.swift */,
@@ -314,14 +332,20 @@
 				6534989C3C674B7E1115525A /* CoachAnnoncesRepository.swift in Sources */,
 				C80C11B8BE095313BB8197D7 /* CoachReservationsRepository.swift in Sources */,
 				7F22917EE11B35039862303A /* Color+Brand.swift in Sources */,
+				A1780F2A0E785202FF80E780 /* ConversationThreadView.swift in Sources */,
+				4087C68A5B42CB105B0459F3 /* ConversationsListView.swift in Sources */,
 				60BB7BA2AEC2B58ADB7D8443 /* Ebook.swift in Sources */,
 				D6C09902CA82ED0D7F8FAFEA /* EbookDetailView.swift in Sources */,
 				2293D40E70ED07ECB318E598 /* EbookPurchasesRepository.swift in Sources */,
 				AEEA5C131ADEEA3312DF0BA2 /* EbooksListView.swift in Sources */,
 				5B1D0AF9713DB0920C13046C /* EbooksRepository.swift in Sources */,
+				BA6FB5411E9E1D30D4CC6F9F /* FollowButton.swift in Sources */,
+				DABC2126D5F03C9B89469391 /* FollowsRepository.swift in Sources */,
 				4B4CF7A181B35E8CFB14D159 /* Listing.swift in Sources */,
 				A6C822DFF2B5A7DC5519CEF2 /* ListingsRepository.swift in Sources */,
 				1F7BC64A2B9B184B86C16DDA /* MainTabView.swift in Sources */,
+				7A50649EDE3A8DD0E5B34D0F /* Message.swift in Sources */,
+				4DC2E8C8CE40F4EA96C2E9B9 /* MessagingRepository.swift in Sources */,
 				C0D9D116EFB120988E6715D7 /* PitchProApp.swift in Sources */,
 				091AB72EF3A1212BB73C3B0B /* PitchProConstants.swift in Sources */,
 				35412CB36349C1D703E940FD /* PitchProTheme.swift in Sources */,

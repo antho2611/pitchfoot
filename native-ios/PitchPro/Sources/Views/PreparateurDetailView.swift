@@ -64,7 +64,7 @@ struct PreparateurDetailView: View {
             }
             .padding(.top)
 
-            HStack(spacing: 12) {
+            HStack(spacing: 10) {
                 Button {
                     Task { await contact(coach: coach) }
                 } label: {
@@ -74,13 +74,14 @@ struct PreparateurDetailView: View {
                         Text("Contacter")
                     }
                 }
-                .buttonStyle(PitchButtonStyle())
-                .fixedSize()
+                .buttonStyle(PillButtonStyle())
                 .disabled(contacting)
 
                 FollowButton(targetId: coach.id, targetName: coach.fullName)
             }
+
             FollowCounts(userId: coach.id)
+
             if let contactError {
                 Text(contactError).font(.footnote).foregroundStyle(.red)
             }

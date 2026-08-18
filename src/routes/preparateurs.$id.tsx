@@ -147,7 +147,7 @@ function CoachDetail() {
             <FollowButton targetId={data.id} targetName={data.full_name} size="lg" />
             <button
               onClick={() => void contact()}
-              className="bg-pitch px-6 py-3 font-display text-xl uppercase text-volt"
+              className="rounded-full bg-pitch px-5 py-2.5 text-base font-semibold text-volt transition-transform active:scale-95"
             >
               Contacter
             </button>

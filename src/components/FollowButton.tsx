@@ -33,7 +33,7 @@ export function FollowButton({
 
   if (user?.id === targetId) return null;
 
-  const pad = size === "lg" ? "px-6 py-3 text-xl" : "px-5 py-2.5 text-lg";
+  const pad = size === "lg" ? "px-5 py-2.5 text-base" : "px-4 py-2 text-sm";
   const filled = "bg-volt text-pitch";
   const outline = tone === "dark" ? "border border-white/25 text-white" : "border border-pitch text-pitch";
 
@@ -63,7 +63,7 @@ export function FollowButton({
     <button
       onClick={() => void toggle()}
       disabled={pending || isLoading}
-      className={`inline-flex items-center gap-2 font-display uppercase disabled:opacity-50 ${pad} ${
+      className={`inline-flex items-center gap-1.5 rounded-full font-semibold transition-transform active:scale-95 disabled:opacity-50 ${pad} ${
         following ? outline : filled
       }`}
     >

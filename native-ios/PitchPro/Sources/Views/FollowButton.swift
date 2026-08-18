@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Bouton "Suivre / Abonné" façon Insta — coins nets, couleurs PitchPro,
+/// Bouton "Suivre / Abonné" façon Insta — pilule arrondie, couleurs PitchPro,
 /// équivalent de src/components/FollowButton.tsx sur le site.
 struct FollowButton: View {
     let targetId: String
@@ -18,23 +18,13 @@ struct FollowButton: View {
             Button {
                 Task { await toggle(myId: myId) }
             } label: {
-                HStack(spacing: 6) {
-                    if pending {
-                        ProgressView().tint(following ? Color.pitchGreen : Color.pitchVolt)
-                    } else {
-                        Image(systemName: following ? "checkmark" : "plus")
-                            .font(.system(size: 12, weight: .bold))
-                        Text(following ? "Abonné" : "Suivre")
-                    }
+                if pending {
+                    ProgressView().tint(following ? Color.primary : Color.pitchVolt)
+                } else {
+                    Label(following ? "Abonné" : "Suivre", systemImage: following ? "checkmark" : "plus")
                 }
-                .font(.system(size: 14, weight: .bold))
-                .padding(.horizontal, 16)
-                .padding(.vertical, 9)
-                .foregroundStyle(following ? Color.pitchGreen : Color.pitchVolt)
-                .background(following ? Color.clear : Color.pitchGreen)
-                .overlay(Rectangle().strokeBorder(Color.pitchGreen, lineWidth: following ? 1.5 : 0))
             }
-            .buttonStyle(.plain)
+            .buttonStyle(PillButtonStyle(filled: !following))
             .disabled(isLoading || pending)
             .task(id: myId) { await load(myId: myId) }
         }

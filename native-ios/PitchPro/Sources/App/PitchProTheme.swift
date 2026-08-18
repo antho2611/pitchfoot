@@ -55,3 +55,20 @@ struct PitchButtonStyle: ButtonStyle {
             .opacity(configuration.isPressed ? 0.85 : 1)
     }
 }
+
+/// Bouton pilule façon Instagram — pour les actions de profil compactes
+/// (Contacter / Suivre côte à côte), là où PitchButtonStyle est trop imposant.
+struct PillButtonStyle: ButtonStyle {
+    var filled: Bool = true
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.system(size: 15, weight: .bold))
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 10)
+            .foregroundStyle(filled ? Color.pitchVolt : Color.primary)
+            .background(filled ? Color.pitchGreen : Color.secondary.opacity(0.12))
+            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            .opacity(configuration.isPressed ? 0.85 : 1)
+    }
+}

@@ -55,7 +55,7 @@ struct PlayerDetailView: View {
                     }
                 }
 
-                HStack(spacing: 12) {
+                HStack(spacing: 10) {
                     Button {
                         Task { await contact(player: player) }
                     } label: {
@@ -65,13 +65,14 @@ struct PlayerDetailView: View {
                             Text("Contacter")
                         }
                     }
-                    .buttonStyle(PitchButtonStyle())
-                    .fixedSize()
+                    .buttonStyle(PillButtonStyle())
                     .disabled(contacting)
 
                     FollowButton(targetId: player.id, targetName: "\(player.firstName) \(player.lastName)")
                 }
+
                 FollowCounts(userId: player.id)
+
                 if let contactError {
                     Text(contactError).font(.footnote).foregroundStyle(.red)
                 }

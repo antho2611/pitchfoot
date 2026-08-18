@@ -173,13 +173,13 @@ function PlayerDetail() {
                 <>
                   <button
                     onClick={contact}
-                    className="inline-flex items-center gap-2 bg-volt px-5 py-2.5 font-display text-lg uppercase text-pitch"
+                    className="inline-flex items-center gap-1.5 rounded-full bg-volt px-4 py-2 text-sm font-semibold text-pitch transition-transform active:scale-95"
                   >
                     <MessageSquare className="size-4" /> Contacter
                   </button>
                   <button
                     onClick={save}
-                    className="inline-flex items-center gap-2 border border-white/25 px-5 py-2.5 font-display text-lg uppercase"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/25 px-4 py-2 text-sm font-semibold transition-transform active:scale-95"
                   >
                     <Bookmark className="size-4" /> Sauvegarder
                   </button>

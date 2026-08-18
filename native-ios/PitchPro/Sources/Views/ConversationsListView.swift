@@ -31,11 +31,9 @@ struct ConversationsListView: View {
                                 row(for: conversation)
                             }
                             .buttonStyle(.plain)
-                            Divider()
+                            Divider().padding(.leading, 76)
                         }
                     }
-                    .overlay(Rectangle().strokeBorder(Color.secondary.opacity(0.15)))
-                    .padding(.horizontal)
                 }
             }
             .padding(.bottom, 24)
@@ -62,7 +60,8 @@ struct ConversationsListView: View {
             }
             Spacer()
         }
-        .padding(12)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
     }
 
     @ViewBuilder

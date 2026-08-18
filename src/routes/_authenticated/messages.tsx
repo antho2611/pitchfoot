@@ -159,7 +159,7 @@ function MessagesPage() {
     <PageShell>
       <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <h1 className="font-display text-5xl uppercase">Messagerie</h1>
-        <div className="mt-6 grid gap-px border border-border bg-border md:grid-cols-[300px_1fr]">
+        <div className="mt-6 grid gap-px overflow-hidden rounded-2xl border border-border bg-border md:grid-cols-[300px_1fr]">
           <aside className="max-h-[70vh] overflow-y-auto bg-card">
             {convs?.length ? (
               convs.map((conv) => (
@@ -199,24 +199,27 @@ function MessagesPage() {
               </div>
             )}
             <div className="flex-1 space-y-3 overflow-y-auto p-4">
-              {messages?.map((m) => (
-                <div
-                  key={m.id}
-                  className={`max-w-[75%] px-3.5 py-2 text-sm ${
-                    m.sender_id === user?.id
-                      ? "ml-auto bg-pitch text-white"
-                      : "bg-secondary text-foreground"
-                  }`}
-                >
-                  {m.content}
-                  <span className="mt-1 block text-[10px] opacity-50">
-                    {new Date(m.created_at).toLocaleTimeString("fr-FR", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </span>
-                </div>
-              ))}
+              {messages?.map((m) => {
+                const mine = m.sender_id === user?.id;
+                return (
+                  <div
+                    key={m.id}
+                    className={`max-w-[75%] px-3.5 py-2 text-sm ${
+                      mine
+                        ? "ml-auto rounded-2xl rounded-br-md bg-pitch text-white"
+                        : "rounded-2xl rounded-bl-md bg-secondary text-foreground"
+                    }`}
+                  >
+                    {m.content}
+                    <span className="mt-1 block text-[10px] opacity-50">
+                      {new Date(m.created_at).toLocaleTimeString("fr-FR", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </span>
+                  </div>
+                );
+              })}
               <div ref={bottom} />
             </div>
             <form onSubmit={send} className="flex gap-2 border-t border-border p-3">
@@ -226,12 +229,12 @@ function MessagesPage() {
                 placeholder={active ? "Votre message…" : "Sélectionnez une conversation"}
                 disabled={!active}
                 maxLength={2000}
-                className="w-full border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-pitch"
+                className="w-full rounded-full border border-border bg-background px-4 py-2.5 text-sm outline-none focus:border-pitch"
               />
               <button
                 type="submit"
                 disabled={!active}
-                className="grid w-12 shrink-0 place-items-center bg-pitch text-volt disabled:opacity-40"
+                className="grid size-11 shrink-0 place-items-center rounded-full bg-pitch text-volt disabled:opacity-40"
                 aria-label="Envoyer"
               >
                 <Send className="size-4" />
