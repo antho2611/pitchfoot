@@ -182,7 +182,7 @@
  * cartes en liste : le flou est coûteux à faire défiler en grand nombre.
  */
 @utility glass {
-  background: color-mix(in oklab, var(--color-card) 72%, transparent);
+  background: color-mix(in oklab, var(--color-card) 82%, transparent);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-top: 1px solid color-mix(in oklab, white 35%, transparent);

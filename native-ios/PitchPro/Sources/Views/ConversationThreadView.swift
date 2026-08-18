@@ -134,7 +134,8 @@ struct ConversationThreadView: View {
             userId: conversation.otherId,
             type: "message",
             title: "Nouveau message",
-            body: String(content.prefix(140))
+            body: String(content.prefix(140)),
+            link: "/messages?c=\(conversation.id)"
         )
         messages = (try? await MessagingRepository.fetchMessages(conversationId: conversation.id)) ?? messages
         sending = false

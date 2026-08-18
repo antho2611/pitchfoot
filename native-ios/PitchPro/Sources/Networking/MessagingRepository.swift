@@ -130,6 +130,37 @@ enum MessagingRepository {
         }
     }
 
+    /// Résout une seule conversation par id — utilisé quand on tape une
+    /// notification de message pour retrouver le fil correspondant.
+    static func fetchConversation(id: String, myId: String) async throws -> Conversation? {
+        let rows: [ConversationRow] = try await supabase
+            .from("conversations")
+            .select("*")
+            .eq("id", value: id)
+            .execute()
+            .value
+        guard let row = rows.first else { return nil }
+
+        let otherId = row.participantA == myId ? row.participantB : row.participantA
+        let profiles: [ProfileRow] = try await supabase
+            .from("profiles")
+            .select("id, display_name, avatar_url")
+            .eq("id", value: otherId)
+            .execute()
+            .value
+        let profile = profiles.first
+        let name = profile?.displayName?.isEmpty == false ? profile!.displayName! : "Utilisateur"
+
+        return Conversation(
+            id: row.id,
+            otherId: otherId,
+            name: name,
+            avatarURL: profile?.avatarUrl,
+            preview: "",
+            lastMessageAt: row.lastMessageAt
+        )
+    }
+
     static func fetchMessages(conversationId: String) async throws -> [ChatMessage] {
         try await supabase
             .from("messages")

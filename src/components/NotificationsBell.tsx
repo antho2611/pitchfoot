@@ -99,7 +99,7 @@ export function NotificationsBell() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -6 }}
             transition={reduceMotion ? { duration: 0.01 } : SPRING}
-            className="glass absolute right-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-2xl border-t"
+            className="glass-pill absolute right-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-2xl"
           >
             <div className="max-h-96 overflow-y-auto">
               {notifs.length ? (

@@ -1,8 +1,12 @@
 import SwiftUI
 
 struct NotificationsListView: View {
+    @EnvironmentObject private var session: SessionStore
     @State private var notifications: [AppNotification] = []
     @State private var isLoading = true
+    @State private var pushedConversation: Conversation?
+
+    private var myId: String? { session.session?.user.id.uuidString }
 
     var body: some View {
         ScrollView {
@@ -46,6 +50,11 @@ struct NotificationsListView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task { await load() }
         .refreshable { await load() }
+        .navigationDestination(item: $pushedConversation) { conversation in
+            if let myId {
+                ConversationThreadView(myId: myId, conversation: conversation)
+            }
+        }
     }
 
     @ViewBuilder
@@ -83,13 +92,21 @@ struct NotificationsListView: View {
         await load()
     }
 
-    /// Marque comme lu au tap. Les liens des notifications pointent vers des
-    /// routes du site web (ex. /messages?c=...) : pas encore de correspondance
-    /// vers la navigation native, donc pas d'ouverture automatique pour l'instant.
+    /// Marque comme lu au tap, puis ouvre le fil de discussion correspondant
+    /// si la notification est de type "message" (lien du style /messages?c=...,
+    /// même format que sur le site).
     private func open(_ n: AppNotification) async {
-        guard !n.isRead else { return }
-        try? await NotificationsRepository.markRead(id: n.id)
-        await load()
+        if !n.isRead {
+            try? await NotificationsRepository.markRead(id: n.id)
+            await load()
+        }
+        guard n.type == "message", let myId, let cid = conversationId(fromLink: n.link) else { return }
+        pushedConversation = try? await MessagingRepository.fetchConversation(id: cid, myId: myId)
+    }
+
+    private func conversationId(fromLink link: String?) -> String? {
+        guard let link, let components = URLComponents(string: link) else { return nil }
+        return components.queryItems?.first(where: { $0.name == "c" })?.value
     }
 }
 

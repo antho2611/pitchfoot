@@ -60,9 +60,9 @@ Sans ça, la connexion Google/Apple s'ouvre mais ne revient jamais dans l'app.
   toutes les 4s pendant qu'il est ouvert
 - **Notifications** : cloche avec badge non-lus en haut à droite de tous les
   écrans de liste (Joueurs, Annonces, Clubs, Séances, Préparateurs, Ebooks),
-  + écran dédié depuis le Menu. Tap = marque comme lu ; pas encore de
-  correspondance lien→écran natif (les liens de notifications pointent vers
-  des routes du site web)
+  + écran dédié depuis le Menu. Tap = marque comme lu, et pour les
+  notifications de message, ouvre directement le fil de discussion
+  correspondant (comme sur le site)
 - **Tableau de bord** : un contenu différent par type de compte, comme sur le
   site — joueur (vues, candidatures, complétion du profil), club (annonces,
   candidatures reçues avec Accepter/Refuser/Message/Profil, short-list),
@@ -84,8 +84,6 @@ Sans ça, la connexion Google/Apple s'ouvre mais ne revient jamais dans l'app.
   existantes dans son tableau de bord, mais la création reste web-only)
 - Notifications push (les notifications existent en base et s'affichent dans
   l'écran dédié, mais rien ne déclenche encore de notification push iOS)
-- Suivre un lien de notification jusqu'au bon écran natif (ex. taper une
-  notification de message n'ouvre pas encore directement la conversation)
 
 ## Point d'attention pour la prochaine build
 

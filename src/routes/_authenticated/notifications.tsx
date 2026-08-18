@@ -1,8 +1,17 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { PageShell } from "@/components/layout/Shell";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+
+type Notif = {
+  id: string;
+  title: string;
+  body: string | null;
+  link: string | null;
+  is_read: boolean;
+  created_at: string;
+};
 
 export const Route = createFileRoute("/_authenticated/notifications")({
   head: () => ({
@@ -18,6 +27,7 @@ export const Route = createFileRoute("/_authenticated/notifications")({
 
 function NotificationsPage() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const { data, refetch } = useQuery({
     queryKey: ["notifications", user?.id],
     enabled: !!user,
@@ -36,6 +46,14 @@ function NotificationsPage() {
     void refetch();
   }
 
+  async function open(n: Notif) {
+    if (!n.is_read) {
+      await supabase.from("notifications").update({ is_read: true }).eq("id", n.id);
+      void refetch();
+    }
+    if (n.link) navigate({ to: n.link });
+  }
+
   return (
     <PageShell>
       <section className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
@@ -49,21 +67,19 @@ function NotificationsPage() {
         <div className="mt-8 space-y-3">
           {data?.length ? (
             data.map((n) => (
-              <div
+              <button
                 key={n.id}
-                className={`border p-4 ${n.is_read ? "border-border bg-card" : "border-pitch bg-volt/10"}`}
+                onClick={() => void open(n)}
+                className={`block w-full border p-4 text-left transition-colors ${
+                  n.is_read ? "border-border bg-card hover:bg-secondary/50" : "border-pitch bg-volt/10 hover:bg-volt/20"
+                }`}
               >
                 <p className="font-display text-xl uppercase">{n.title}</p>
                 {n.body && <p className="mt-1 text-sm text-muted-foreground">{n.body}</p>}
                 <p className="label-xs mt-2 text-foreground/40">
                   {new Date(n.created_at).toLocaleString("fr-FR")}
                 </p>
-                {n.link && (
-                  <Link to={n.link} className="label-xs mt-2 inline-block underline underline-offset-4">
-                    Ouvrir
-                  </Link>
-                )}
-              </div>
+              </button>
             ))
           ) : (
             <p className="border border-dashed border-border p-10 text-center text-sm text-muted-foreground">

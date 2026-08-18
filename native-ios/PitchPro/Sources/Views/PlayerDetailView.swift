@@ -129,7 +129,13 @@ struct PlayerDetailView: View {
         contactError = nil
         do {
             let cid = try await MessagingRepository.openConversation(me: myId, other: player.id)
-            await MessagingRepository.notify(userId: player.id, type: "message", title: "Nouveau contact", body: "Un club souhaite vous parler.")
+            await MessagingRepository.notify(
+                userId: player.id,
+                type: "message",
+                title: "Nouveau contact",
+                body: "Un club souhaite vous parler.",
+                link: "/messages?c=\(cid)"
+            )
             pushedConversation = Conversation(
                 id: cid,
                 otherId: player.id,

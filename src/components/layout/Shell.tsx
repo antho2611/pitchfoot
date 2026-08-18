@@ -150,7 +150,7 @@ export function MobileTabBar() {
             exit={{ y: "100%", opacity: 0 }}
             transition={reduceMotion ? { duration: 0.01 } : SPRING}
             style={{ bottom: TAB_BAR_CLEARANCE }}
-            className="glass fixed inset-x-4 z-40 max-h-[60vh] overflow-auto rounded-2xl border-t-0 md:hidden"
+            className="glass-pill fixed inset-x-4 z-40 max-h-[60vh] overflow-auto rounded-2xl md:hidden"
           >
             <div className="flex flex-col gap-1 px-4 py-4 text-sm font-medium uppercase tracking-wider">
               <Link to="/preparateurs" onClick={() => setOpen(false)} className="py-2">

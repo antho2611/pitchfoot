@@ -82,7 +82,7 @@ function PlayerDetail() {
     if (!user) return navigate({ to: "/auth" });
     try {
       const cid = await openConversation(user.id, player.id);
-      await notify(player.id, "message", "Nouveau contact", "Un club souhaite vous parler.");
+      await notify(player.id, "message", "Nouveau contact", "Un club souhaite vous parler.", `/messages?c=${cid}`);
       navigate({ to: "/messages", search: { c: cid } });
     } catch (err) {
       toast.error(
