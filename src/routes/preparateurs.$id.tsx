@@ -5,6 +5,8 @@ import { PageShell } from "@/components/layout/Shell";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { openConversation } from "@/lib/messaging";
+import { isPermissionError } from "@/lib/follows";
+import { FollowButton, FollowCounts } from "@/components/FollowButton";
 import { SessionCard } from "@/components/SessionCard";
 import { CoachReviews } from "@/components/CoachReviews";
 
@@ -83,10 +85,14 @@ function CoachDetail() {
       return;
     }
     try {
-      await openConversation(user.id, id);
-      navigate({ to: "/messages" });
-    } catch {
-      toast.error("Impossible d'ouvrir la conversation.");
+      const cid = await openConversation(user.id, id);
+      navigate({ to: "/messages", search: { c: cid } });
+    } catch (err) {
+      toast.error(
+        isPermissionError(err)
+          ? "Suivez ce profil pour pouvoir lui écrire."
+          : "Impossible d'ouvrir la conversation.",
+      );
     }
   }
 
@@ -133,13 +139,19 @@ function CoachDetail() {
               {data.city ?? "Ville non renseignée"} · Rayon {data.radius_km} km
             </p>
             {data.headline && <p className="mt-3 max-w-2xl">{data.headline}</p>}
+            <div className="mt-2">
+              <FollowCounts userId={data.id} />
+            </div>
           </div>
-          <button
-            onClick={() => void contact()}
-            className="bg-pitch px-6 py-3 font-display text-xl uppercase text-volt"
-          >
-            Contacter
-          </button>
+          <div className="flex flex-wrap items-start gap-2">
+            <FollowButton targetId={data.id} targetName={data.full_name} size="lg" />
+            <button
+              onClick={() => void contact()}
+              className="bg-pitch px-6 py-3 font-display text-xl uppercase text-volt"
+            >
+              Contacter
+            </button>
+          </div>
         </div>
       </section>
 

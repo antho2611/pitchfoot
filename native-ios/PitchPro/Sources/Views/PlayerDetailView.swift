@@ -3,9 +3,13 @@ import SwiftUI
 struct PlayerDetailView: View {
     let playerId: String
 
+    @EnvironmentObject private var session: SessionStore
     @State private var player: Player?
     @State private var isLoading = true
     @State private var errorMessage: String?
+    @State private var pushedConversation: Conversation?
+    @State private var contactError: String?
+    @State private var contacting = false
 
     var body: some View {
         ScrollView {
@@ -24,6 +28,11 @@ struct PlayerDetailView: View {
         .background(Color(.systemBackground))
         .navigationBarTitleDisplayMode(.inline)
         .task { await load() }
+        .navigationDestination(item: $pushedConversation) { conversation in
+            if let myId = session.session?.user.id.uuidString {
+                ConversationThreadView(myId: myId, conversation: conversation)
+            }
+        }
     }
 
     @ViewBuilder
@@ -44,6 +53,27 @@ struct PlayerDetailView: View {
                     if let position = player.mainPosition {
                         LabelXS(text: position, color: Color.pitchGreen)
                     }
+                }
+
+                HStack(spacing: 12) {
+                    Button {
+                        Task { await contact(player: player) }
+                    } label: {
+                        if contacting {
+                            ProgressView().tint(Color.pitchVolt)
+                        } else {
+                            Text("Contacter")
+                        }
+                    }
+                    .buttonStyle(PitchButtonStyle())
+                    .fixedSize()
+                    .disabled(contacting)
+
+                    FollowButton(targetId: player.id, targetName: "\(player.firstName) \(player.lastName)")
+                }
+                FollowCounts(userId: player.id)
+                if let contactError {
+                    Text(contactError).font(.footnote).foregroundStyle(.red)
                 }
 
                 let tags = [player.currentClub, player.city, player.championship].compactMap { $0 }
@@ -90,6 +120,27 @@ struct PlayerDetailView: View {
             errorMessage = "Profil indisponible."
         }
         isLoading = false
+    }
+
+    private func contact(player: Player) async {
+        guard let myId = session.session?.user.id.uuidString else { return }
+        contacting = true
+        contactError = nil
+        do {
+            let cid = try await MessagingRepository.openConversation(me: myId, other: player.id)
+            await MessagingRepository.notify(userId: player.id, type: "message", title: "Nouveau contact", body: "Un club souhaite vous parler.")
+            pushedConversation = Conversation(
+                id: cid,
+                otherId: player.id,
+                name: "\(player.firstName) \(player.lastName)",
+                avatarURL: player.photoURL,
+                preview: "",
+                lastMessageAt: ""
+            )
+        } catch {
+            contactError = "Suivez ce profil pour pouvoir lui écrire."
+        }
+        contacting = false
     }
 }
 

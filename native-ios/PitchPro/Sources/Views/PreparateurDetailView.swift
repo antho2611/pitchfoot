@@ -3,10 +3,14 @@ import SwiftUI
 struct PreparateurDetailView: View {
     let preparateurId: String
 
+    @EnvironmentObject private var session: SessionStore
     @State private var coach: Preparateur?
     @State private var sessions: [CoachAnnonce] = []
     @State private var isLoading = true
     @State private var errorMessage: String?
+    @State private var pushedConversation: Conversation?
+    @State private var contactError: String?
+    @State private var contacting = false
 
     var body: some View {
         ScrollView {
@@ -23,6 +27,11 @@ struct PreparateurDetailView: View {
         .background(Color(.systemBackground))
         .navigationBarTitleDisplayMode(.inline)
         .task { await load() }
+        .navigationDestination(item: $pushedConversation) { conversation in
+            if let myId = session.session?.user.id.uuidString {
+                ConversationThreadView(myId: myId, conversation: conversation)
+            }
+        }
     }
 
     @ViewBuilder
@@ -54,6 +63,27 @@ struct PreparateurDetailView: View {
                 }
             }
             .padding(.top)
+
+            HStack(spacing: 12) {
+                Button {
+                    Task { await contact(coach: coach) }
+                } label: {
+                    if contacting {
+                        ProgressView().tint(Color.pitchVolt)
+                    } else {
+                        Text("Contacter")
+                    }
+                }
+                .buttonStyle(PitchButtonStyle())
+                .fixedSize()
+                .disabled(contacting)
+
+                FollowButton(targetId: coach.id, targetName: coach.fullName)
+            }
+            FollowCounts(userId: coach.id)
+            if let contactError {
+                Text(contactError).font(.footnote).foregroundStyle(.red)
+            }
 
             if !coach.specialties.isEmpty {
                 HStack {
@@ -130,5 +160,25 @@ struct PreparateurDetailView: View {
             errorMessage = "Fiche indisponible."
         }
         isLoading = false
+    }
+
+    private func contact(coach: Preparateur) async {
+        guard let myId = session.session?.user.id.uuidString else { return }
+        contacting = true
+        contactError = nil
+        do {
+            let cid = try await MessagingRepository.openConversation(me: myId, other: coach.id)
+            pushedConversation = Conversation(
+                id: cid,
+                otherId: coach.id,
+                name: coach.fullName,
+                avatarURL: coach.photoURL,
+                preview: "",
+                lastMessageAt: ""
+            )
+        } catch {
+            contactError = "Suivez ce profil pour pouvoir lui écrire."
+        }
+        contacting = false
     }
 }

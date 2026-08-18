@@ -85,7 +85,7 @@ struct MenuView: View {
                         NavigationLink { ComingSoonView(title: "Tableau de bord") } label: {
                             PitchCard { MenuRow(text: "Tableau de bord") }
                         }
-                        NavigationLink { ComingSoonView(title: "Messagerie") } label: {
+                        NavigationLink { ConversationsListView() } label: {
                             PitchCard { MenuRow(text: "Messagerie") }
                         }
                         NavigationLink { ComingSoonView(title: "Notifications") } label: {

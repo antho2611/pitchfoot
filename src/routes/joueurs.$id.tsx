@@ -8,6 +8,8 @@ import { ageFrom, availabilityLabel, statFieldsFor } from "@/lib/football";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { openConversation, notify } from "@/lib/messaging";
+import { isPermissionError } from "@/lib/follows";
+import { FollowButton, FollowCounts } from "@/components/FollowButton";
 
 export const Route = createFileRoute("/joueurs/$id")({
   head: () => ({
@@ -82,8 +84,12 @@ function PlayerDetail() {
       const cid = await openConversation(user.id, player.id);
       await notify(player.id, "message", "Nouveau contact", "Un club souhaite vous parler.");
       navigate({ to: "/messages", search: { c: cid } });
-    } catch {
-      toast.error("Impossible d'ouvrir la conversation.");
+    } catch (err) {
+      toast.error(
+        isPermissionError(err)
+          ? "Suivez ce profil pour pouvoir lui écrire."
+          : "Impossible d'ouvrir la conversation.",
+      );
     }
   }
 
@@ -140,6 +146,9 @@ function PlayerDetail() {
               {player.current_club ? ` • ${player.current_club}` : ""}
               {player.level ? ` • ${player.level}` : ""}
             </p>
+            <div className="mt-2">
+              <FollowCounts userId={player.id} tone="dark" />
+            </div>
             <div className="mt-6 grid grid-cols-2 gap-4 border-t border-white/10 pt-5 text-white/80 sm:grid-cols-4">
               <Info label="Âge" value={age ? `${age} ans` : "—"} />
               <Info
@@ -159,6 +168,7 @@ function PlayerDetail() {
               <Info label="Vues" value={String(player.views_count)} />
             </div>
             <div className="mt-6 flex flex-wrap gap-2">
+              <FollowButton targetId={player.id} targetName={`${player.first_name} ${player.last_name}`.trim()} tone="dark" />
               {accountType !== "player" && (
                 <>
                   <button
