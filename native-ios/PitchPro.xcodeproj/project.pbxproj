@@ -1,0 +1,617 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0361CAD0FC3289CBD1F7C0A2 /* PremiumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDB3101AC9ED3490F4EB93D /* PremiumView.swift */; };
+		091AB72EF3A1212BB73C3B0B /* PitchProConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81316930A01B7F89A1C96F2E /* PitchProConstants.swift */; };
+		09D7A2DCDD0DBD6AD82BB92C /* AnnoncesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4665858442CBB9FF781179D3 /* AnnoncesListView.swift */; };
+		0D59706233B32B74D5592220 /* SupabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F189F0B9414748A1AEAA7E /* SupabaseService.swift */; };
+		194E2A4E9291C185109F93D8 /* Club.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5E45F0F704C0ECEE52A024 /* Club.swift */; };
+		1B0221A8345F2C0189A33E3F /* NotificationsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429C377F610A9AC878C85A98 /* NotificationsRepository.swift */; };
+		1B69C1FFBC1187FDF7726144 /* PlayersListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C16ED04BBC4FBCF58297139 /* PlayersListView.swift */; };
+		1F7BC64A2B9B184B86C16DDA /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E0CFEFD741D4156AA8326F /* MainTabView.swift */; };
+		225B0A40DF6E2AFC69DCB78C /* ApplicationsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E5184FD69C2889F58CC289 /* ApplicationsRepository.swift */; };
+		2293D40E70ED07ECB318E598 /* EbookPurchasesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67080D19DE0A55597CE21628 /* EbookPurchasesRepository.swift */; };
+		3440D9F7E0CA01013EC1B576 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = BD5AED8EED7500A3974D5B37 /* OFL.txt */; };
+		35412CB36349C1D703E940FD /* PitchProTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E902448E771B52EBDFC7ADDA /* PitchProTheme.swift */; };
+		4087C68A5B42CB105B0459F3 /* ConversationsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDF2E789AF0719CE5173FCE /* ConversationsListView.swift */; };
+		4466C7A613BD844AEC9C95CD /* TableauDeBordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9545C43C3951EEE413FA57E /* TableauDeBordView.swift */; };
+		4B4CF7A181B35E8CFB14D159 /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD54AE0A2E133CDD4874F5D6 /* Listing.swift */; };
+		4D635635F9B3368647091508 /* AsyncListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62358E2A9A52E7B6FFAAF918 /* AsyncListView.swift */; };
+		4DC2E8C8CE40F4EA96C2E9B9 /* MessagingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B81C55459F86B4FCF810BAD /* MessagingRepository.swift */; };
+		4FD95293EAA46AD802642E14 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A080D0FFB637C8129D2507 /* Player.swift */; };
+		503BB956DAAD3A1AFFBDB63C /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 3645F4FA8DC3AC7C7D338A9A /* Supabase */; };
+		5B1D0AF9713DB0920C13046C /* EbooksRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5F00C7FC2BDFF48D978D4E /* EbooksRepository.swift */; };
+		5BCFF097A188633FC7CDE3B7 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B268178F6DEEDA54CA56476A /* SessionStore.swift */; };
+		60BB7BA2AEC2B58ADB7D8443 /* Ebook.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06BB22C10079EEB22443423 /* Ebook.swift */; };
+		642E3A0AC4B7F0C88C48F507 /* CoachAnnonce.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3955A285A9EA4BA3E800FEF /* CoachAnnonce.swift */; };
+		6534989C3C674B7E1115525A /* CoachAnnoncesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCD3FF720EE134955F1CB6F /* CoachAnnoncesRepository.swift */; };
+		65921D2AA8549C161F30A27B /* PlayerFilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5C96A7561C4687A0B5C1C0 /* PlayerFilterBar.swift */; };
+		7632C7E4723C4808D70799B5 /* SubscriptionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B61A4C3BBEF5C9BB3739DB /* SubscriptionRepository.swift */; };
+		7A50649EDE3A8DD0E5B34D0F /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D300A3CCFDB36F691646EFC /* Message.swift */; };
+		7F22917EE11B35039862303A /* Color+Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B79A76ACB16722DC74064E /* Color+Brand.swift */; };
+		83E2DC997172D81C17819D2F /* ClubDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DEBDBD954D67C1DA537FF5 /* ClubDetailView.swift */; };
+		86747A553C997EF2689F13F5 /* PreparateurDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2F7644E20F42B2143DDE0 /* PreparateurDetailView.swift */; };
+		8A78877794DCD649D9D9ED31 /* NotificationBellIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC36D0386F2E748173A859C8 /* NotificationBellIcon.swift */; };
+		8B8C543483C560F10DBC3846 /* Preparateur.swift in Sources */ = {isa = PBXBuildFile; fileRef = B861A9771E6D3350EE243A5D /* Preparateur.swift */; };
+		9E659C84E09B59ABBD232C78 /* ClubsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B16F03E94A3266DB9889ED5 /* ClubsListView.swift */; };
+		9F82882D37C1AE0DA67BC65F /* PlayersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE898F0ADD84AD783F16DC2 /* PlayersRepository.swift */; };
+		A1780F2A0E785202FF80E780 /* ConversationThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51A4153BCF5E2AF393070D2 /* ConversationThreadView.swift */; };
+		A46DCCEF1D2FC54775CBDC0A /* BebasNeue-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C604388A89973C30A2071ACF /* BebasNeue-Regular.ttf */; };
+		A6C822DFF2B5A7DC5519CEF2 /* ListingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B819807FC5F776113747052D /* ListingsRepository.swift */; };
+		A91AB1D84D5FB5B93719FC86 /* AppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC24B49E03859AE39947E119 /* AppNotification.swift */; };
+		AEEA5C131ADEEA3312DF0BA2 /* EbooksListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4145E2BDC8DF837F4E5167 /* EbooksListView.swift */; };
+		B59F44D851F364391DEFF2E2 /* PlayerFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6280E5844340CEFE1ED4E77 /* PlayerFilters.swift */; };
+		B8B01E2CC313B8BC8B05C649 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AD045649DE725B804CBBF7 /* Application.swift */; };
+		B9CA1A3997411D65950E9141 /* PreparateursRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC8A1079CD139CD8875F8B0 /* PreparateursRepository.swift */; };
+		BA6FB5411E9E1D30D4CC6F9F /* FollowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4255927394121AE4EDD7C256 /* FollowButton.swift */; };
+		BBEA6804142887E900346058 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CA62FCB7544868841BF59C /* AuthView.swift */; };
+		C0D9D116EFB120988E6715D7 /* PitchProApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3BC83D13733CA2DE43BA2 /* PitchProApp.swift */; };
+		C80C11B8BE095313BB8197D7 /* CoachReservationsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EC8517B2D9768901745C8E /* CoachReservationsRepository.swift */; };
+		C9503184CFCF9532D25D8500 /* ClubsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8166237A6C63A4B557CAD8 /* ClubsRepository.swift */; };
+		CA868E50C41BF2E92978A30F /* SeanceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8E454937D40C0DBFEC83B1 /* SeanceDetailView.swift */; };
+		D1E2F95AC2D58B3AF0551D38 /* AnnonceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD78CA70960A62C28953FD0 /* AnnonceDetailView.swift */; };
+		D6C09902CA82ED0D7F8FAFEA /* EbookDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EBB611F2CEAC91B1D2FF4C /* EbookDetailView.swift */; };
+		DABC2126D5F03C9B89469391 /* FollowsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE47557334DA38E684E670A /* FollowsRepository.swift */; };
+		E1ED53660E09D4F9AFBB4964 /* PlayerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9C2EF09EB10CB3CD73E3E6 /* PlayerDetailView.swift */; };
+		E4D55E9FFA624AD79A165C04 /* NotificationsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BE4A7F7D1276B2081498A0 /* NotificationsListView.swift */; };
+		E5758F9F86A8DAE49BB339E3 /* SeancesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB83F039DAA02E3F01CC6A8 /* SeancesListView.swift */; };
+		E975C29A9AD0EDA762C173C6 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1CAAA00A76F4DC6C8F0D30 /* RootView.swift */; };
+		F804B37D0BD7C443E1A356B4 /* Premium.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56971FAA8FFBFB76034E97B /* Premium.swift */; };
+		F9DE8C2F043F58A8504B036D /* DashboardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16911FDBFDB2154B16167E2D /* DashboardRepository.swift */; };
+		FC823A5D4C305E52DB84560E /* PreparateursListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E2C0CA9A94044B6DCD34DE /* PreparateursListView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		02EBB611F2CEAC91B1D2FF4C /* EbookDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EbookDetailView.swift; sourceTree = "<group>"; };
+		04B61A4C3BBEF5C9BB3739DB /* SubscriptionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionRepository.swift; sourceTree = "<group>"; };
+		0A5F00C7FC2BDFF48D978D4E /* EbooksRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EbooksRepository.swift; sourceTree = "<group>"; };
+		0B8166237A6C63A4B557CAD8 /* ClubsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubsRepository.swift; sourceTree = "<group>"; };
+		0E4145E2BDC8DF837F4E5167 /* EbooksListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EbooksListView.swift; sourceTree = "<group>"; };
+		0E5E45F0F704C0ECEE52A024 /* Club.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Club.swift; sourceTree = "<group>"; };
+		0E9C2EF09EB10CB3CD73E3E6 /* PlayerDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailView.swift; sourceTree = "<group>"; };
+		16911FDBFDB2154B16167E2D /* DashboardRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardRepository.swift; sourceTree = "<group>"; };
+		1B81C55459F86B4FCF810BAD /* MessagingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingRepository.swift; sourceTree = "<group>"; };
+		1EDB3101AC9ED3490F4EB93D /* PremiumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumView.swift; sourceTree = "<group>"; };
+		25DEBDBD954D67C1DA537FF5 /* ClubDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubDetailView.swift; sourceTree = "<group>"; };
+		2FDF2E789AF0719CE5173FCE /* ConversationsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListView.swift; sourceTree = "<group>"; };
+		30AD045649DE725B804CBBF7 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
+		3C16ED04BBC4FBCF58297139 /* PlayersListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersListView.swift; sourceTree = "<group>"; };
+		4255927394121AE4EDD7C256 /* FollowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowButton.swift; sourceTree = "<group>"; };
+		429C377F610A9AC878C85A98 /* NotificationsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsRepository.swift; sourceTree = "<group>"; };
+		4665858442CBB9FF781179D3 /* AnnoncesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnoncesListView.swift; sourceTree = "<group>"; };
+		55E5184FD69C2889F58CC289 /* ApplicationsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationsRepository.swift; sourceTree = "<group>"; };
+		5D1CAAA00A76F4DC6C8F0D30 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		5DD78CA70960A62C28953FD0 /* AnnonceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnonceDetailView.swift; sourceTree = "<group>"; };
+		62358E2A9A52E7B6FFAAF918 /* AsyncListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncListView.swift; sourceTree = "<group>"; };
+		67080D19DE0A55597CE21628 /* EbookPurchasesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EbookPurchasesRepository.swift; sourceTree = "<group>"; };
+		6D300A3CCFDB36F691646EFC /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		76E2C0CA9A94044B6DCD34DE /* PreparateursListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparateursListView.swift; sourceTree = "<group>"; };
+		7EE47557334DA38E684E670A /* FollowsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowsRepository.swift; sourceTree = "<group>"; };
+		7FCD3FF720EE134955F1CB6F /* CoachAnnoncesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachAnnoncesRepository.swift; sourceTree = "<group>"; };
+		81316930A01B7F89A1C96F2E /* PitchProConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitchProConstants.swift; sourceTree = "<group>"; };
+		85B79A76ACB16722DC74064E /* Color+Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Brand.swift"; sourceTree = "<group>"; };
+		8B16F03E94A3266DB9889ED5 /* ClubsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubsListView.swift; sourceTree = "<group>"; };
+		94A080D0FFB637C8129D2507 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		9BA3BC83D13733CA2DE43BA2 /* PitchProApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitchProApp.swift; sourceTree = "<group>"; };
+		A2BE4A7F7D1276B2081498A0 /* NotificationsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsListView.swift; sourceTree = "<group>"; };
+		A3955A285A9EA4BA3E800FEF /* CoachAnnonce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachAnnonce.swift; sourceTree = "<group>"; };
+		A4EC8517B2D9768901745C8E /* CoachReservationsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachReservationsRepository.swift; sourceTree = "<group>"; };
+		A51A4153BCF5E2AF393070D2 /* ConversationThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationThreadView.swift; sourceTree = "<group>"; };
+		ABE898F0ADD84AD783F16DC2 /* PlayersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersRepository.swift; sourceTree = "<group>"; };
+		AF8E454937D40C0DBFEC83B1 /* SeanceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeanceDetailView.swift; sourceTree = "<group>"; };
+		B268178F6DEEDA54CA56476A /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
+		B6280E5844340CEFE1ED4E77 /* PlayerFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerFilters.swift; sourceTree = "<group>"; };
+		B819807FC5F776113747052D /* ListingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingsRepository.swift; sourceTree = "<group>"; };
+		B861A9771E6D3350EE243A5D /* Preparateur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preparateur.swift; sourceTree = "<group>"; };
+		BD54AE0A2E133CDD4874F5D6 /* Listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listing.swift; sourceTree = "<group>"; };
+		BD5AED8EED7500A3974D5B37 /* OFL.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		C56971FAA8FFBFB76034E97B /* Premium.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Premium.swift; sourceTree = "<group>"; };
+		C5CA62FCB7544868841BF59C /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		C5F189F0B9414748A1AEAA7E /* SupabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseService.swift; sourceTree = "<group>"; };
+		C604388A89973C30A2071ACF /* BebasNeue-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BebasNeue-Regular.ttf"; sourceTree = "<group>"; };
+		C9545C43C3951EEE413FA57E /* TableauDeBordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableauDeBordView.swift; sourceTree = "<group>"; };
+		CC36D0386F2E748173A859C8 /* NotificationBellIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationBellIcon.swift; sourceTree = "<group>"; };
+		CC5C96A7561C4687A0B5C1C0 /* PlayerFilterBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerFilterBar.swift; sourceTree = "<group>"; };
+		CFC8A1079CD139CD8875F8B0 /* PreparateursRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparateursRepository.swift; sourceTree = "<group>"; };
+		D06BB22C10079EEB22443423 /* Ebook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ebook.swift; sourceTree = "<group>"; };
+		DC24B49E03859AE39947E119 /* AppNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNotification.swift; sourceTree = "<group>"; };
+		E902448E771B52EBDFC7ADDA /* PitchProTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitchProTheme.swift; sourceTree = "<group>"; };
+		F23BA330A3F83639E242D50F /* PitchPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PitchPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6A2F7644E20F42B2143DDE0 /* PreparateurDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparateurDetailView.swift; sourceTree = "<group>"; };
+		F9E0CFEFD741D4156AA8326F /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		FFB83F039DAA02E3F01CC6A8 /* SeancesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeancesListView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F19CCD33E6961B815282F95E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				503BB956DAAD3A1AFFBDB63C /* Supabase in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		20A965EFE65FC35D9832F42F /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				C604388A89973C30A2071ACF /* BebasNeue-Regular.ttf */,
+				BD5AED8EED7500A3974D5B37 /* OFL.txt */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		4A8FCB553FCA5D4DB8F718FD /* App */ = {
+			isa = PBXGroup;
+			children = (
+				85B79A76ACB16722DC74064E /* Color+Brand.swift */,
+				9BA3BC83D13733CA2DE43BA2 /* PitchProApp.swift */,
+				81316930A01B7F89A1C96F2E /* PitchProConstants.swift */,
+				E902448E771B52EBDFC7ADDA /* PitchProTheme.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		62BE8D57D8D77BC7CD856324 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				B268178F6DEEDA54CA56476A /* SessionStore.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		93280E8875CBEBA3A30826BD /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				55E5184FD69C2889F58CC289 /* ApplicationsRepository.swift */,
+				0B8166237A6C63A4B557CAD8 /* ClubsRepository.swift */,
+				7FCD3FF720EE134955F1CB6F /* CoachAnnoncesRepository.swift */,
+				A4EC8517B2D9768901745C8E /* CoachReservationsRepository.swift */,
+				16911FDBFDB2154B16167E2D /* DashboardRepository.swift */,
+				67080D19DE0A55597CE21628 /* EbookPurchasesRepository.swift */,
+				0A5F00C7FC2BDFF48D978D4E /* EbooksRepository.swift */,
+				7EE47557334DA38E684E670A /* FollowsRepository.swift */,
+				B819807FC5F776113747052D /* ListingsRepository.swift */,
+				1B81C55459F86B4FCF810BAD /* MessagingRepository.swift */,
+				429C377F610A9AC878C85A98 /* NotificationsRepository.swift */,
+				ABE898F0ADD84AD783F16DC2 /* PlayersRepository.swift */,
+				CFC8A1079CD139CD8875F8B0 /* PreparateursRepository.swift */,
+				04B61A4C3BBEF5C9BB3739DB /* SubscriptionRepository.swift */,
+				C5F189F0B9414748A1AEAA7E /* SupabaseService.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		AA9EE0532EEB392FAC836A6F = {
+			isa = PBXGroup;
+			children = (
+				F87D03204AB8BE257727C372 /* Resources */,
+				F5E26C9B10676BAA44B613E8 /* Sources */,
+				F1885F81B505411EF59E5A95 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D754E8ACE8BE82ADFF843109 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				30AD045649DE725B804CBBF7 /* Application.swift */,
+				DC24B49E03859AE39947E119 /* AppNotification.swift */,
+				0E5E45F0F704C0ECEE52A024 /* Club.swift */,
+				A3955A285A9EA4BA3E800FEF /* CoachAnnonce.swift */,
+				D06BB22C10079EEB22443423 /* Ebook.swift */,
+				BD54AE0A2E133CDD4874F5D6 /* Listing.swift */,
+				6D300A3CCFDB36F691646EFC /* Message.swift */,
+				94A080D0FFB637C8129D2507 /* Player.swift */,
+				C56971FAA8FFBFB76034E97B /* Premium.swift */,
+				B861A9771E6D3350EE243A5D /* Preparateur.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		DA94901043EF77D45EDEFA7C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5DD78CA70960A62C28953FD0 /* AnnonceDetailView.swift */,
+				4665858442CBB9FF781179D3 /* AnnoncesListView.swift */,
+				62358E2A9A52E7B6FFAAF918 /* AsyncListView.swift */,
+				C5CA62FCB7544868841BF59C /* AuthView.swift */,
+				25DEBDBD954D67C1DA537FF5 /* ClubDetailView.swift */,
+				8B16F03E94A3266DB9889ED5 /* ClubsListView.swift */,
+				2FDF2E789AF0719CE5173FCE /* ConversationsListView.swift */,
+				A51A4153BCF5E2AF393070D2 /* ConversationThreadView.swift */,
+				02EBB611F2CEAC91B1D2FF4C /* EbookDetailView.swift */,
+				0E4145E2BDC8DF837F4E5167 /* EbooksListView.swift */,
+				4255927394121AE4EDD7C256 /* FollowButton.swift */,
+				F9E0CFEFD741D4156AA8326F /* MainTabView.swift */,
+				CC36D0386F2E748173A859C8 /* NotificationBellIcon.swift */,
+				A2BE4A7F7D1276B2081498A0 /* NotificationsListView.swift */,
+				0E9C2EF09EB10CB3CD73E3E6 /* PlayerDetailView.swift */,
+				CC5C96A7561C4687A0B5C1C0 /* PlayerFilterBar.swift */,
+				B6280E5844340CEFE1ED4E77 /* PlayerFilters.swift */,
+				3C16ED04BBC4FBCF58297139 /* PlayersListView.swift */,
+				1EDB3101AC9ED3490F4EB93D /* PremiumView.swift */,
+				F6A2F7644E20F42B2143DDE0 /* PreparateurDetailView.swift */,
+				76E2C0CA9A94044B6DCD34DE /* PreparateursListView.swift */,
+				5D1CAAA00A76F4DC6C8F0D30 /* RootView.swift */,
+				AF8E454937D40C0DBFEC83B1 /* SeanceDetailView.swift */,
+				FFB83F039DAA02E3F01CC6A8 /* SeancesListView.swift */,
+				C9545C43C3951EEE413FA57E /* TableauDeBordView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F1885F81B505411EF59E5A95 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F23BA330A3F83639E242D50F /* PitchPro.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F5E26C9B10676BAA44B613E8 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				4A8FCB553FCA5D4DB8F718FD /* App */,
+				62BE8D57D8D77BC7CD856324 /* Auth */,
+				D754E8ACE8BE82ADFF843109 /* Models */,
+				93280E8875CBEBA3A30826BD /* Networking */,
+				DA94901043EF77D45EDEFA7C /* Views */,
+			);
+			name = Sources;
+			path = PitchPro/Sources;
+			sourceTree = "<group>";
+		};
+		F87D03204AB8BE257727C372 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				20A965EFE65FC35D9832F42F /* Fonts */,
+			);
+			name = Resources;
+			path = PitchPro/Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8FF849473B024058A4DDA31E /* PitchPro */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 059A3FA3B65A761AA76CEF92 /* Build configuration list for PBXNativeTarget "PitchPro" */;
+			buildPhases = (
+				35785C499563152BB817F180 /* Sources */,
+				59E04BB2D227D24AE38E35CB /* Resources */,
+				F19CCD33E6961B815282F95E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PitchPro;
+			packageProductDependencies = (
+				3645F4FA8DC3AC7C7D338A9A /* Supabase */,
+			);
+			productName = PitchPro;
+			productReference = F23BA330A3F83639E242D50F /* PitchPro.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3476656FF7407CB47820D597 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+			};
+			buildConfigurationList = E56C3A35AC8F96903CF59908 /* Build configuration list for PBXProject "PitchPro" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = AA9EE0532EEB392FAC836A6F;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				69A238C0E658FF4EF0E378F1 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = F1885F81B505411EF59E5A95 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8FF849473B024058A4DDA31E /* PitchPro */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		59E04BB2D227D24AE38E35CB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A46DCCEF1D2FC54775CBDC0A /* BebasNeue-Regular.ttf in Resources */,
+				3440D9F7E0CA01013EC1B576 /* OFL.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		35785C499563152BB817F180 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1E2F95AC2D58B3AF0551D38 /* AnnonceDetailView.swift in Sources */,
+				09D7A2DCDD0DBD6AD82BB92C /* AnnoncesListView.swift in Sources */,
+				A91AB1D84D5FB5B93719FC86 /* AppNotification.swift in Sources */,
+				B8B01E2CC313B8BC8B05C649 /* Application.swift in Sources */,
+				225B0A40DF6E2AFC69DCB78C /* ApplicationsRepository.swift in Sources */,
+				4D635635F9B3368647091508 /* AsyncListView.swift in Sources */,
+				BBEA6804142887E900346058 /* AuthView.swift in Sources */,
+				194E2A4E9291C185109F93D8 /* Club.swift in Sources */,
+				83E2DC997172D81C17819D2F /* ClubDetailView.swift in Sources */,
+				9E659C84E09B59ABBD232C78 /* ClubsListView.swift in Sources */,
+				C9503184CFCF9532D25D8500 /* ClubsRepository.swift in Sources */,
+				642E3A0AC4B7F0C88C48F507 /* CoachAnnonce.swift in Sources */,
+				6534989C3C674B7E1115525A /* CoachAnnoncesRepository.swift in Sources */,
+				C80C11B8BE095313BB8197D7 /* CoachReservationsRepository.swift in Sources */,
+				7F22917EE11B35039862303A /* Color+Brand.swift in Sources */,
+				A1780F2A0E785202FF80E780 /* ConversationThreadView.swift in Sources */,
+				4087C68A5B42CB105B0459F3 /* ConversationsListView.swift in Sources */,
+				F9DE8C2F043F58A8504B036D /* DashboardRepository.swift in Sources */,
+				60BB7BA2AEC2B58ADB7D8443 /* Ebook.swift in Sources */,
+				D6C09902CA82ED0D7F8FAFEA /* EbookDetailView.swift in Sources */,
+				2293D40E70ED07ECB318E598 /* EbookPurchasesRepository.swift in Sources */,
+				AEEA5C131ADEEA3312DF0BA2 /* EbooksListView.swift in Sources */,
+				5B1D0AF9713DB0920C13046C /* EbooksRepository.swift in Sources */,
+				BA6FB5411E9E1D30D4CC6F9F /* FollowButton.swift in Sources */,
+				DABC2126D5F03C9B89469391 /* FollowsRepository.swift in Sources */,
+				4B4CF7A181B35E8CFB14D159 /* Listing.swift in Sources */,
+				A6C822DFF2B5A7DC5519CEF2 /* ListingsRepository.swift in Sources */,
+				1F7BC64A2B9B184B86C16DDA /* MainTabView.swift in Sources */,
+				7A50649EDE3A8DD0E5B34D0F /* Message.swift in Sources */,
+				4DC2E8C8CE40F4EA96C2E9B9 /* MessagingRepository.swift in Sources */,
+				8A78877794DCD649D9D9ED31 /* NotificationBellIcon.swift in Sources */,
+				E4D55E9FFA624AD79A165C04 /* NotificationsListView.swift in Sources */,
+				1B0221A8345F2C0189A33E3F /* NotificationsRepository.swift in Sources */,
+				C0D9D116EFB120988E6715D7 /* PitchProApp.swift in Sources */,
+				091AB72EF3A1212BB73C3B0B /* PitchProConstants.swift in Sources */,
+				35412CB36349C1D703E940FD /* PitchProTheme.swift in Sources */,
+				4FD95293EAA46AD802642E14 /* Player.swift in Sources */,
+				E1ED53660E09D4F9AFBB4964 /* PlayerDetailView.swift in Sources */,
+				65921D2AA8549C161F30A27B /* PlayerFilterBar.swift in Sources */,
+				B59F44D851F364391DEFF2E2 /* PlayerFilters.swift in Sources */,
+				1B69C1FFBC1187FDF7726144 /* PlayersListView.swift in Sources */,
+				9F82882D37C1AE0DA67BC65F /* PlayersRepository.swift in Sources */,
+				F804B37D0BD7C443E1A356B4 /* Premium.swift in Sources */,
+				0361CAD0FC3289CBD1F7C0A2 /* PremiumView.swift in Sources */,
+				8B8C543483C560F10DBC3846 /* Preparateur.swift in Sources */,
+				86747A553C997EF2689F13F5 /* PreparateurDetailView.swift in Sources */,
+				FC823A5D4C305E52DB84560E /* PreparateursListView.swift in Sources */,
+				B9CA1A3997411D65950E9141 /* PreparateursRepository.swift in Sources */,
+				E975C29A9AD0EDA762C173C6 /* RootView.swift in Sources */,
+				CA868E50C41BF2E92978A30F /* SeanceDetailView.swift in Sources */,
+				E5758F9F86A8DAE49BB339E3 /* SeancesListView.swift in Sources */,
+				5BCFF097A188633FC7CDE3B7 /* SessionStore.swift in Sources */,
+				7632C7E4723C4808D70799B5 /* SubscriptionRepository.swift in Sources */,
+				0D59706233B32B74D5592220 /* SupabaseService.swift in Sources */,
+				4466C7A613BD844AEC9C95CD /* TableauDeBordView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		5A45FDEC9334796099C28419 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		615422C1658D08C376D718C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4RQHM5B9NT;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Generated-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pitchpro.native;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6D67A148FADF7AC80C3A4AC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		9EB2D1465AD76F076AE43A16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4RQHM5B9NT;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Generated-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pitchpro.native;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		059A3FA3B65A761AA76CEF92 /* Build configuration list for PBXNativeTarget "PitchPro" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9EB2D1465AD76F076AE43A16 /* Debug */,
+				615422C1658D08C376D718C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E56C3A35AC8F96903CF59908 /* Build configuration list for PBXProject "PitchPro" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6D67A148FADF7AC80C3A4AC6 /* Debug */,
+				5A45FDEC9334796099C28419 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		69A238C0E658FF4EF0E378F1 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3645F4FA8DC3AC7C7D338A9A /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 69A238C0E658FF4EF0E378F1 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 3476656FF7407CB47820D597 /* Project object */;
+}
