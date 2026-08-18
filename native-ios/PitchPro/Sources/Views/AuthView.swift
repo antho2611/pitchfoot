@@ -103,6 +103,8 @@ struct AuthView: View {
 
                     Spacer(minLength: 20)
                 }
+                .frame(maxWidth: 480)
+                .frame(maxWidth: .infinity)
             }
         }
     }

@@ -59,6 +59,10 @@ struct AsyncListView<Item: Identifiable, RowContent: View, Header: View>: View {
                 }
             }
             .padding(.bottom, 24)
+            // Sur iPad, on garde une colonne de lecture confortable plutôt que
+            // d'étirer les cartes sur toute la largeur de l'écran.
+            .frame(maxWidth: 700)
+            .frame(maxWidth: .infinity)
         }
         .background(Color(.systemBackground))
         .navigationBarTitleDisplayMode(.inline)

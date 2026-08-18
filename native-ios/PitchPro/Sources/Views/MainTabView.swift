@@ -44,6 +44,8 @@ struct ComingSoonView: View {
             .padding(.top, 40)
             Spacer()
         }
+        .frame(maxWidth: 700)
+        .frame(maxWidth: .infinity)
         .navigationBarTitleDisplayMode(.inline)
     }
 }
@@ -103,6 +105,8 @@ struct MenuView: View {
                     .padding(.top, 12)
                 }
                 .padding(.bottom, 24)
+                .frame(maxWidth: 700)
+                .frame(maxWidth: .infinity)
             }
             .navigationBarTitleDisplayMode(.inline)
         }

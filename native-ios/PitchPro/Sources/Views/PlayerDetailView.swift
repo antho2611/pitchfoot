@@ -17,6 +17,8 @@ struct PlayerDetailView: View {
                     .padding(.top, 60)
             } else if let player {
                 content(for: player)
+                    .frame(maxWidth: 700)
+                    .frame(maxWidth: .infinity)
             }
         }
         .background(Color(.systemBackground))
