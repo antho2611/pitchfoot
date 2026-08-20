@@ -26,14 +26,18 @@ type Props = {
   onMoved: (center: { lat: number; lon: number }) => void;
 };
 
-const pin = (active: boolean) =>
+/** Le logo du club sert de pastille sur la carte ; à défaut, son initiale. */
+const pin = (active: boolean, logoUrl: string | null, name: string) =>
   L.divIcon({
     className: "",
     html: `<span style="display:grid;place-items:center;width:34px;height:34px;border-radius:9999px;
-      background:${active ? "var(--color-volt, #c8ff00)" : "#0d2b1d"};
-      color:${active ? "#0d2b1d" : "#ffffff"};
-      box-shadow:0 6px 16px rgba(0,0,0,.28);font:700 12px/1 Inter,sans-serif;
-      border:2px solid #fff;transition:transform .15s ease;transform:scale(${active ? 1.15 : 1})">⚽</span>`,
+      background:${active ? "var(--color-volt, #c8ff00)" : "#0d2b1d"};overflow:hidden;
+      box-shadow:0 6px 16px rgba(0,0,0,.28);
+      border:2px solid #fff;transition:transform .15s ease;transform:scale(${active ? 1.15 : 1})">${
+        logoUrl
+          ? `<img src="${logoUrl}" alt="" style="width:100%;height:100%;object-fit:cover" />`
+          : `<span style="color:${active ? "#0d2b1d" : "#ffffff"};font:700 14px/1 Inter,sans-serif">${(name[0] ?? "?").toUpperCase()}</span>`
+      }</span>`,
     iconSize: [34, 34],
     iconAnchor: [17, 17],
     popupAnchor: [0, -16],
@@ -54,6 +58,7 @@ export default function ClubsMap({
   const cluster = useRef<L.MarkerClusterGroup | null>(null);
   const circle = useRef<L.Circle | null>(null);
   const markers = useRef<Record<string, L.Marker>>({});
+  const clubsById = useRef<Record<string, MapClub>>({});
   const cb = useRef({ onSelect, onViewProfile, onMoved });
   cb.current = { onSelect, onViewProfile, onMoved };
 
@@ -91,11 +96,15 @@ export default function ClubsMap({
     if (!m || !cg) return;
     cg.clearLayers();
     markers.current = {};
+    clubsById.current = {};
     const points: L.LatLngExpression[] = [];
 
     for (const club of clubs) {
       if (club.latitude == null || club.longitude == null) continue;
-      const marker = L.marker([club.latitude, club.longitude], { icon: pin(false) });
+      clubsById.current[club.id] = club;
+      const marker = L.marker([club.latitude, club.longitude], {
+        icon: pin(false, club.logo_url, club.name),
+      });
       const node = document.createElement("div");
       node.style.minWidth = "210px";
       node.innerHTML = `
@@ -154,7 +163,8 @@ export default function ClubsMap({
     const cg = cluster.current;
     if (!m || !cg) return;
     for (const [id, marker] of Object.entries(markers.current)) {
-      marker.setIcon(pin(id === selectedId));
+      const club = clubsById.current[id];
+      marker.setIcon(pin(id === selectedId, club?.logo_url ?? null, club?.name ?? "?"));
     }
     if (!selectedId) return;
     const marker = markers.current[selectedId];
