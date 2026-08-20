@@ -76,32 +76,32 @@ struct ConversationThreadView: View {
     @ViewBuilder
     private func bubble(for message: ChatMessage) -> some View {
         let mine = message.senderId.lowercased() == myId.lowercased()
-        HStack {
-            if mine { Spacer(minLength: 40) }
-            VStack(alignment: .leading, spacing: 4) {
-                Text(message.content)
-                Text(formatTime(message.createdAt))
-                    .font(.system(size: 10))
-                    .opacity(0.6)
-            }
-            .padding(.horizontal, 14)
-            .padding(.vertical, 9)
-            .foregroundStyle(mine ? Color.white : Color.primary)
-            .background(mine ? Color.pitchGreen : Color.secondary.opacity(0.12))
-            .clipShape(
-                UnevenRoundedRectangle(
-                    cornerRadii: RectangleCornerRadii(
-                        topLeading: 18,
-                        bottomLeading: mine ? 18 : 4,
-                        bottomTrailing: mine ? 4 : 18,
-                        topTrailing: 18
-                    ),
-                    style: .continuous
-                )
-            )
-            .frame(maxWidth: 280, alignment: .leading)
-            if !mine { Spacer(minLength: 40) }
+        VStack(alignment: .leading, spacing: 4) {
+            Text(message.content)
+            Text(formatTime(message.createdAt))
+                .font(.system(size: 10))
+                .opacity(0.6)
         }
+        .padding(.horizontal, 14)
+        .padding(.vertical, 9)
+        .foregroundStyle(mine ? Color.white : Color.primary)
+        .background(mine ? Color.pitchGreen : Color.secondary.opacity(0.12))
+        .clipShape(
+            UnevenRoundedRectangle(
+                cornerRadii: RectangleCornerRadii(
+                    topLeading: 18,
+                    bottomLeading: mine ? 18 : 4,
+                    bottomTrailing: mine ? 4 : 18,
+                    topTrailing: 18
+                ),
+                style: .continuous
+            )
+        )
+        // Un seul frame combinant la largeur max de la bulle (280) et
+        // l'alignement à droite/gauche ne fonctionnait pas de façon fiable
+        // dans une LazyVStack (le Spacer ne poussait pas jusqu'au bord) —
+        // deux frames chaînés est le pattern éprouvé pour ce cas.
+        .frame(maxWidth: 280, alignment: .leading)
         .frame(maxWidth: .infinity, alignment: mine ? .trailing : .leading)
     }
 

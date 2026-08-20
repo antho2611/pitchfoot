@@ -85,6 +85,17 @@ Sans ça, la connexion Google/Apple s'ouvre mais ne revient jamais dans l'app.
 - Notifications push (les notifications existent en base et s'affichent dans
   l'écran dédié, mais rien ne déclenche encore de notification push iOS)
 
+## Bug corrigé : tous les messages s'affichaient à gauche
+
+`UUID.uuidString` (Swift) renvoie des majuscules, alors que Supabase renvoie
+les uuid en minuscules dans ses réponses JSON. Résultat : `message.senderId
+== myId` ne matchait jamais, donc chaque message tombait dans la branche
+"pas moi" — tout s'affichait à gauche, y compris tes propres messages.
+Corrigé partout (`.lowercased()` sur chaque id dérivé de la session), y
+compris dans le tri qui détermine `participant_a`/`participant_b` d'une
+conversation, qui aurait pu créer des conversations en double entre le site
+et l'app pour la même paire de comptes.
+
 ## Point d'attention pour la prochaine build
 
 `SubscriptionRepository.swift` utilise `.maybeSingle()` et `.upsert(...)` —
