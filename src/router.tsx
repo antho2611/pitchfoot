@@ -4,7 +4,7 @@ import { routeTree } from "./routeTree.gen";
 import { initSentry } from "./lib/sentry";
 
 export const getRouter = () => {
-  initSentry();
+  void initSentry();
   const queryClient = new QueryClient();
 
   const router = createRouter({
