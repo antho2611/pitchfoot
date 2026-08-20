@@ -122,7 +122,7 @@
 		D06BB22C10079EEB22443423 /* Ebook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ebook.swift; sourceTree = "<group>"; };
 		DC24B49E03859AE39947E119 /* AppNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNotification.swift; sourceTree = "<group>"; };
 		E902448E771B52EBDFC7ADDA /* PitchProTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitchProTheme.swift; sourceTree = "<group>"; };
-		F23BA330A3F83639E242D50F /* PitchPro.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = PitchPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F23BA330A3F83639E242D50F /* PitchPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PitchPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6A2F7644E20F42B2143DDE0 /* PreparateurDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparateurDetailView.swift; sourceTree = "<group>"; };
 		F9E0CFEFD741D4156AA8326F /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		FFB83F039DAA02E3F01CC6A8 /* SeancesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeancesListView.swift; sourceTree = "<group>"; };
@@ -309,8 +309,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = E56C3A35AC8F96903CF59908 /* Build configuration list for PBXProject "PitchPro" */;
 			developmentRegion = en;
@@ -474,6 +472,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4RQHM5B9NT;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Generated-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -557,6 +556,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4RQHM5B9NT;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Generated-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;

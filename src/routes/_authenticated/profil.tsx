@@ -577,6 +577,7 @@ function ClubForm({ userId }: { userId: string }) {
       (await supabase.from("clubs").select("*").eq("id", userId).maybeSingle()).data,
   });
   const [form, setForm] = useState<Record<string, string>>({});
+  const [coords, setCoords] = useState<{ lat: number; lon: number } | null>(null);
 
   useEffect(() => {
     if (!data) return;
@@ -599,6 +600,8 @@ function ClubForm({ userId }: { userId: string }) {
   const set = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
 
   async function save() {
+    const latitude = coords?.lat ?? data?.latitude ?? null;
+    const longitude = coords?.lon ?? data?.longitude ?? null;
     const { error } = await supabase
       .from("clubs")
       .update({
@@ -607,6 +610,8 @@ function ClubForm({ userId }: { userId: string }) {
         championship: form.championship || null,
         city: form.city || null,
         country: form.country || null,
+        latitude,
+        longitude,
         stadium: form.stadium || null,
         description: form.description?.slice(0, 2000) || null,
         history: form.history?.slice(0, 2000) || null,
@@ -674,11 +679,14 @@ function ClubForm({ userId }: { userId: string }) {
           />
         </Field>
         <Field label="Ville">
-          <input
-            className={input}
+          <CityAutocomplete
             value={form.city ?? ""}
-            onChange={(e) => set("city", e.target.value)}
-            maxLength={60}
+            onChange={(v) => set("city", v)}
+            onSelect={(pick) => {
+              if (!pick) return;
+              set("city", pick.city);
+              setCoords({ lat: pick.lat, lon: pick.lon });
+            }}
           />
         </Field>
         <Field label="Pays">
