@@ -55,10 +55,14 @@ struct ConversationsListView: View {
                     .foregroundStyle(.primary)
                 Text(conversation.preview)
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .fontWeight(conversation.hasUnread ? .semibold : .regular)
+                    .foregroundStyle(conversation.hasUnread ? .primary : .secondary)
                     .lineLimit(1)
             }
             Spacer()
+            if conversation.hasUnread {
+                Circle().fill(Color.pitchGreen).frame(width: 10, height: 10)
+            }
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)

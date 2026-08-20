@@ -35,13 +35,19 @@ private struct ProfileRow: Decodable {
 
 private struct MessagePreviewRow: Decodable {
     let conversationId: String
+    let senderId: String
     let content: String
+    let readAt: String?
 
     enum CodingKeys: String, CodingKey {
         case conversationId = "conversation_id"
+        case senderId = "sender_id"
         case content
+        case readAt = "read_at"
     }
 }
+
+private struct ReadUpdate: Encodable { let read_at: String }
 
 private struct NewNotification: Encodable {
     let user_id: String
@@ -106,7 +112,7 @@ enum MessagingRepository {
             .value
         async let previewsTask: [MessagePreviewRow] = supabase
             .from("messages")
-            .select("conversation_id, content")
+            .select("conversation_id, sender_id, content, read_at")
             .in("conversation_id", values: convIds)
             .order("created_at", ascending: false)
             .execute()
@@ -115,8 +121,14 @@ enum MessagingRepository {
         let (profiles, previews) = try await (profilesTask, previewsTask)
 
         var previewByConversation: [String: String] = [:]
-        for preview in previews where previewByConversation[preview.conversationId] == nil {
-            previewByConversation[preview.conversationId] = preview.content
+        var unreadConversations: Set<String> = []
+        for preview in previews {
+            if previewByConversation[preview.conversationId] == nil {
+                previewByConversation[preview.conversationId] = preview.content
+            }
+            if preview.senderId.lowercased() != myId && preview.readAt == nil {
+                unreadConversations.insert(preview.conversationId)
+            }
         }
 
         return rows.map { row in
@@ -129,9 +141,21 @@ enum MessagingRepository {
                 name: name,
                 avatarURL: profile?.avatarUrl,
                 preview: previewByConversation[row.id] ?? "Nouvelle conversation",
-                lastMessageAt: row.lastMessageAt
+                lastMessageAt: row.lastMessageAt,
+                hasUnread: unreadConversations.contains(row.id)
             )
         }
+    }
+
+    /// Marque comme lus les messages reçus d'une conversation (colonne read_at,
+    /// déjà présente dans le schéma mais jusqu'ici inutilisée côté natif).
+    static func markRead(messageIds: [String]) async {
+        guard !messageIds.isEmpty else { return }
+        try? await supabase
+            .from("messages")
+            .update(ReadUpdate(read_at: ISO8601DateFormatter().string(from: Date())))
+            .in("id", values: messageIds)
+            .execute()
     }
 
     /// Résout une seule conversation par id — utilisé quand on tape une

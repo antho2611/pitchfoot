@@ -6,6 +6,7 @@ struct ChatMessage: Identifiable, Decodable {
     let senderId: String
     let content: String
     let createdAt: String
+    let readAt: String?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -13,6 +14,7 @@ struct ChatMessage: Identifiable, Decodable {
         case senderId = "sender_id"
         case content
         case createdAt = "created_at"
+        case readAt = "read_at"
     }
 }
 
@@ -39,4 +41,5 @@ struct Conversation: Identifiable, Hashable {
     let avatarURL: String?
     let preview: String
     let lastMessageAt: String
+    let hasUnread: Bool = false
 }

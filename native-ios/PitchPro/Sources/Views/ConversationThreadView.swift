@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct ConversationThreadView: View {
     let myId: String
@@ -8,6 +9,10 @@ struct ConversationThreadView: View {
     @State private var text = ""
     @State private var isLoading = true
     @State private var sending = false
+
+    private var lastMineId: String? {
+        messages.last { $0.senderId.lowercased() == myId.lowercased() }?.id
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -21,8 +26,10 @@ struct ConversationThreadView: View {
                                 .frame(maxWidth: .infinity)
                                 .padding(.top, 40)
                         }
-                        ForEach(messages) { message in
-                            bubble(for: message).id(message.id)
+                        ForEach(Array(messages.enumerated()), id: \.element.id) { index, message in
+                            let isLastInGroup = index == messages.count - 1
+                                || messages[index + 1].senderId.lowercased() != message.senderId.lowercased()
+                            row(for: message, isLastInGroup: isLastInGroup).id(message.id)
                         }
                     }
                     .padding(12)
@@ -74,8 +81,33 @@ struct ConversationThreadView: View {
     }
 
     @ViewBuilder
-    private func bubble(for message: ChatMessage) -> some View {
+    private func row(for message: ChatMessage, isLastInGroup: Bool) -> some View {
         let mine = message.senderId.lowercased() == myId.lowercased()
+        if mine {
+            VStack(alignment: .trailing, spacing: 3) {
+                bubbleContent(for: message, mine: true)
+                if message.id == lastMineId && message.readAt != nil {
+                    Text("Vu")
+                        .font(.system(size: 10))
+                        .foregroundStyle(.secondary)
+                        .padding(.trailing, 4)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .trailing)
+        } else {
+            HStack(alignment: .bottom, spacing: 8) {
+                if isLastInGroup {
+                    ChatAvatar(url: conversation.avatarURL, name: conversation.name, size: 22)
+                } else {
+                    Color.clear.frame(width: 22, height: 22)
+                }
+                bubbleContent(for: message, mine: false)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+
+    private func bubbleContent(for message: ChatMessage, mine: Bool) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(message.content)
             Text(formatTime(message.createdAt))
@@ -101,14 +133,14 @@ struct ConversationThreadView: View {
         // l'alignement à droite/gauche ne fonctionnait pas de façon fiable
         // dans une LazyVStack (le Spacer ne poussait pas jusqu'au bord) —
         // deux frames chaînés est le pattern éprouvé pour ce cas.
-        .frame(maxWidth: 280, alignment: .leading)
-        .frame(maxWidth: .infinity, alignment: mine ? .trailing : .leading)
+        .frame(maxWidth: 258, alignment: .leading)
     }
 
     private func load() async {
         isLoading = true
         messages = (try? await MessagingRepository.fetchMessages(conversationId: conversation.id)) ?? []
         isLoading = false
+        await markIncomingAsRead()
     }
 
     /// Pas de canal realtime côté natif pour l'instant : rafraîchissement
@@ -116,12 +148,22 @@ struct ConversationThreadView: View {
     /// seule à la fermeture de la vue (comportement standard de .task).
     private func poll() async {
         while !Task.isCancelled {
-            try? await Task.sleep(for: .seconds(4))
+            try? await Task.sleep(for: .seconds(2))
             if Task.isCancelled { break }
             if let fresh = try? await MessagingRepository.fetchMessages(conversationId: conversation.id) {
                 messages = fresh
+                await markIncomingAsRead()
             }
         }
+    }
+
+    /// Marque comme lus les messages reçus pas encore vus, pour afficher
+    /// "Vu" côté expéditeur (colonne read_at déjà présente dans le schéma).
+    private func markIncomingAsRead() async {
+        let unreadIds = messages
+            .filter { $0.senderId.lowercased() != myId.lowercased() && $0.readAt == nil }
+            .map(\.id)
+        await MessagingRepository.markRead(messageIds: unreadIds)
     }
 
     private func send() async {
@@ -129,6 +171,7 @@ struct ConversationThreadView: View {
         guard !content.isEmpty else { return }
         text = ""
         sending = true
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
         try? await MessagingRepository.send(conversationId: conversation.id, senderId: myId, content: content)
         await MessagingRepository.notify(
             userId: conversation.otherId,

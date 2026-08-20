@@ -96,6 +96,36 @@ compris dans le tri qui détermine `participant_a`/`participant_b` d'une
 conversation, qui aurait pu créer des conversations en double entre le site
 et l'app pour la même paire de comptes.
 
+## Messagerie façon Instagram/Snapchat
+
+La messagerie native reprend maintenant plusieurs codes des apps de
+messagerie grand public :
+
+- **Accusés de lecture** : la colonne `messages.read_at` (déjà présente dans
+  le schéma, jamais utilisée côté natif) est renseignée dès qu'un message
+  reçu est affiché à l'écran (`markIncomingAsRead()` dans
+  `ConversationThreadView`). Un "Vu" discret apparaît sous ton dernier
+  message envoyé une fois qu'il a été lu.
+- **Indicateur de messages non lus** dans la liste des conversations : point
+  vert + texte en gras tant qu'un message reçu n'a pas de `read_at`
+  (`Conversation.hasUnread`, calculé dans
+  `MessagingRepository.fetchConversations`).
+- **Rafraîchissement plus rapide** pendant qu'un fil est ouvert : 2 secondes
+  au lieu de 4 (toujours du polling, pas de canal realtime Supabase côté
+  natif pour l'instant).
+- **Groupement des bulles** : l'avatar du contact ne s'affiche plus qu'une
+  fois, sur le dernier message d'une série de messages consécutifs du même
+  expéditeur — comme sur Instagram, au lieu de répéter l'avatar sur chaque
+  bulle.
+- **Retour haptique** léger à l'envoi d'un message.
+
+Pas encore fait (nécessite une décision produit avant d'être construit) :
+l'envoi de photos dans les messages. Le bucket Supabase Storage `media`
+existant a une policy `media_read_own` qui limite la lecture au
+propriétaire du fichier — il faudrait soit une nouvelle policy, soit un
+bucket dédié aux pièces jointes de messagerie, pour que le destinataire
+puisse voir les photos envoyées par l'autre.
+
 ## Point d'attention pour la prochaine build
 
 `SubscriptionRepository.swift` utilise `.maybeSingle()` et `.upsert(...)` —
