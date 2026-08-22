@@ -1,7 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
-  Link,
   createRootRouteWithContext,
   useLocation,
   useNavigate,
@@ -16,23 +15,48 @@ import { reportClientError } from "../lib/error-reporting";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { Breadcrumb } from "@/components/Breadcrumb";
+
+const notFoundActions = [
+  { href: "/", label: "Retour à l'accueil", primary: true },
+  { href: "/joueurs", label: "Voir les joueurs" },
+  { href: "/clubs", label: "Voir les clubs" },
+  { href: "/annonces", label: "Voir les annonces" },
+];
 
 function NotFoundComponent() {
+  // notFoundComponent n'est pas une route avec son propre head() — un
+  // <title> rendu directement en JSX serait hoisté par React 19 en PLUS de
+  // celui de la racine (deux <title> dans le HTML), pas à sa place. Un
+  // effet ciblant document.title reste le seul moyen fiable de le remplacer.
+  useEffect(() => {
+    document.title = "Page introuvable — PitchPro";
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
+    <div className="min-h-screen bg-background">
+      <Breadcrumb items={[{ label: "Accueil", href: "/" }, { label: "Page introuvable" }]} />
+      <div className="mx-auto flex max-w-2xl flex-col items-center px-4 py-16 text-center sm:py-24">
         <h1 className="font-display text-8xl text-foreground">404</h1>
         <h2 className="mt-2 font-display text-2xl uppercase">Page introuvable</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Cette page n'existe pas ou a été déplacée.
+        <p className="mt-2 max-w-sm text-sm text-muted-foreground">
+          Cette page n'existe pas ou a été déplacée. Voici quelques endroits utiles pour repartir :
         </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center bg-pitch px-5 py-2.5 font-display text-lg uppercase text-volt transition-colors hover:bg-field"
-          >
-            Retour à l'accueil
-          </Link>
+        {/* Boutons d'action visibles immédiatement, sans scroll. */}
+        <div className="mt-6 flex flex-wrap justify-center gap-2.5">
+          {notFoundActions.map((action) => (
+            <a
+              key={action.href}
+              href={action.href}
+              className={
+                action.primary
+                  ? "inline-flex items-center justify-center bg-pitch px-5 py-2.5 font-display text-lg uppercase text-volt transition-colors hover:bg-field"
+                  : "inline-flex items-center justify-center border border-border px-5 py-2.5 font-display text-lg uppercase transition-colors hover:border-pitch"
+              }
+            >
+              {action.label}
+            </a>
+          ))}
         </div>
       </div>
     </div>

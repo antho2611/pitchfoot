@@ -135,10 +135,12 @@ function PlayerForm({ userId }: { userId: string }) {
     club_name: "",
   });
   const [historyBusy, setHistoryBusy] = useState(false);
+  const [guardianConsent, setGuardianConsent] = useState(false);
 
   useEffect(() => {
     if (!data?.player) return;
     const p = data.player;
+    setGuardianConsent(p.guardian_consent ?? false);
     setForm({
       first_name: p.first_name ?? "",
       last_name: p.last_name ?? "",
@@ -163,7 +165,25 @@ function PlayerForm({ userId }: { userId: string }) {
 
   const set = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
 
+  // RGPD (CGU art. sur les mineurs) : au-dessous de 18 ans, la création /
+  // mise à jour du profil doit être couverte par l'accord d'un représentant
+  // légal — ce n'était jusqu'ici qu'une clause des CGU sans vérification.
+  const isMinor = (() => {
+    if (!form.birth_date) return false;
+    const birth = new Date(form.birth_date);
+    if (Number.isNaN(birth.getTime())) return false;
+    const eighteenthBirthday = new Date(birth);
+    eighteenthBirthday.setFullYear(birth.getFullYear() + 18);
+    return eighteenthBirthday > new Date();
+  })();
+
   async function save() {
+    if (isMinor && !guardianConsent) {
+      toast.error(
+        "Confirmez l'autorisation de votre représentant légal pour enregistrer ce profil.",
+      );
+      return;
+    }
     setBusy(true);
     const { error } = await supabase
       .from("players")
@@ -171,6 +191,7 @@ function PlayerForm({ userId }: { userId: string }) {
         first_name: form.first_name?.slice(0, 60) || "",
         last_name: form.last_name?.slice(0, 60) || "",
         birth_date: form.birth_date || null,
+        guardian_consent: isMinor ? guardianConsent : false,
         nationality: form.nationality || null,
         city: form.city || null,
         country: form.country || null,
@@ -426,9 +447,28 @@ function PlayerForm({ userId }: { userId: string }) {
         </Field>
       </Block>
 
+      {isMinor && (
+        <label className="flex items-start gap-2 border border-pitch/20 bg-pitch/5 p-4 text-sm">
+          <input
+            type="checkbox"
+            checked={guardianConsent}
+            onChange={(e) => setGuardianConsent(e.target.checked)}
+            className="mt-0.5 size-4 shrink-0 accent-pitch"
+          />
+          <span>
+            Je confirme que mon représentant légal (parent ou tuteur) a été informé et autorise la
+            création et la publication de ce profil, conformément aux{" "}
+            <a href="/cgu" target="_blank" rel="noreferrer" className="underline">
+              CGU
+            </a>
+            .
+          </span>
+        </label>
+      )}
+
       <button
         onClick={save}
-        disabled={busy}
+        disabled={busy || (isMinor && !guardianConsent)}
         className="w-full bg-pitch py-3 font-display text-xl uppercase text-volt disabled:opacity-50"
       >
         Enregistrer mon profil

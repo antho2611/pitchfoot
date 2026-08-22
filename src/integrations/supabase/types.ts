@@ -662,6 +662,7 @@ export type Database = {
           experience_years: number;
           first_name: string;
           gallery_urls: string[];
+          guardian_consent: boolean;
           height_cm: number | null;
           id: string;
           is_premium: boolean;
@@ -694,6 +695,7 @@ export type Database = {
           experience_years?: number;
           first_name?: string;
           gallery_urls?: string[];
+          guardian_consent?: boolean;
           height_cm?: number | null;
           id: string;
           is_premium?: boolean;
@@ -726,6 +728,7 @@ export type Database = {
           experience_years?: number;
           first_name?: string;
           gallery_urls?: string[];
+          guardian_consent?: boolean;
           height_cm?: number | null;
           id?: string;
           is_premium?: boolean;

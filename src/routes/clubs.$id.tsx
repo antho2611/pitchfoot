@@ -2,6 +2,8 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { BadgeCheck, Globe, Mail, MapPin, Phone } from "lucide-react";
 import { PageShell } from "@/components/layout/Shell";
+import { EntityNotFound } from "@/components/EntityNotFound";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -21,9 +23,7 @@ export const Route = createFileRoute("/clubs/$id")({
     </PageShell>
   ),
   notFoundComponent: () => (
-    <PageShell>
-      <p className="mx-auto max-w-3xl px-6 py-24 text-center">Ce club n'existe pas.</p>
-    </PageShell>
+    <EntityNotFound message="Ce club n'existe pas." section={{ label: "Clubs", href: "/clubs" }} />
   ),
 });
 
@@ -80,6 +80,13 @@ function ClubDetail() {
 
   return (
     <PageShell>
+      <Breadcrumb
+        items={[
+          { label: "Accueil", href: "/" },
+          { label: "Clubs", href: "/clubs" },
+          { label: club.name },
+        ]}
+      />
       <section className="bg-pitch text-white">
         <div className="mx-auto grid max-w-5xl grid-cols-[auto_minmax(0,1fr)] items-center gap-6 px-4 py-12 sm:px-6">
           <div className="grid size-24 shrink-0 place-items-center bg-field">

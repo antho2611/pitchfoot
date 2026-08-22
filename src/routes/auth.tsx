@@ -50,6 +50,7 @@ function AuthPage() {
   });
   const [busy, setBusy] = useState(false);
   const [pendingEmail, setPendingEmail] = useState<string | null>(null);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
 
   async function resend() {
     if (!pendingEmail) return;
@@ -74,6 +75,10 @@ function AuthPage() {
         const parsed = signUpSchema.safeParse(form);
         if (!parsed.success) {
           toast.error(parsed.error.issues[0].message);
+          return;
+        }
+        if (!acceptedTerms) {
+          toast.error("Merci d'accepter les CGU et la politique de confidentialité.");
           return;
         }
         const { data, error } = await supabase.auth.signUp({
@@ -343,26 +348,34 @@ function AuthPage() {
                 Mot de passe oublié ?
               </button>
             )}
+            {mode === "signup" && (
+              <label className="flex items-start gap-2 text-xs text-muted-foreground">
+                <input
+                  type="checkbox"
+                  checked={acceptedTerms}
+                  onChange={(e) => setAcceptedTerms(e.target.checked)}
+                  className="mt-0.5 size-4 shrink-0 accent-pitch"
+                />
+                <span>
+                  J'accepte les{" "}
+                  <a href="/cgu" target="_blank" rel="noreferrer" className="underline">
+                    CGU
+                  </a>{" "}
+                  et la{" "}
+                  <a href="/confidentialite" target="_blank" rel="noreferrer" className="underline">
+                    politique de confidentialité
+                  </a>
+                  .
+                </span>
+              </label>
+            )}
             <button
               type="submit"
-              disabled={busy}
+              disabled={busy || (mode === "signup" && !acceptedTerms)}
               className="w-full bg-pitch py-3 font-display text-xl uppercase text-volt disabled:opacity-50"
             >
               {busy ? "…" : mode === "signup" ? "Créer mon compte" : "Se connecter"}
             </button>
-            {mode === "signup" && (
-              <p className="text-center text-xs text-muted-foreground">
-                En créant un compte, vous acceptez les{" "}
-                <a href="/cgu" className="underline">
-                  CGU
-                </a>{" "}
-                et la{" "}
-                <a href="/confidentialite" className="underline">
-                  politique de confidentialité
-                </a>
-                .
-              </p>
-            )}
           </form>
 
           <div className="my-5 flex items-center gap-3 text-[10px] uppercase tracking-widest text-foreground/40">

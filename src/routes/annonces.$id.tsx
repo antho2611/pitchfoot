@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
 import { PageShell } from "@/components/layout/Shell";
+import { EntityNotFound } from "@/components/EntityNotFound";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { notify } from "@/lib/messaging";
@@ -23,9 +25,10 @@ export const Route = createFileRoute("/annonces/$id")({
     </PageShell>
   ),
   notFoundComponent: () => (
-    <PageShell>
-      <p className="mx-auto max-w-3xl px-6 py-24 text-center">Cette annonce n'existe pas.</p>
-    </PageShell>
+    <EntityNotFound
+      message="Cette annonce n'existe pas."
+      section={{ label: "Annonces", href: "/annonces" }}
+    />
   ),
 });
 
@@ -85,10 +88,14 @@ function ListingDetail() {
 
   return (
     <PageShell>
+      <Breadcrumb
+        items={[
+          { label: "Accueil", href: "/" },
+          { label: "Annonces", href: "/annonces" },
+          { label: data.title },
+        ]}
+      />
       <section className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-        <Link to="/annonces" className="label-xs underline underline-offset-4">
-          ← Toutes les annonces
-        </Link>
         <h1 className="mt-4 font-display text-6xl uppercase leading-none">{data.title}</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           <Link

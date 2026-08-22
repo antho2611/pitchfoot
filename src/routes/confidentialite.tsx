@@ -18,7 +18,7 @@ export const Route = createFileRoute("/confidentialite")({
 function Page() {
   return (
     <PageShell>
-      <LegalPage title="Politique de confidentialité" updated="12 août 2026">
+      <LegalPage title="Politique de confidentialité" updated="22 août 2026">
         <LegalSection title="Responsable du traitement">
           <p>
             Anthony Seguin, éditeur du site PitchPro, est responsable du traitement des données
@@ -67,6 +67,12 @@ function Page() {
             <li>
               <strong>Brevo (Sendinblue SAS)</strong> — envoi des emails transactionnels
               (confirmation de compte, notifications).
+            </li>
+            <li>
+              <strong>Sentry (Functional Software, Inc.)</strong> — suivi des erreurs techniques du
+              site, hébergé sur des serveurs situés dans l'Union européenne. Seules des informations
+              techniques (page concernée, message d'erreur) sont transmises, jamais votre mot de
+              passe ni le contenu de vos messages.
             </li>
           </ul>
           <p>

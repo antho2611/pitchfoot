@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 import { Bookmark, Flag, MapPin, MessageSquare, Ruler, Weight } from "lucide-react";
 import { PageShell } from "@/components/layout/Shell";
+import { EntityNotFound } from "@/components/EntityNotFound";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { ageFrom, availabilityLabel, statFieldsFor } from "@/lib/football";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -30,9 +32,10 @@ export const Route = createFileRoute("/joueurs/$id")({
     </PageShell>
   ),
   notFoundComponent: () => (
-    <PageShell>
-      <p className="mx-auto max-w-3xl px-6 py-24 text-center">Ce joueur n'existe pas.</p>
-    </PageShell>
+    <EntityNotFound
+      message="Ce joueur n'existe pas."
+      section={{ label: "Joueurs", href: "/joueurs" }}
+    />
   ),
 });
 
@@ -118,6 +121,13 @@ function PlayerDetail() {
 
   return (
     <PageShell>
+      <Breadcrumb
+        items={[
+          { label: "Accueil", href: "/" },
+          { label: "Joueurs", href: "/joueurs" },
+          { label: `${player.first_name} ${player.last_name}`.trim() || "Profil" },
+        ]}
+      />
       <section className="border-b border-pitch/10 bg-pitch text-white">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-[280px_1fr]">
           <div className="h-72 w-full overflow-hidden bg-field md:h-80">

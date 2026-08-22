@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { PageShell } from "@/components/layout/Shell";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { openConversation } from "@/lib/messaging";
@@ -119,6 +120,13 @@ function CoachDetail() {
 
   return (
     <PageShell>
+      <Breadcrumb
+        items={[
+          { label: "Accueil", href: "/" },
+          { label: "Préparateurs", href: "/preparateurs" },
+          { label: data.full_name || "Profil" },
+        ]}
+      />
       <section className="border-b border-border bg-card/50">
         <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-12 sm:px-6 md:flex-row md:items-end">
           <div className="size-32 shrink-0 overflow-hidden border-2 border-pitch bg-muted">
